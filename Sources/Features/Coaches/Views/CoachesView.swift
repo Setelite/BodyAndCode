@@ -5,43 +5,28 @@
 //  Created by MAXIM GORNOSTAEV on 12/28/25.
 //
 
-// Sources/Features/Coaches/Views/CoachesView.swift
+//
+//  CoachesView.swift
+//  Body&Code
+//
+//  Created by MAXIM GORNOSTAEV
+//
+
 import SwiftUI
 
 struct CoachesView: View {
     @StateObject private var viewModel = CoachListViewModel()
     @State private var searchText = ""
     
+    // Управление навигацией
+    @State private var path = NavigationPath()
+    
+    // Отдельное состояние для алерта об ошибке
+    @State private var showErrorAlert = false
+    
     var body: some View {
-        NavigationStack {
-            Group {
-                if viewModel.isLoading {
-                    loadingView
-                } else if viewModel.coaches.isEmpty && !viewModel.isLoading {
-                    emptyView
-                } else {
-                    coachesListView
-                }
-            }
-            .navigationTitle("Тренеры")
-            .searchable(text: $searchText, prompt: "Поиск тренеров")
-            .onChange(of: searchText) { newValue in
-                if newValue.isEmpty {
-                    Task {
-                        await viewModel.loadCoaches()
-                    }
-                } else {
-                    viewModel.searchCoaches(query: newValue)
-                }
-            }
-            .refreshable {
-                await viewModel.refresh()
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    filterMenu
-                }
-            }
+        NavigationStack(path: $path) {
+            content
         }
         .onAppear {
             Task {
@@ -50,14 +35,89 @@ struct CoachesView: View {
                 }
             }
         }
-        .alert("Ошибка", isPresented: Binding(
-            get: { viewModel.errorMessage != nil },
-            set: { if !$0 { viewModel.errorMessage = nil } }
-        )) {
+        // Алерт ошибки
+        .alert("Ошибка", isPresented: $showErrorAlert) {
             Button("OK", role: .cancel) { }
         } message: {
-            if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
+            Text(viewModel.errorMessage ?? "Неизвестная ошибка")
+        }
+        // Синхронизация состояния алерта
+        .onChange(of: viewModel.errorMessage) { newValue in
+            showErrorAlert = newValue != nil
+        }
+        .onChange(of: showErrorAlert) { newValue in
+            if !newValue {
+                viewModel.errorMessage = nil
+            }
+        }
+    }
+    
+    // MARK: - Вспомогательные представления
+
+    private var content: some View {
+        Group {
+            if viewModel.isLoading {
+                loadingView
+            } else if viewModel.coaches.isEmpty && !viewModel.isLoading {
+                emptyView
+            } else {
+                coachesListView
+            }
+        }
+        .navigationTitle("Тренеры")
+        .searchable(text: $searchText, prompt: "Поиск тренеров")
+        .onChange(of: searchText) { newValue in
+            if newValue.isEmpty {
+                Task {
+                    await viewModel.loadCoaches()
+                }
+            } else {
+                viewModel.searchCoaches(query: newValue)
+            }
+        }
+        .refreshable {
+            await viewModel.refresh()
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                filterMenu
+            }
+        }
+        // Обработка всех маршрутов
+        .navigationDestination(for: CoachRoute.self) { route in
+            destinationView(for: route)
+        }
+    }
+
+    @ViewBuilder
+    private func destinationView(for route: CoachRoute) -> some View {
+        switch route {
+        case .list:
+            EmptyView()
+
+        case .detail(let coachID):
+            if let coach = viewModel.coaches.first(where: { $0.id == coachID }) {
+                CoachDetailView(coach: coach, path: $path)
+            } else {
+                Text("Тренер не найден")
+                    .navigationTitle("Ошибка")
+            }
+
+        case .booking(let coachID, let type):
+            if let coach = viewModel.coaches.first(where: { $0.id == coachID }) {
+                BookingView(coach: coach, selectedType: type)
+                    .navigationTitle("Запись на тренировку")
+            } else {
+                Text("Ошибка бронирования")
+                    .navigationTitle("Ошибка")
+            }
+
+        case .reviews(let coachID):
+            if let coach = viewModel.coaches.first(where: { $0.id == coachID }) {
+                CoachReviewsView(coach: coach)
+            } else {
+                Text("Тренер не найден")
+                    .navigationTitle("Ошибка")
             }
         }
     }
@@ -98,9 +158,12 @@ struct CoachesView: View {
     private var coachesListView: some View {
         List {
             ForEach(viewModel.coaches) { coach in
-                NavigationLink(destination: CoachDetailView(coach: coach)) {
+                Button {
+                    path.append(CoachRoute.detail(coachID: coach.id))
+                } label: {
                     CoachRow(coach: coach)
                 }
+                .buttonStyle(.plain)
             }
         }
         .listStyle(.insetGrouped)
@@ -128,26 +191,13 @@ struct CoachesView: View {
     }
 }
 
-// MARK: - CoachRow View
+// MARK: - CoachRow (оставляем без изменений)
 struct CoachRow: View {
     let coach: Coach
     
     var body: some View {
         HStack(spacing: 16) {
             // Аватар
-            coachAvatar
-            
-            coachInfo
-            
-            Spacer()
-            
-            experienceBadge
-        }
-        .padding(.vertical, 8)
-    }
-    
-    private var coachAvatar: some View {
-        ZStack {
             Circle()
                 .fill(LinearGradient(
                     colors: [.blue, .purple],
@@ -155,55 +205,56 @@ struct CoachRow: View {
                     endPoint: .bottomTrailing
                 ))
                 .frame(width: 60, height: 60)
-                .shadow(color: .blue.opacity(0.3), radius: 5)
+                .overlay(
+                    Text(String(coach.name.prefix(1)))
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                )
             
-            Text(String(coach.name.prefix(1)))
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-        }
-    }
-    
-    private var coachInfo: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(coach.name)
-                .font(.headline)
-            
-            Text(coach.specialization)
-                .font(.caption)
-                .foregroundColor(.secondary)
-                .lineLimit(1)
-            
-            HStack(spacing: 12) {
-                HStack(spacing: 4) {
-                    Image(systemName: "star.fill")
-                        .font(.caption2)
-                        .foregroundColor(.orange)
-                    
-                    Text(String(format: "%.1f", coach.rating))
-                        .font(.caption)
-                        .fontWeight(.medium)
-                }
+            // Информация
+            VStack(alignment: .leading, spacing: 6) {
+                Text(coach.name)
+                    .font(.headline)
                 
-                Text("•")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                
-                Text("\(coach.reviewCount) отзывов")
+                Text(coach.specialization)
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .lineLimit(1)
+                
+                HStack(spacing: 12) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "star.fill")
+                            .font(.caption2)
+                            .foregroundColor(.orange)
+                        
+                        Text(String(format: "%.1f", coach.rating))
+                            .font(.caption)
+                            .fontWeight(.medium)
+                    }
+                    
+                    Text("•")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    
+                    Text("\(coach.reviewCount) отзывов")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
+            
+            Spacer()
+            
+            // Бейдж опыта
+            Text(coach.experience)
+                .font(.caption2)
+                .fontWeight(.medium)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(Color.blue.opacity(0.1))
+                .cornerRadius(6)
         }
-    }
-    
-    private var experienceBadge: some View {
-        Text(coach.experience)
-            .font(.caption2)
-            .fontWeight(.medium)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(Color.blue.opacity(0.1))
-            .cornerRadius(6)
+        .padding(.vertical, 8)
     }
 }
 

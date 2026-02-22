@@ -4,33 +4,17 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var authViewModel = AuthViewModel()
     @StateObject private var appCoordinator = AppCoordinator()
-    
-    // Для теста - временно true
-    init() {
-        // Тестовая авторизация
-        _authViewModel = StateObject(wrappedValue: {
-            let vm = AuthViewModel()
-            vm.isAuthenticated = true  // ← сразу авторизованы для теста
-            return vm
-        }())
-    }
+    @AppStorage("hasSeenWelcome") private var hasSeenWelcome = false
     
     var body: some View {
         Group {
             if authViewModel.isAuthenticated {
-                MainTabView()  // ← Теперь MainTabView определен ниже
+                MainTabView()
                     .environmentObject(appCoordinator)
+            } else if hasSeenWelcome {
+                AuthFlowView()
             } else {
-                // Простой LoginView для теста
-                VStack {
-                    Text("Body&Code")
-                        .font(.largeTitle)
-                        .padding()
-                    Button("Войти для теста") {
-                        authViewModel.isAuthenticated = true
-                    }
-                    .buttonStyle(.borderedProminent)
-                }
+                WelcomeView()
             }
         }
         .environmentObject(authViewModel)

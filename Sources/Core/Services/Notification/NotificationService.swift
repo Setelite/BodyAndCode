@@ -172,13 +172,13 @@ class NotificationService: NSObject, ObservableObject {
     
     // MARK: - Отмена уведомлений
     func cancelNotification(identifier: String) async {
-        await notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
         await loadScheduledNotifications()
         print("✅ Уведомление отменено: \(identifier)")
     }
     
     func cancelAllNotifications() async {
-        await notificationCenter.removeAllPendingNotificationRequests()
+        notificationCenter.removeAllPendingNotificationRequests()
         await MainActor.run {
             self.scheduledNotifications = []
         }

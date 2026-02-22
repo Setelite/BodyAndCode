@@ -2,15 +2,18 @@
 import SwiftUI
 internal import CoreData
 
-@main
+/*@main
 struct BodyCodeApp: App {
+    @StateObject private var offlineService = OfflineService()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(offlineService)
         }
-
     }
 }
+*/
 
 
 
@@ -26,12 +29,8 @@ struct BodyCodeApp: App {
 
 
 
-
-
-
-
-/*@main
-struct FitnessAppApp: App {
+@main
+struct BodyCodeApp: App {
     private let persistence = PersistenceController.shared
     @StateObject private var offlineService = OfflineService()
     
@@ -64,4 +63,4 @@ struct LoadingView: View {
         }
     }
 }
-*/
+

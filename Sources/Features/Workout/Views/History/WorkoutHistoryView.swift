@@ -11,6 +11,7 @@ import Combine
 struct WorkoutHistoryView: View {
     @StateObject private var viewModel = WorkoutHistoryViewModel()
     @EnvironmentObject private var appCoordinator: AppCoordinator
+    @State private var selectedSession: StoredWorkoutHistorySession?
     
     var body: some View {
         NavigationView {
@@ -38,12 +39,15 @@ struct WorkoutHistoryView: View {
         List {
             ForEach(viewModel.workoutSessions) { session in
                 WorkoutSessionRow(session: session) {
-                    viewModel.showSessionDetail(session)
+                    selectedSession = session
                 }
             }
         }
         .refreshable {
             viewModel.loadWorkoutHistory()
+        }
+        .sheet(item: $selectedSession) { session in
+            WorkoutSessionDetailView(session: session)
         }
     }
     
@@ -71,9 +75,60 @@ struct WorkoutHistoryView: View {
     }
 }
 
+struct WorkoutSessionDetailView: View {
+    let session: StoredWorkoutHistorySession
+
+    var body: some View {
+        NavigationView {
+            List {
+                Section("Обзор") {
+                    LabeledContent("Название", value: session.workoutName)
+                    LabeledContent("Дата", value: formattedDate(session.startDate))
+                    LabeledContent("Длительность", value: "\(Int(session.duration) / 60) мин")
+                    LabeledContent("Упражнений", value: "\(session.completedExercises.count)")
+                }
+
+                ForEach(session.completedExercises, id: \.exerciseId) { exercise in
+                    Section(exercise.exerciseName) {
+                        LabeledContent("Макс. вес", value: "\(formatWeight(exercise.weight)) кг")
+                        LabeledContent("Макс. повторения", value: "\(exercise.reps)")
+
+                        ForEach(exercise.sets, id: \.setNumber) { set in
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Подход \(set.setNumber)")
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                Text("План: \(formatWeight(set.targetWeight)) кг × \(set.targetReps)")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                Text("Факт: \(formatWeight(set.completedWeight)) кг × \(set.completedReps)")
+                                    .font(.caption)
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Детали тренировки")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter.string(from: date)
+    }
+
+    private func formatWeight(_ weight: Double) -> String {
+        String(format: "%.1f", weight)
+    }
+}
+
 // MARK: - Workout Session Row
 struct WorkoutSessionRow: View {
-    let session: WorkoutHistorySession
+    let session: StoredWorkoutHistorySession
     let onTap: () -> Void
     
     var body: some View {
@@ -134,8 +189,9 @@ struct WorkoutSessionRow: View {
 // MARK: - ViewModel для истории тренировок
 @MainActor
 class WorkoutHistoryViewModel: ObservableObject {
-    @Published var workoutSessions: [WorkoutHistorySession] = []
+    @Published var workoutSessions: [StoredWorkoutHistorySession] = []
     @Published var isLoading: Bool = false
+    private let workoutPersistenceStore = WorkoutPersistenceStore()
     
     init() {
         loadWorkoutHistory()
@@ -143,101 +199,12 @@ class WorkoutHistoryViewModel: ObservableObject {
     
     func loadWorkoutHistory() {
         isLoading = true
-        
-        // Временные mock данные
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
             guard let self = self else { return }
-            
-            self.workoutSessions = self.createMockWorkoutSessions()
+            self.workoutSessions = self.workoutPersistenceStore.loadHistory()
             self.isLoading = false
         }
     }
     
-    func showSessionDetail(_ session: WorkoutHistorySession) {
-        print("Показать детали тренировки: \(session.workoutName)")
-    }
-    
-    // MARK: - Mock Data
-    private func createMockWorkoutSessions() -> [WorkoutHistorySession] {
-        let calendar = Calendar.current
-        let today = Date()
-        
-        return [
-            WorkoutHistorySession(
-                workoutPlanId: UUID(),
-                workoutName: "Грудь и Трицепс",
-                startDate: calendar.date(byAdding: .day, value: -1, to: today)!,
-                endDate: calendar.date(byAdding: .hour, value: 1, to: calendar.date(byAdding: .day, value: -1, to: today)!)!,
-                duration: 3600,
-                completedExercises: [
-                    WorkoutCompletedExercise(
-                        exerciseId: UUID(),
-                        exerciseName: "Жим лежа",
-                        sets: [
-                            WorkoutCompletedSet(
-                                setNumber: 1,
-                                targetWeight: 60,
-                                targetReps: 8,
-                                completedWeight: 65,
-                                completedReps: 8,
-                                difficulty: "medium"
-                            )
-                        ],
-                        weight: 65,
-                        reps: 8
-                    )
-                ]
-            ),
-            WorkoutHistorySession(
-                workoutPlanId: UUID(),
-                workoutName: "Ноги",
-                startDate: calendar.date(byAdding: .day, value: -3, to: today)!,
-                endDate: calendar.date(byAdding: .hour, value: 1, to: calendar.date(byAdding: .day, value: -3, to: today)!)!,
-                duration: 3300,
-                completedExercises: [
-                    WorkoutCompletedExercise(
-                        exerciseId: UUID(),
-                        exerciseName: "Приседания",
-                        sets: [
-                            WorkoutCompletedSet(
-                                setNumber: 1,
-                                targetWeight: 80,
-                                targetReps: 8,
-                                completedWeight: 85,
-                                completedReps: 8,
-                                difficulty: "medium"
-                            )
-                        ],
-                        weight: 85,
-                        reps: 8
-                    )
-                ]
-            ),
-            WorkoutHistorySession(
-                workoutPlanId: UUID(),
-                workoutName: "Спина и Бицепс",
-                startDate: calendar.date(byAdding: .day, value: -5, to: today)!,
-                endDate: calendar.date(byAdding: .hour, value: 1, to: calendar.date(byAdding: .day, value: -5, to: today)!)!,
-                duration: 3000,
-                completedExercises: [
-                    WorkoutCompletedExercise(
-                        exerciseId: UUID(),
-                        exerciseName: "Подтягивания",
-                        sets: [
-                            WorkoutCompletedSet(
-                                setNumber: 1,
-                                targetWeight: 0,
-                                targetReps: 8,
-                                completedWeight: 0,
-                                completedReps: 10,
-                                difficulty: "easy"
-                            )
-                        ],
-                        weight: 0,
-                        reps: 10
-                    )
-                ]
-            )
-        ]
-    }
 }

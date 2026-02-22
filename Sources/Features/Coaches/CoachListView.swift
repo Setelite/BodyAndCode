@@ -1,52 +1,63 @@
 import SwiftUI
 
 struct CoachListView: View {
-    @StateObject private var viewModel = CoachListViewModel()
-    @State private var searchText = ""
-    
+
+    // Навигация управляется из CoachFeature
+    @Binding var path: NavigationPath
+
+    // Единый источник данных
+    @EnvironmentObject private var coachStore: CoachStore
+
     var body: some View {
-        NavigationStack {
-            List(viewModel.coaches) { coach in
-                NavigationLink(destination: CoachDetailView(coach: coach)) {
-                    VStack(alignment: .leading) {
-                        Text(coach.name)
-                            .font(.headline)
-                        Text(coach.specialization)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Text("Рейтинг: \(String(format: "%.1f", coach.rating))")
-                            .font(.caption)
-                    }
+        List {
+            ForEach(coachStore.coaches) { coach in
+                Button {
+                    // Переход в детали тренера
+                    path.append(
+                        CoachRoute.detail(coachID: coach.id)
+                    )
+                } label: {
+                    coachRow(coach)
                 }
-            }
-            .navigationTitle("Тренеры")
-            .searchable(text: $searchText)
-            .onChange(of: searchText) { newValue in
-                viewModel.searchCoaches(query: newValue)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Button("Рейтинг 4.5+") {
-                            viewModel.filterByMinRating(4.5)
-                        }
-                        Button("Рейтинг 4.8+") {
-                            viewModel.filterByMinRating(4.8)
-                        }
-                    } label: {
-                        Image(systemName: "line.3.horizontal.decrease.circle")
-                    }
-                }
+                .buttonStyle(.plain)
             }
         }
-        .onAppear {
-            Task {
-                await viewModel.loadCoaches()
+        .listStyle(.plain)
+    }
+
+    // MARK: - Row
+
+    @ViewBuilder
+    private func coachRow(_ coach: Coach) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+
+            Text(coach.name)
+                .font(.headline)
+
+            Text(coach.specialization)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+
+            HStack(spacing: 8) {
+                Label(
+                    String(format: "%.1f", coach.rating),
+                    systemImage: "star.fill"
+                )
+                .foregroundColor(.yellow)
+
+                Text("(\(coach.reviewCount))")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
         }
+        .padding(.vertical, 6)
     }
 }
 
 #Preview {
-    CoachListView()
+    NavigationStack {
+        CoachListView(path: .constant(NavigationPath()))
+            .environmentObject(CoachStore())
+            .navigationTitle("Тренеры")
+    }
 }

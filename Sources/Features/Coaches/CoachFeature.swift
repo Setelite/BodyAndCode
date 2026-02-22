@@ -5,17 +5,7 @@
 //  Created by MAXIM GORNOSTAEV on 12/28/25.
 //
 
-// Sources/Features/Coaches/CoachFeature.swift
 import SwiftUI
-
-struct CoachFeature: View {
-    var body: some View {
-        NavigationView {
-            CoachListView()
-                .navigationTitle("Тренеры")
-        }
-    }
-}
 
 // Placeholder protocol to fix the build error.
 // Replace with your actual analytics service protocol when available.
@@ -29,9 +19,4 @@ struct CoachDependencies {
 }
 
 // Конфигурация роутинга
-enum CoachRoute: Hashable {
-    case list
-    case detail(Coach)
-    case booking(Coach, TrainingType)
-    case reviews(Coach)
-}
+// CoachRoute is now only declared in CoachRout.swift.

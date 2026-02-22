@@ -8,7 +8,7 @@
 import Foundation
 internal import CoreData
 
-struct Coach: Identifiable, Codable, Hashable {
+struct Coach: Identifiable {
     let id: UUID
     let name: String
     let specialization: String
@@ -24,7 +24,7 @@ struct Coach: Identifiable, Codable, Hashable {
     let certifications: [String]
     let achievements: [String]
     let availableSlots: [TimeSlot]
-    let prices: [TrainingType: Int]
+    let prices: [TrainingType: Double]
     
     // Изменяем CoachReview на TrainerReview
     //var reviews: [TrainerReview]?

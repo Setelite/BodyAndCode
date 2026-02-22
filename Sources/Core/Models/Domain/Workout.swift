@@ -16,7 +16,7 @@ struct Workout: Identifiable, Codable, Hashable {
     let calories: Int
     let date: Date
     var isCompleted: Bool
-    let notes: String
+    let notes: String?
     let coachId: UUID?
     
     init(

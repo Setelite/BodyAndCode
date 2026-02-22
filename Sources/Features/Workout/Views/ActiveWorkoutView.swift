@@ -38,6 +38,7 @@ struct ActiveWorkoutView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 headerSection(workoutPlan)
+                timerSection
                 
                 ForEach(workoutPlan.exercises) { exercise in
                     ExerciseSectionView(
@@ -58,6 +59,39 @@ struct ActiveWorkoutView: View {
             }
             .padding()
         }
+    }
+
+    private var timerSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(formattedTime(viewModel.elapsedSeconds))
+                .font(.system(size: 30, weight: .bold, design: .rounded))
+                .frame(maxWidth: .infinity, alignment: .center)
+
+            HStack(spacing: 8) {
+                Button("Старт") {
+                    viewModel.startTimer()
+                }
+                .buttonStyle(.borderedProminent)
+
+                Button("Пауза") {
+                    viewModel.pauseTimer()
+                }
+                .buttonStyle(.bordered)
+
+                Button("Стоп") {
+                    viewModel.stopTimer()
+                }
+                .buttonStyle(.bordered)
+
+                Button("Закончить тренировку") {
+                    viewModel.finishWorkout()
+                }
+                .buttonStyle(.bordered)
+            }
+        }
+        .padding()
+        .background(Color.secondaryBackground)
+        .cornerRadius(12)
     }
     
     private func headerSection(_ workoutPlan: WorkoutPlan) -> some View {
@@ -108,6 +142,13 @@ struct ActiveWorkoutView: View {
             }
         }
         .padding()
+    }
+
+    private func formattedTime(_ seconds: Int) -> String {
+        let hours = seconds / 3600
+        let minutes = (seconds % 3600) / 60
+        let secs = seconds % 60
+        return String(format: "%02d:%02d:%02d", hours, minutes, secs)
     }
     
     private var noWorkoutView: some View {

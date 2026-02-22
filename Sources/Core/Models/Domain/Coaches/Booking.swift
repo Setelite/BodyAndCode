@@ -14,7 +14,7 @@ struct Booking: Identifiable, Codable {
     let trainingType: TrainingType
     let date: Date
     let time: String
-    let notes: String
+    let notes: String?
     let status: BookingStatus
     let createdAt: Date
     let updatedAt: Date

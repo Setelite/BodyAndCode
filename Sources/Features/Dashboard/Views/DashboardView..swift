@@ -9,8 +9,13 @@
 import SwiftUI
 
 struct DashboardView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @State private var selectedDate = Date()
     @State private var showingStats = false
+    @State private var showingNewWorkoutFlow = false
+    @State private var showingActiveWorkout = false
+    @State private var hasOngoingWorkout = false
+    private let workoutPersistenceStore = WorkoutPersistenceStore()
     
     var body: some View {
         NavigationView {
@@ -35,6 +40,32 @@ struct DashboardView: View {
             }
             .navigationTitle("Главная")
             .background(Color(.systemGroupedBackground))
+            .background(
+                NavigationLink(
+                    destination: NewWorkoutProgramLibraryView(),
+                    isActive: $showingNewWorkoutFlow
+                ) {
+                    EmptyView()
+                }
+                .hidden()
+            )
+            .background(
+                NavigationLink(
+                    destination: ActiveWorkoutView(),
+                    isActive: $showingActiveWorkout
+                ) {
+                    EmptyView()
+                }
+                .hidden()
+            )
+            .onAppear {
+                refreshOngoingWorkoutState()
+            }
+            .onChange(of: scenePhase) { newValue in
+                if newValue == .active {
+                    refreshOngoingWorkoutState()
+                }
+            }
         }
     }
     
@@ -71,6 +102,27 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Быстрый доступ")
                 .font(.headline)
+
+            if hasOngoingWorkout {
+                Button {
+                    showingActiveWorkout = true
+                } label: {
+                    HStack {
+                        Image(systemName: "play.circle.fill")
+                            .font(.title3)
+                        Text("Продолжить тренировку")
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.caption)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue.opacity(0.12))
+                    .cornerRadius(12)
+                }
+                .buttonStyle(.plain)
+            }
             
             LazyVGrid(columns: [
                 GridItem(.flexible()),
@@ -80,7 +132,7 @@ struct DashboardView: View {
                     title: "Новая тренировка",
                     icon: "plus.circle.fill",
                     color: .blue,
-                    action: {}
+                    action: { showingNewWorkoutFlow = true }
                 )
                 
                 QuickActionButton(
@@ -109,6 +161,10 @@ struct DashboardView: View {
         .background(Color.white)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
+    }
+
+    private func refreshOngoingWorkoutState() {
+        hasOngoingWorkout = workoutPersistenceStore.loadOngoing() != nil
     }
     
     private var statsSection: some View {
@@ -175,21 +231,24 @@ struct DashboardView: View {
                         title: "Силовая",
                         duration: "45 мин",
                         calories: "320",
-                        color: .blue
+                        color: .blue,
+                        startDestination: AnyView(DailyProgramView())
                     )
                     
                     WorkoutCard(
                         title: "Кардио",
                         duration: "30 мин",
                         calories: "280",
-                        color: .red
+                        color: .red,
+                        startDestination: nil
                     )
                     
                     WorkoutCard(
                         title: "Йога",
                         duration: "60 мин",
                         calories: "180",
-                        color: .green
+                        color: .green,
+                        startDestination: nil
                     )
                 }
             }
@@ -299,6 +358,7 @@ struct WorkoutCard: View {
     let duration: String
     let calories: String
     let color: Color
+    let startDestination: AnyView?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -328,14 +388,28 @@ struct WorkoutCard: View {
                 .foregroundColor(.secondary)
             }
             
-            Button("Начать") {}
-                .font(.caption)
-                .fontWeight(.medium)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(color)
-                .foregroundColor(.white)
-                .cornerRadius(8)
+            if let startDestination {
+                NavigationLink(destination: startDestination) {
+                    Text("Начать")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(color)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+            } else {
+                Button("Начать") {}
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(color.opacity(0.5))
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                    .disabled(true)
+            }
         }
         .padding()
         .frame(width: 180)

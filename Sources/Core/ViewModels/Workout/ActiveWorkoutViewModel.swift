@@ -16,6 +16,13 @@ final class ActiveWorkoutViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var workoutStartTime: Date?
+    @Published var elapsedSeconds: Int = 0
+    @Published var isTimerRunning: Bool = false
+
+    private var timerCancellable: AnyCancellable?
+    private let customWorkoutDraftStore = CustomWorkoutDraftStore()
+    private let workoutPersistenceStore = WorkoutPersistenceStore()
+    private var exerciseSetPlan: [UUID: [CustomWorkoutSet]] = [:]
     
     private var mockWorkoutPlan: WorkoutPlan {
         WorkoutPlan(
@@ -53,24 +60,52 @@ final class ActiveWorkoutViewModel: ObservableObject {
     }
     
     var isWorkoutCompleted: Bool {
-        guard let workoutPlan = currentWorkoutPlan else { return false }
-        let totalSets = workoutPlan.exercises.count * 3 // 3 sets per exercise
+        guard currentWorkoutPlan != nil else { return false }
+        let totalSets: Int
+        if exerciseSetPlan.isEmpty {
+            totalSets = (currentWorkoutPlan?.exercises.count ?? 0) * 3
+        } else {
+            totalSets = exerciseSetPlan.values.reduce(0) { $0 + $1.count }
+        }
         return completedSets.count >= totalSets
     }
     
     init() {
-        loadTodaysWorkout()
-        startWorkout()
+        setupTimer()
+        if !restoreOngoingWorkoutIfNeeded() {
+            loadTodaysWorkout()
+            startWorkout()
+        }
     }
     
     func loadTodaysWorkout() {
         isLoading = true
+
+        if let draft = customWorkoutDraftStore.load() {
+            currentWorkoutPlan = WorkoutPlan(
+                id: draft.id,
+                name: draft.name,
+                description: "Собранная тренировка",
+                dayOfWeek: DayOfWeek.from(Date()),
+                exercises: draft.exercises.map(\.exercise),
+                assignedTo: [UUID()],
+                createdAt: draft.createdAt
+            )
+            exerciseSetPlan = Dictionary(uniqueKeysWithValues: draft.exercises.map { ($0.exercise.id, $0.sets) })
+            completedSets.removeAll()
+            isLoading = false
+            customWorkoutDraftStore.clear()
+            persistOngoingWorkout()
+            return
+        }
         
         // Имитация загрузки из сети/базы
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.isLoading = false
             self.currentWorkoutPlan = self.mockWorkoutPlan
+            self.exerciseSetPlan = [:]
             self.generateInitialSets()
+            self.persistOngoingWorkout()
         }
     }
     
@@ -104,7 +139,16 @@ final class ActiveWorkoutViewModel: ObservableObject {
         guard let workoutPlan = currentWorkoutPlan else { return [] }
         
         var sets: [WorkoutSet] = []
-        for setNumber in 1...3 {
+        let plannedSets = exerciseSetPlan[exerciseId] ?? (1...3).map {
+            CustomWorkoutSet(
+                setNumber: $0,
+                targetReps: 8 + ($0 - 1) * 2,
+                targetWeight: 60.0 + Double($0 - 1) * 5.0
+            )
+        }
+
+        for plannedSet in plannedSets {
+            let setNumber = plannedSet.setNumber
             let isCompleted = completedSets.contains { $0.exerciseId == exerciseId && $0.setNumber == setNumber }
             let completedSet = completedSets.first { $0.exerciseId == exerciseId && $0.setNumber == setNumber }
             
@@ -113,8 +157,8 @@ final class ActiveWorkoutViewModel: ObservableObject {
                 exerciseId: exerciseId,
                 workoutPlanId: workoutPlan.id,
                 setNumber: setNumber,
-                targetReps: 8 + (setNumber - 1) * 2,
-                targetWeight: 60.0 + Double(setNumber - 1) * 5.0,
+                targetReps: plannedSet.targetReps,
+                targetWeight: plannedSet.targetWeight,
                 completedReps: completedSet?.completedReps,
                 completedWeight: completedSet?.completedWeight,
                 isCompleted: isCompleted,
@@ -127,6 +171,7 @@ final class ActiveWorkoutViewModel: ObservableObject {
     
     func completeSet(for exerciseId: UUID, setIndex: Int, weight: Double, reps: Int) {
         let setNumber = setIndex + 1
+        let plannedSet = exerciseSetPlan[exerciseId]?.first(where: { $0.setNumber == setNumber })
         
         // Удаляем старую запись если есть
         completedSets.removeAll { $0.exerciseId == exerciseId && $0.setNumber == setNumber }
@@ -137,8 +182,8 @@ final class ActiveWorkoutViewModel: ObservableObject {
             exerciseId: exerciseId,
             workoutPlanId: currentWorkoutPlan?.id ?? UUID(),
             setNumber: setNumber,
-            targetReps: 8 + (setIndex) * 2,
-            targetWeight: 60.0 + Double(setIndex) * 5.0,
+            targetReps: plannedSet?.targetReps ?? (8 + setIndex * 2),
+            targetWeight: plannedSet?.targetWeight ?? (60.0 + Double(setIndex) * 5.0),
             completedReps: reps,
             completedWeight: weight,
             isCompleted: true,
@@ -147,13 +192,33 @@ final class ActiveWorkoutViewModel: ObservableObject {
         
         completedSets.append(completedSet)
         objectWillChange.send()
+        persistOngoingWorkout()
     }
     
     // MARK: - Workout History Methods
     
     func startWorkout() {
         workoutStartTime = Date()
+        elapsedSeconds = 0
+        isTimerRunning = false
         print("Тренировка начата: \(workoutStartTime?.description ?? "неизвестно")")
+        persistOngoingWorkout()
+    }
+
+    func startTimer() {
+        isTimerRunning = true
+        persistOngoingWorkout()
+    }
+
+    func pauseTimer() {
+        isTimerRunning = false
+        persistOngoingWorkout()
+    }
+
+    func stopTimer() {
+        isTimerRunning = false
+        elapsedSeconds = 0
+        persistOngoingWorkout()
     }
     
     func finishWorkout() {
@@ -169,18 +234,35 @@ final class ActiveWorkoutViewModel: ObservableObject {
         // Создаем завершенные упражнения
         let completedExercises = createCompletedExercises()
         
-        // Создаем сессию тренировки (используем WorkoutHistorySession)
-        let workoutSession = WorkoutHistorySession(
+        let storedSession = StoredWorkoutHistorySession(
+            id: UUID(),
             workoutPlanId: workoutPlan.id,
             workoutName: workoutPlan.name,
             startDate: startTime,
             endDate: endTime,
             duration: duration,
-            completedExercises: completedExercises
+            completedExercises: completedExercises.map { exercise in
+                StoredWorkoutExercise(
+                    exerciseId: exercise.exerciseId,
+                    exerciseName: exercise.exerciseName,
+                    sets: exercise.sets.map {
+                        StoredWorkoutSet(
+                            setNumber: $0.setNumber,
+                            targetWeight: $0.targetWeight,
+                            targetReps: $0.targetReps,
+                            completedWeight: $0.completedWeight,
+                            completedReps: $0.completedReps,
+                            difficulty: $0.difficulty
+                        )
+                    },
+                    weight: exercise.weight,
+                    reps: exercise.reps
+                )
+            }
         )
         
-        // Сохраняем в историю (пока просто выводим в консоль)
-        saveWorkoutToHistory(workoutSession)
+        // Сохраняем в историю
+        saveWorkoutToHistory(storedSession)
         
         // Показываем успешное сообщение
         errorMessage = "Тренировка завершена и сохранена! 🎉"
@@ -247,7 +329,7 @@ final class ActiveWorkoutViewModel: ObservableObject {
         }
     }
     
-    private func saveWorkoutToHistory(_ session: WorkoutHistorySession) {
+    private func saveWorkoutToHistory(_ session: StoredWorkoutHistorySession) {
         // Временная реализация - выводим в консоль
         // В реальном приложении здесь будет сохранение в базу данных
         
@@ -276,11 +358,11 @@ final class ActiveWorkoutViewModel: ObservableObject {
             print("")
         }
         
-        // Здесь можно добавить сохранение в UserDefaults, SwiftData или другую базу
+        workoutPersistenceStore.appendHistory(session)
         saveToUserDefaults(session)
     }
     
-    private func saveToUserDefaults(_ session: WorkoutHistorySession) {
+    private func saveToUserDefaults(_ session: StoredWorkoutHistorySession) {
         // Временное сохранение в UserDefaults для демонстрации
         var savedWorkouts = UserDefaults.standard.array(forKey: "savedWorkouts") as? [String] ?? []
         
@@ -297,8 +379,47 @@ final class ActiveWorkoutViewModel: ObservableObject {
     private func resetWorkout() {
         completedSets.removeAll()
         workoutStartTime = nil
+        stopTimer()
         errorMessage = nil
+        workoutPersistenceStore.clearOngoing()
         loadTodaysWorkout() // Перезагружаем для новой тренировки
+    }
+
+    private func setupTimer() {
+        timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self = self, self.isTimerRunning else { return }
+                self.elapsedSeconds += 1
+                if self.elapsedSeconds % 5 == 0 {
+                    self.persistOngoingWorkout()
+                }
+            }
+    }
+
+    private func restoreOngoingWorkoutIfNeeded() -> Bool {
+        guard let snapshot = workoutPersistenceStore.loadOngoing() else { return false }
+        currentWorkoutPlan = snapshot.workoutPlan
+        completedSets = snapshot.completedSets
+        workoutStartTime = snapshot.workoutStartTime
+        elapsedSeconds = snapshot.elapsedSeconds
+        isTimerRunning = false
+        exerciseSetPlan = snapshot.exerciseSetPlan
+        isLoading = false
+        return true
+    }
+
+    private func persistOngoingWorkout() {
+        guard let workoutPlan = currentWorkoutPlan else { return }
+        let snapshot = OngoingWorkoutSnapshot(
+            workoutPlan: workoutPlan,
+            completedSets: completedSets,
+            workoutStartTime: workoutStartTime,
+            elapsedSeconds: elapsedSeconds,
+            isTimerRunning: isTimerRunning,
+            exerciseSetPlan: exerciseSetPlan
+        )
+        workoutPersistenceStore.saveOngoing(snapshot)
     }
     
     // MARK: - Workout Statistics
