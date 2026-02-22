@@ -98,7 +98,7 @@ struct NotificationSettingsView: View {
                     }
                 }
             }
-            .onChange(of: preference.wrappedValue.isEnabled) { newValue in
+            .onChange(of: preference.wrappedValue.isEnabled) { _, newValue in
                 handlePreferenceChange(type: preference.wrappedValue.type, isEnabled: newValue)
             }
             
@@ -315,8 +315,12 @@ struct NotificationSettingsView: View {
     }
 }
 
-#Preview {
-    NavigationView {
-        NotificationSettingsView()
+#if DEBUG
+struct NotificationSettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            NotificationSettingsView()
+        }
     }
 }
+#endif

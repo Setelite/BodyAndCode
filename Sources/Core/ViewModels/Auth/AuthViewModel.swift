@@ -75,6 +75,31 @@ final class AuthViewModel: ObservableObject {
             )
         }
     }
+
+    @discardableResult
+    func updateCurrentUser(_ transform: (inout User) -> Void) -> User? {
+        guard var user = currentUser else { return nil }
+        transform(&user)
+        currentUser = user
+        return user
+    }
+
+    @discardableResult
+    func updateCoachProfile(
+        name: String,
+        email: String,
+        specialization: String?,
+        experience: Int?,
+        bio: String?
+    ) -> User? {
+        updateCurrentUser { user in
+            user.name = name
+            user.email = email
+            user.specialization = specialization
+            user.experience = experience
+            user.bio = bio
+        }
+    }
     
     // MARK: - Initialization
     init() {

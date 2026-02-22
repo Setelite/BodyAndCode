@@ -27,7 +27,7 @@ struct DailyProgramView: View {
         .onAppear {
             store.refreshForToday()
         }
-        .onChange(of: store.program) { _ in
+        .onChange(of: store.program) { _, _ in
             store.persist()
         }
     }
@@ -168,8 +168,12 @@ struct SetEditorRow: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        DailyProgramView()
+#if DEBUG
+struct DailyProgramView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            DailyProgramView()
+        }
     }
 }
+#endif

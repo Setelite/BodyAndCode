@@ -42,10 +42,10 @@ struct CoachesView: View {
             Text(viewModel.errorMessage ?? "Неизвестная ошибка")
         }
         // Синхронизация состояния алерта
-        .onChange(of: viewModel.errorMessage) { newValue in
+        .onChange(of: viewModel.errorMessage) { _, newValue in
             showErrorAlert = newValue != nil
         }
-        .onChange(of: showErrorAlert) { newValue in
+        .onChange(of: showErrorAlert) { _, newValue in
             if !newValue {
                 viewModel.errorMessage = nil
             }
@@ -66,7 +66,7 @@ struct CoachesView: View {
         }
         .navigationTitle("Тренеры")
         .searchable(text: $searchText, prompt: "Поиск тренеров")
-        .onChange(of: searchText) { newValue in
+        .onChange(of: searchText) { _, newValue in
             if newValue.isEmpty {
                 Task {
                     await viewModel.loadCoaches()
@@ -258,6 +258,10 @@ struct CoachRow: View {
     }
 }
 
-#Preview {
-    CoachesView()
+#if DEBUG
+struct CoachesView_Previews: PreviewProvider {
+    static var previews: some View {
+        CoachesView()
+    }
 }
+#endif

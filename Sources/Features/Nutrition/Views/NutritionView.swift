@@ -690,6 +690,10 @@ struct NutrientInput: View {
 }
 
 // MARK: - Preview
-#Preview {
-    NutritionView()
+#if DEBUG
+struct NutritionView_Previews: PreviewProvider {
+    static var previews: some View {
+        NutritionView()
+    }
 }
+#endif

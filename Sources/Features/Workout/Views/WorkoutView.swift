@@ -404,6 +404,10 @@ struct CreateWorkoutView: View {
     }
 }
 
-#Preview {
-    WorkoutView()
+#if DEBUG
+struct WorkoutView_Previews: PreviewProvider {
+    static var previews: some View {
+        WorkoutView()
+    }
 }
+#endif

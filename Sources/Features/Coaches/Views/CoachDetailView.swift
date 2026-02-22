@@ -182,11 +182,15 @@ struct CoachDetailView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        CoachDetailView(
-            coach: Coach.mockData[0],
-            path: .constant(NavigationPath())
-        )
+#if DEBUG
+struct CoachDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            CoachDetailView(
+                coach: Coach.mockData[0],
+                path: .constant(NavigationPath())
+            )
+        }
     }
 }
+#endif

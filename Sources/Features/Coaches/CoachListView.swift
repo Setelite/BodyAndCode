@@ -54,10 +54,14 @@ struct CoachListView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        CoachListView(path: .constant(NavigationPath()))
-            .environmentObject(CoachStore())
-            .navigationTitle("Тренеры")
+#if DEBUG
+struct CoachListView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            CoachListView(path: .constant(NavigationPath()))
+                .environmentObject(CoachStore())
+                .navigationTitle("Тренеры")
+        }
     }
 }
+#endif

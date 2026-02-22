@@ -33,10 +33,14 @@ class OfflineService: ObservableObject {
         }
     }
     
-    init(repository: CoreDataRepositoryProtocol = CoreDataRepository()) {
+    init(repository: CoreDataRepositoryProtocol) {
         self.repository = repository
         setupNetworkMonitoring()
         loadOfflineStatus()
+    }
+
+    convenience init() {
+        self.init(repository: CoreDataRepository())
     }
     
     // MARK: - Настройка мониторинга сети
@@ -94,19 +98,14 @@ class OfflineService: ObservableObject {
         
         syncInProgress = true
         
-        do {
-            // Здесь будет синхронизация с бэкендом
-            // Пока просто обновляем дату последней синхронизации
-            
-            lastSyncDate = Date()
-            UserDefaults.standard.set(lastSyncDate, forKey: "lastSyncDate")
-            
-            await updateOfflineDataCount()
-            
-            print("✅ Синхронизация завершена")
-        } catch {
-            print("❌ Ошибка синхронизации: \(error)")
-        }
+        // Здесь будет синхронизация с бэкендом
+        // Пока просто обновляем дату последней синхронизации
+        lastSyncDate = Date()
+        UserDefaults.standard.set(lastSyncDate, forKey: "lastSyncDate")
+        
+        await updateOfflineDataCount()
+        
+        print("✅ Синхронизация завершена")
         
         syncInProgress = false
     }

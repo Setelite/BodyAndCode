@@ -36,7 +36,7 @@ struct CoachSearchView: View {
             
             TextField("Имя тренера или специализация...", text: $searchText)
                 .textFieldStyle(PlainTextFieldStyle())
-                .onChange(of: searchText) { newValue in
+                .onChange(of: searchText) { _, newValue in
                     if newValue.count > 2 {
                         service.searchCoaches(query: newValue)
                     } else if newValue.isEmpty {

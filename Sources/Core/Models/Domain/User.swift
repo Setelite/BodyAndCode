@@ -21,12 +21,13 @@ enum UserRole: String, Codable, CaseIterable {
 
 struct User: Identifiable, Codable {
     let id: UUID
-    let name: String
-    let email: String
+    var name: String
+    var email: String
     let role: UserRole
     var currentWeight: Double?
     var goalWeight: Double?
     var profileImageUrl: String?
+    var bio: String?
     let createdAt: Date
     
     // Для тренера
@@ -46,6 +47,7 @@ struct User: Identifiable, Codable {
          currentWeight: Double? = nil,
          goalWeight: Double? = nil,
          profileImageUrl: String? = nil,
+         bio: String? = nil,
          clients: [UUID]? = nil,
          specialization: String? = nil,
          experience: Int? = nil,
@@ -60,6 +62,7 @@ struct User: Identifiable, Codable {
         self.currentWeight = currentWeight
         self.goalWeight = goalWeight
         self.profileImageUrl = profileImageUrl
+        self.bio = bio
         self.clients = clients
         self.specialization = specialization
         self.experience = experience

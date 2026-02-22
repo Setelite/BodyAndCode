@@ -6,42 +6,39 @@
 //
 
 import Foundation
-import SwiftData
 import Combine
 
 @MainActor
 final class WorkoutDataService: ObservableObject {
-    private let modelContainer: ModelContainer
-    private let modelContext: ModelContext
-    
     @Published var workoutHistory: [WorkoutHistorySession] = []
+    private let fileURL: URL
     
     init() {
-        do {
-            modelContainer = try ModelContainer(for: WorkoutHistorySession.self)
-            modelContext = modelContainer.mainContext
-            loadWorkoutHistory()
-        } catch {
-            fatalError("Failed to initialize ModelContainer: \(error)")
-        }
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        fileURL = (documents ?? FileManager.default.temporaryDirectory).appendingPathComponent("workout_history.json")
+        loadWorkoutHistory()
     }
     
     // Загрузка истории тренировок
     func loadWorkoutHistory() {
-        let descriptor = FetchDescriptor<WorkoutHistorySession>(sortBy: [SortDescriptor(\.startDate, order: .reverse)])
-        
+        guard let data = try? Data(contentsOf: fileURL) else {
+            workoutHistory = []
+            return
+        }
+
         do {
-            workoutHistory = try modelContext.fetch(descriptor)
+            workoutHistory = try JSONDecoder().decode([WorkoutHistorySession].self, from: data)
+                .sorted(by: { $0.startDate > $1.startDate })
         } catch {
+            workoutHistory = []
             print("Failed to load workout history: \(error)")
         }
     }
     
     // Сохранение завершенной тренировки
     func saveWorkoutSession(_ session: WorkoutHistorySession) {
-        modelContext.insert(session)
+        workoutHistory.insert(session, at: 0)
         saveContext()
-        loadWorkoutHistory() // Обновляем локальный массив
     }
     
     // Получение статистики по упражнениям
@@ -105,7 +102,8 @@ final class WorkoutDataService: ObservableObject {
     
     private func saveContext() {
         do {
-            try modelContext.save()
+            let data = try JSONEncoder().encode(workoutHistory)
+            try data.write(to: fileURL, options: .atomic)
         } catch {
             print("Failed to save context: \(error)")
         }
@@ -113,8 +111,7 @@ final class WorkoutDataService: ObservableObject {
 }
 
 // MARK: - Data Models for History
-@Model
-class WorkoutHistorySession {
+struct WorkoutHistorySession: Codable, Identifiable, Hashable {
     var id: UUID
     var workoutPlanId: UUID
     var workoutName: String

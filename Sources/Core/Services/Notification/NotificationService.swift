@@ -243,8 +243,10 @@ extension NotificationService: UNUserNotificationCenterDelegate {
         }
         
         // Сбрасываем бейдж
-        await MainActor.run {
-            UIApplication.shared.applicationIconBadgeNumber = 0
+        do {
+            try await UNUserNotificationCenter.current().setBadgeCount(0)
+        } catch {
+            print("⚠️ Не удалось сбросить бейдж: \(error.localizedDescription)")
         }
     }
     

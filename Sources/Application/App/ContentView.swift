@@ -25,7 +25,7 @@ struct ContentView: View {
             }
         }
         .environmentObject(authViewModel)
-        .onChange(of: authViewModel.isAuthenticated) { isAuthenticated in
+        .onChange(of: authViewModel.isAuthenticated) { _, isAuthenticated in
             if !isAuthenticated {
                 shouldShowWelcome = true
             }

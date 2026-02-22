@@ -183,9 +183,13 @@ struct DataCountRow: View {
     }
 }
 
-#Preview {
-    NavigationView {
-        OfflineSettingsView()
-            .environmentObject(OfflineService())
+#if DEBUG
+struct OfflineSettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            OfflineSettingsView()
+                .environmentObject(OfflineService())
+        }
     }
 }
+#endif

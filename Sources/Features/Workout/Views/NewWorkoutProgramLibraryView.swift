@@ -142,15 +142,9 @@ struct WorkoutAssemblyView: View {
         }
         .navigationTitle("Сборка тренировки")
         .navigationBarTitleDisplayMode(.inline)
-        .background(
-            NavigationLink(
-                destination: ActiveWorkoutView(),
-                isActive: $navigateToActiveWorkout
-            ) {
-                EmptyView()
-            }
-            .hidden()
-        )
+        .navigationDestination(isPresented: $navigateToActiveWorkout) {
+            ActiveWorkoutView()
+        }
     }
 
     private func startWorkout() {
@@ -272,8 +266,12 @@ struct WorkoutExerciseTemplate: Identifiable, Hashable {
     }
 }
 
-#Preview {
-    NavigationStack {
-        NewWorkoutProgramLibraryView()
+#if DEBUG
+struct NewWorkoutProgramLibraryView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            NewWorkoutProgramLibraryView()
+        }
     }
 }
+#endif

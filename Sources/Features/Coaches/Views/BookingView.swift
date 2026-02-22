@@ -127,7 +127,7 @@ struct BookingView: View {
             
             DatePicker("", selection: $selectedDate, in: Date()..., displayedComponents: .date)
                 .datePickerStyle(.graphical)
-                .onChange(of: selectedDate) { _ in selectedTime = nil }
+                .onChange(of: selectedDate) { _, _ in selectedTime = nil }
         }
         .padding()
         .background(Color(.systemGroupedBackground))
@@ -260,11 +260,16 @@ fileprivate extension BookingView {
     }
 }
 
-#Preview {
-    NavigationStack {
-        BookingView(
-            coach: BookingView.previewCoach,            selectedType: TrainingType(rawValue: "Персональная тренировка")!   // Замени "Персональная тренировка" на реальный rawValue из твоего enum TrainingType
-        )
-        .environmentObject(OfflineService())
+#if DEBUG
+struct BookingView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            BookingView(
+                coach: BookingView.previewCoach,
+                selectedType: TrainingType(rawValue: "Персональная тренировка")!
+            )
+            .environmentObject(OfflineService())
+        }
     }
 }
+#endif

@@ -120,6 +120,10 @@ struct TrainerReviewRow: View {
     }
 }
 
-#Preview {
-    CoachReviewsView(coach: Coach.mockData[0])
+#if DEBUG
+struct CoachReviewsView_Previews: PreviewProvider {
+    static var previews: some View {
+        CoachReviewsView(coach: Coach.mockData[0])
+    }
 }
+#endif

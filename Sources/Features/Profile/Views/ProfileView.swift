@@ -414,6 +414,10 @@ struct SettingsView: View {
     }
 }*/
 
-#Preview {
-    ProfileView()
+#if DEBUG
+struct ProfileView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProfileView()
+    }
 }
+#endif
