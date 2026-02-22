@@ -4,20 +4,32 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var authViewModel = AuthViewModel()
     @StateObject private var appCoordinator = AppCoordinator()
-    @AppStorage("hasSeenWelcome") private var hasSeenWelcome = false
+    @State private var shouldShowWelcome = true
     
     var body: some View {
         Group {
             if authViewModel.isAuthenticated {
-                MainTabView()
-                    .environmentObject(appCoordinator)
-            } else if hasSeenWelcome {
-                AuthFlowView()
+                if authViewModel.currentUser?.role == .coach {
+                    CoachCabinetView()
+                        .environmentObject(authViewModel)
+                } else {
+                    MainTabView()
+                        .environmentObject(appCoordinator)
+                }
+            } else if shouldShowWelcome {
+                WelcomeView {
+                    shouldShowWelcome = false
+                }
             } else {
-                WelcomeView()
+                AuthFlowView()
             }
         }
         .environmentObject(authViewModel)
+        .onChange(of: authViewModel.isAuthenticated) { isAuthenticated in
+            if !isAuthenticated {
+                shouldShowWelcome = true
+            }
+        }
     }
 }
 

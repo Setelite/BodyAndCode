@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    @AppStorage("hasSeenWelcome") private var hasSeenWelcome = false
+    var onContinue: (() -> Void)?
+
+    init(onContinue: (() -> Void)? = nil) {
+        self.onContinue = onContinue
+    }
 
     var body: some View {
         VStack(spacing: 24) {
@@ -30,7 +34,7 @@ struct WelcomeView: View {
             Spacer()
 
             Button {
-                hasSeenWelcome = true
+                onContinue?()
             } label: {
                 Text("Начать")
                     .fontWeight(.semibold)

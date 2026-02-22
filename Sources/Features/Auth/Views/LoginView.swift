@@ -32,6 +32,10 @@ struct LoginView: View {
                         .foregroundColor(.red)
                         .font(.caption)
                 }
+
+                Text("Тест: client `user@example.com` / coach `coach@example.com`, пароль `password`")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
             }
             .padding()
             

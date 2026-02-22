@@ -61,6 +61,7 @@
 		7DA30C562F0F9A3100040001 /* CoachFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D337F482F016DFE008227CC /* CoachFeature.swift */; };
 		7DA30C572F0F9A4000040001 /* CoachReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D984E282F0C0F7900824BAC /* CoachReviewsView.swift */; };
 		7DA30C582F0F9A5500040001 /* CoachFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA0380D2F0A5AAA00CAF45D /* CoachFiltersView.swift */; };
+		7DA30C9B2F123E0000040001 /* CoachCabinetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C9C2F123E0000040001 /* CoachCabinetView.swift */; };
 		7DA30C5A2F0F9CF900040001 /* MockCoachService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA038122F0A5F4700CAF45D /* MockCoachService.swift */; };
 		7DA30C812F10EFA300040001 /* TimeSlotButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C802F10EF9B00040001 /* TimeSlotButton.swift */; };
 		7DA30C832F10EFCC00040001 /* DetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C822F10EFC500040001 /* DetailRow.swift */; };
@@ -117,6 +118,7 @@
 		7D984E372F0D3E1800824BAC /* UserProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProgress.swift; sourceTree = "<group>"; };
 		7D984E392F0D401A00824BAC /* OfflineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineService.swift; sourceTree = "<group>"; };
 		7DA0380D2F0A5AAA00CAF45D /* CoachFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachFiltersView.swift; sourceTree = "<group>"; };
+		7DA30C9C2F123E0000040001 /* CoachCabinetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachCabinetView.swift; sourceTree = "<group>"; };
 		7DA038122F0A5F4700CAF45D /* MockCoachService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoachService.swift; sourceTree = "<group>"; };
 		7DA038142F0BB2ED00CAF45D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		7DA038162F0BB34300CAF45D /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
@@ -801,6 +803,7 @@
 				7D984E282F0C0F7900824BAC /* CoachReviewsView.swift */,
 				7DA038162F0BB34300CAF45D /* Untitled.swift */,
 				7DA038142F0BB2ED00CAF45D /* DashboardView.swift */,
+				7DA30C9C2F123E0000040001 /* CoachCabinetView.swift */,
 				7DA0380D2F0A5AAA00CAF45D /* CoachFiltersView.swift */,
 				7D337F4C2F0178D0008227CC /* CoachesView.swift */,
 				7D337F262F0162C8008227CC /* ReviewsView.swift */,
@@ -887,6 +890,7 @@
 			files = (
 				7DA30C452F0F94EF00040001 /* SetInputView.swift in Sources */,
 				7DA30C582F0F9A5500040001 /* CoachFiltersView.swift in Sources */,
+				7DA30C9B2F123E0000040001 /* CoachCabinetView.swift in Sources */,
 				7DA30C342F0F91E200040001 /* BookingView.swift in Sources */,
 				7DA30C402F0F949800040001 /* Colors.swift in Sources */,
 				7DA30C3B2F0F93C400040001 /* BodyCodeModel.xcdatamodeld in Sources */,

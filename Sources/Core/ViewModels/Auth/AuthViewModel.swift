@@ -34,8 +34,19 @@ final class AuthViewModel: ObservableObject {
                     goalWeight: 70.0,
                     createdAt: Date()
                 )
+            } else if email == "coach@example.com" && password == "password" {
+                self.isAuthenticated = true
+                self.currentUser = User(
+                    id: UUID(),
+                    name: "Coach User",
+                    email: email,
+                    role: .coach,
+                    currentWeight: nil,
+                    goalWeight: nil,
+                    createdAt: Date()
+                )
             } else {
-                self.errorMessage = "Invalid email or password"
+                self.errorMessage = "Неверный email или пароль"
             }
         }
     }
