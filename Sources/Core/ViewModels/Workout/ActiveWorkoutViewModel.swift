@@ -20,9 +20,13 @@ final class ActiveWorkoutViewModel: ObservableObject {
     @Published var isTimerRunning: Bool = false
 
     private var timerCancellable: AnyCancellable?
+    private var timerStartedAt: Date?
+    private var accumulatedElapsedSeconds: Int = 0
     private let customWorkoutDraftStore = CustomWorkoutDraftStore()
     private let workoutPersistenceStore = WorkoutPersistenceStore()
     private var exerciseSetPlan: [UUID: [CustomWorkoutSet]] = [:]
+    private var stableSetIDs: [String: UUID] = [:]
+    private let presetPlan: WorkoutPlan?
     
     private var mockWorkoutPlan: WorkoutPlan {
         WorkoutPlan(
@@ -70,16 +74,37 @@ final class ActiveWorkoutViewModel: ObservableObject {
         return completedSets.count >= totalSets
     }
     
-    init() {
+    init(presetPlan: WorkoutPlan? = nil) {
+        self.presetPlan = presetPlan
         setupTimer()
         if !restoreOngoingWorkoutIfNeeded() {
-            loadTodaysWorkout()
+            if let presetPlan {
+                loadPresetWorkout(presetPlan)
+            } else {
+                loadTodaysWorkout()
+            }
             startWorkout()
         }
+    }
+
+    private func loadPresetWorkout(_ plan: WorkoutPlan) {
+        isLoading = false
+        stableSetIDs.removeAll()
+        currentWorkoutPlan = plan
+        exerciseSetPlan = Dictionary(uniqueKeysWithValues: plan.exercises.map {
+            ($0.id, [
+                CustomWorkoutSet(setNumber: 1, targetReps: 12, targetWeight: 0),
+                CustomWorkoutSet(setNumber: 2, targetReps: 10, targetWeight: 0),
+                CustomWorkoutSet(setNumber: 3, targetReps: 8, targetWeight: 0)
+            ])
+        })
+        completedSets.removeAll()
+        persistOngoingWorkout()
     }
     
     func loadTodaysWorkout() {
         isLoading = true
+        stableSetIDs.removeAll()
 
         if let draft = customWorkoutDraftStore.load() {
             currentWorkoutPlan = WorkoutPlan(
@@ -153,7 +178,7 @@ final class ActiveWorkoutViewModel: ObservableObject {
             let completedSet = completedSets.first { $0.exerciseId == exerciseId && $0.setNumber == setNumber }
             
             let set = WorkoutSet(
-                id: UUID(),
+                id: stableSetID(for: exerciseId, setNumber: setNumber),
                 exerciseId: exerciseId,
                 workoutPlanId: workoutPlan.id,
                 setNumber: setNumber,
@@ -167,6 +192,16 @@ final class ActiveWorkoutViewModel: ObservableObject {
             sets.append(set)
         }
         return sets
+    }
+
+    private func stableSetID(for exerciseId: UUID, setNumber: Int) -> UUID {
+        let key = "\(exerciseId.uuidString)-\(setNumber)"
+        if let existing = stableSetIDs[key] {
+            return existing
+        }
+        let newID = UUID()
+        stableSetIDs[key] = newID
+        return newID
     }
     
     func completeSet(for exerciseId: UUID, setIndex: Int, weight: Double, reps: Int) {
@@ -201,24 +236,52 @@ final class ActiveWorkoutViewModel: ObservableObject {
         workoutStartTime = Date()
         elapsedSeconds = 0
         isTimerRunning = false
+        timerStartedAt = nil
+        accumulatedElapsedSeconds = 0
         print("Тренировка начата: \(workoutStartTime?.description ?? "неизвестно")")
         persistOngoingWorkout()
     }
 
     func startTimer() {
+        guard !isTimerRunning else { return }
+        timerStartedAt = Date()
         isTimerRunning = true
+        syncElapsedFromClock()
         persistOngoingWorkout()
     }
 
     func pauseTimer() {
+        guard isTimerRunning else { return }
+        syncElapsedFromClock()
+        accumulatedElapsedSeconds = elapsedSeconds
+        timerStartedAt = nil
         isTimerRunning = false
         persistOngoingWorkout()
     }
 
     func stopTimer() {
         isTimerRunning = false
+        timerStartedAt = nil
+        accumulatedElapsedSeconds = 0
         elapsedSeconds = 0
         persistOngoingWorkout()
+    }
+
+    func handleScenePhaseChange(_ phase: ScenePhase) {
+        switch phase {
+        case .active:
+            syncElapsedFromClock()
+            if isTimerRunning {
+                persistOngoingWorkout()
+            }
+        case .background:
+            if isTimerRunning {
+                syncElapsedFromClock()
+                persistOngoingWorkout()
+            }
+        default:
+            break
+        }
     }
     
     func finishWorkout() {
@@ -377,6 +440,7 @@ final class ActiveWorkoutViewModel: ObservableObject {
     }
     
     private func resetWorkout() {
+        stableSetIDs.removeAll()
         completedSets.removeAll()
         workoutStartTime = nil
         stopTimer()
@@ -390,7 +454,7 @@ final class ActiveWorkoutViewModel: ObservableObject {
             .autoconnect()
             .sink { [weak self] _ in
                 guard let self = self, self.isTimerRunning else { return }
-                self.elapsedSeconds += 1
+                self.syncElapsedFromClock()
                 if self.elapsedSeconds % 5 == 0 {
                     self.persistOngoingWorkout()
                 }
@@ -399,27 +463,53 @@ final class ActiveWorkoutViewModel: ObservableObject {
 
     private func restoreOngoingWorkoutIfNeeded() -> Bool {
         guard let snapshot = workoutPersistenceStore.loadOngoing() else { return false }
+        stableSetIDs.removeAll()
         currentWorkoutPlan = snapshot.workoutPlan
         completedSets = snapshot.completedSets
         workoutStartTime = snapshot.workoutStartTime
-        elapsedSeconds = snapshot.elapsedSeconds
-        isTimerRunning = false
         exerciseSetPlan = snapshot.exerciseSetPlan
+        accumulatedElapsedSeconds = snapshot.accumulatedElapsedBeforeCurrentRun ?? snapshot.elapsedSeconds
+        if snapshot.isTimerRunning {
+            if let previousStart = snapshot.timerStartedAt {
+                let backgroundDelta = max(Int(Date().timeIntervalSince(previousStart)), 0)
+                accumulatedElapsedSeconds += backgroundDelta
+            }
+            timerStartedAt = Date()
+            isTimerRunning = true
+        } else {
+            timerStartedAt = nil
+            isTimerRunning = false
+        }
+        syncElapsedFromClock()
         isLoading = false
         return true
     }
 
     private func persistOngoingWorkout() {
         guard let workoutPlan = currentWorkoutPlan else { return }
+        if isTimerRunning {
+            syncElapsedFromClock()
+        }
         let snapshot = OngoingWorkoutSnapshot(
             workoutPlan: workoutPlan,
             completedSets: completedSets,
             workoutStartTime: workoutStartTime,
             elapsedSeconds: elapsedSeconds,
             isTimerRunning: isTimerRunning,
-            exerciseSetPlan: exerciseSetPlan
+            exerciseSetPlan: exerciseSetPlan,
+            timerStartedAt: timerStartedAt,
+            accumulatedElapsedBeforeCurrentRun: accumulatedElapsedSeconds
         )
         workoutPersistenceStore.saveOngoing(snapshot)
+    }
+
+    private func syncElapsedFromClock() {
+        if isTimerRunning, let timerStartedAt {
+            let runElapsed = max(Int(Date().timeIntervalSince(timerStartedAt)), 0)
+            elapsedSeconds = accumulatedElapsedSeconds + runElapsed
+        } else {
+            elapsedSeconds = accumulatedElapsedSeconds
+        }
     }
     
     // MARK: - Workout Statistics

@@ -1,0 +1,65 @@
+{
+  "/Users/wowgorno/Documents/Body&Code/Sources/Core/Models/Domain/UserProgress.swift" : {
+    "const-values" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/UserProgress.swiftconstvalues",
+    "dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/UserProgress.d",
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/UserProgress.dia",
+    "object" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/UserProgress.o",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/UserProgress.swiftdeps"
+  },
+  "/Users/wowgorno/Documents/Body&Code/Sources/Core/Models/Domain/Workout/MuscleGroup.swift" : {
+    "const-values" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/MuscleGroup.swiftconstvalues",
+    "dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/MuscleGroup.d",
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/MuscleGroup.dia",
+    "object" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/MuscleGroup.o",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/MuscleGroup.swiftdeps"
+  },
+  "/Users/wowgorno/Documents/Body&Code/Sources/Core/Services/CoachClientService.swift" : {
+    "const-values" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachClientService.swiftconstvalues",
+    "dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachClientService.d",
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachClientService.dia",
+    "object" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachClientService.o",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachClientService.swiftdeps"
+  },
+  "/Users/wowgorno/Documents/Body&Code/Sources/Core/Services/Data/OfflineService.swift" : {
+    "const-values" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/OfflineService.swiftconstvalues",
+    "dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/OfflineService.d",
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/OfflineService.dia",
+    "object" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/OfflineService.o",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/OfflineService.swiftdeps"
+  },
+  "/Users/wowgorno/Documents/Body&Code/Sources/Core/Stores/CoachStore.swift" : {
+    "const-values" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachStore.swiftconstvalues",
+    "dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachStore.d",
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachStore.dia",
+    "object" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachStore.o",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachStore.swiftdeps"
+  },
+  "/Users/wowgorno/Documents/Body&Code/Sources/Core/ViewModels/Coaches/CoachListViewModel.swift" : {
+    "const-values" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachListViewModel.swiftconstvalues",
+    "dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachListViewModel.d",
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachListViewModel.dia",
+    "object" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachListViewModel.o",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/CoachListViewModel.swiftdeps"
+  },
+  "/Users/wowgorno/Documents/Body&Code/Sources/Features/Workout/Views/History/WorkoutHistoryView.swift" : {
+    "const-values" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/WorkoutHistoryView.swiftconstvalues",
+    "dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/WorkoutHistoryView.d",
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/WorkoutHistoryView.dia",
+    "object" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/WorkoutHistoryView.o",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/WorkoutHistoryView.swiftdeps"
+  },
+  "/Users/wowgorno/Documents/Body&Code/Sources/Shared/UI/Style/Theme.swift" : {
+    "const-values" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/Theme.swiftconstvalues",
+    "dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/Theme.d",
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/Theme.dia",
+    "object" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/Theme.o",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/Theme.swiftdeps"
+  },
+  "/Users/wowgorno/Documents/Body&Code/Sources/Shared/Utilities/Constants/AppUserIDs.swift" : {
+    "const-values" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/AppUserIDs.swiftconstvalues",
+    "dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/AppUserIDs.d",
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/AppUserIDs.dia",
+    "object" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/AppUserIDs.o",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeApp.build/Objects-normal/arm64/AppUserIDs.swiftdeps"
+  }
+}

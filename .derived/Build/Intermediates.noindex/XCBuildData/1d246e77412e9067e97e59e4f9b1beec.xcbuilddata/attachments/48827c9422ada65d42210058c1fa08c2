@@ -1,0 +1,29 @@
+{
+  "" : {
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetExtension-primary.dia",
+    "emit-module-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetExtension-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetExtension-primary-emit-module.dia",
+    "pch" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetExtension-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetExtension-primary.swiftdeps"
+  },
+  "/Users/wowgorno/Documents/Body&Code/Sources/WidgetExtension/BodyCodeWidgetBundle.swift" : {
+    "const-values" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetBundle.swiftconstvalues",
+    "dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetBundle.d",
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetBundle.dia",
+    "index-unit-output-path" : "/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetBundle.o",
+    "llvm-bc" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetBundle.bc",
+    "object" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetBundle.o",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetBundle.swiftdeps",
+    "swiftmodule" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/BodyCodeWidgetBundle~partial.swiftmodule"
+  },
+  "/Users/wowgorno/Documents/Body&Code/Sources/WidgetExtension/WorkoutProgressWidget.swift" : {
+    "const-values" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/WorkoutProgressWidget.swiftconstvalues",
+    "dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/WorkoutProgressWidget.d",
+    "diagnostics" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/WorkoutProgressWidget.dia",
+    "index-unit-output-path" : "/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/WorkoutProgressWidget.o",
+    "llvm-bc" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/WorkoutProgressWidget.bc",
+    "object" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/WorkoutProgressWidget.o",
+    "swift-dependencies" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/WorkoutProgressWidget.swiftdeps",
+    "swiftmodule" : "/Users/wowgorno/Documents/Body&Code/.derived/Build/Intermediates.noindex/Body&Code.build/Debug-iphoneos/BodyCodeWidgetExtension.build/Objects-normal/arm64/WorkoutProgressWidget~partial.swiftmodule"
+  }
+}

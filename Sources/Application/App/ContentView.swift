@@ -7,21 +7,27 @@ struct ContentView: View {
     @State private var shouldShowWelcome = true
     
     var body: some View {
-        Group {
-            if authViewModel.isAuthenticated {
-                if authViewModel.currentUser?.role == .coach {
-                    CoachCabinetView()
-                        .environmentObject(authViewModel)
+        ZStack {
+            LinearGradient.appGlassGradient
+                .opacity(0.45)
+                .ignoresSafeArea()
+
+            Group {
+                if authViewModel.isAuthenticated {
+                    if authViewModel.currentUser?.role == .coach {
+                        CoachCabinetView()
+                            .environmentObject(authViewModel)
+                    } else {
+                        MainTabView()
+                            .environmentObject(appCoordinator)
+                    }
+                } else if shouldShowWelcome {
+                    WelcomeView {
+                        shouldShowWelcome = false
+                    }
                 } else {
-                    MainTabView()
-                        .environmentObject(appCoordinator)
+                    AuthFlowView()
                 }
-            } else if shouldShowWelcome {
-                WelcomeView {
-                    shouldShowWelcome = false
-                }
-            } else {
-                AuthFlowView()
             }
         }
         .environmentObject(authViewModel)
@@ -74,6 +80,6 @@ struct MainTabView: View {
                 }
                 .tag(4)
         }
-        .accentColor(.blue)
+        .accentColor(.glassBlue)
     }
 }

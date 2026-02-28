@@ -1,0 +1,40 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Profile/Views/CoachSearchView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Поиск тренеров",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Поиск тренеров...",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Имя тренера или специализация...",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld лет опыта",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 111
+        }
+      }
+    ]
+  },
+  "version": 1
+}

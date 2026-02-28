@@ -1,0 +1,32 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Coaches/Views/CoachReviewsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Отзывы",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Готово",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "На основе %lld отзывов",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 53
+        }
+      }
+    ]
+  },
+  "version": 1
+}

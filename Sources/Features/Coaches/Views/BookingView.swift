@@ -91,7 +91,7 @@ struct BookingView: View {
             Spacer()
         }
         .padding()
-        .background(Color(.systemGroupedBackground))
+        .background(LinearGradient.appGlassGradient.opacity(0.42))
         .cornerRadius(16)
     }
     
@@ -117,7 +117,7 @@ struct BookingView: View {
             DetailRow(title: "Стоимость", value: "\(Int(coach.prices[selectedType] ?? 0)) ₽")
         }
         .padding()
-        .background(Color(.systemGroupedBackground))
+        .background(LinearGradient.appGlassGradient.opacity(0.42))
         .cornerRadius(16)
     }
     
@@ -130,7 +130,7 @@ struct BookingView: View {
                 .onChange(of: selectedDate) { _, _ in selectedTime = nil }
         }
         .padding()
-        .background(Color(.systemGroupedBackground))
+        .background(LinearGradient.appGlassGradient.opacity(0.42))
         .cornerRadius(16)
     }
     
@@ -155,7 +155,7 @@ struct BookingView: View {
             }
         }
         .padding()
-        .background(Color(.systemGroupedBackground))
+        .background(LinearGradient.appGlassGradient.opacity(0.42))
         .cornerRadius(16)
     }
     
@@ -187,7 +187,7 @@ struct BookingView: View {
                 .lineLimit(5...)
         }
         .padding()
-        .background(Color(.systemGroupedBackground))
+        .background(LinearGradient.appGlassGradient.opacity(0.42))
         .cornerRadius(16)
     }
     

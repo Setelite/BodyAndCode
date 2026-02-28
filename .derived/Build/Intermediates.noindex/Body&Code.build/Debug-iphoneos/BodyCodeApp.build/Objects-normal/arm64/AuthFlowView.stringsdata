@@ -1,0 +1,24 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Auth/Views/AuthFlowView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Вход",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Регистрация",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 27
+        }
+      }
+    ]
+  },
+  "version": 1
+}

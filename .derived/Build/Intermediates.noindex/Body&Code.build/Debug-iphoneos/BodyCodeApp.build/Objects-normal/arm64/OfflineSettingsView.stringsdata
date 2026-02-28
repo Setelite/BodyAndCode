@@ -1,0 +1,160 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Settings/Views/OfflineSettingsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Оффлайн режим",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 118
+        }
+      },
+      {
+        "comment": "",
+        "key": "Очистить данные?",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 120
+        }
+      },
+      {
+        "comment": "",
+        "key": "Синхронизация",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 128
+        }
+      },
+      {
+        "comment": "",
+        "key": "Оффлайн данные",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "Последняя синхронизация",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Всего данных",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Размер БД",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Дата",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Синхронизировать",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Очистить оффлайн данные",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Оффлайн режим позволяет:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "• Просматривать тренеров\n• Записывать тренировки\n• Вести дневник питания\n• Отслеживать прогресс",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отмена",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 121
+        }
+      },
+      {
+        "comment": "",
+        "key": "Очистить",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 122
+        }
+      },
+      {
+        "comment": "",
+        "key": "Все оффлайн данные будут удалены. Это действие нельзя отменить.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 129
+        }
+      },
+      {
+        "comment": "",
+        "key": "Синхронизация завершена. Все данные обновлены.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 179
+        }
+      }
+    ]
+  },
+  "version": 1
+}

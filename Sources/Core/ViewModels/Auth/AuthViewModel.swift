@@ -13,67 +13,90 @@ final class AuthViewModel: ObservableObject {
     @Published var currentUser: User?
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    @Published var registrationSucceeded: Bool = false
+    @Published var lastRegisteredEmail: String?
+    private let cloudIdentity = CloudIdentityService()
     
     // MARK: - Authentication Methods
     func login(email: String, password: String) {
         isLoading = true
         errorMessage = nil
-        
-        // Имитация сетевого запроса
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.isLoading = false
-            
-            if email == "user@example.com" && password == "password" {
-                self.isAuthenticated = true
-                self.currentUser = User(
-                    id: UUID(),
-                    name: "Test User",
-                    email: email,
-                    role: .client,
-                    currentWeight: 75.0,
-                    goalWeight: 70.0,
-                    createdAt: Date()
-                )
-            } else if email == "coach@example.com" && password == "password" {
-                self.isAuthenticated = true
-                self.currentUser = User(
-                    id: UUID(),
-                    name: "Coach User",
-                    email: email,
-                    role: .coach,
-                    currentWeight: nil,
-                    goalWeight: nil,
-                    createdAt: Date()
-                )
-            } else {
-                self.errorMessage = "Неверный email или пароль"
-            }
+
+        let normalizedEmail = email
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+        let normalizedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !normalizedEmail.isEmpty, !normalizedPassword.isEmpty else {
+            isLoading = false
+            errorMessage = "Введите email и пароль."
+            return
         }
+
+        if cloudIdentity.isConfigured {
+            Task { @MainActor in
+                do {
+                    let result = try await cloudIdentity.login(email: normalizedEmail, password: normalizedPassword)
+                    isLoading = false
+                    isAuthenticated = true
+                    currentUser = result.user
+                } catch {
+                    isLoading = false
+                    errorMessage = error.localizedDescription
+                }
+            }
+            return
+        }
+
+        isLoading = false
+        errorMessage = "Cloud авторизация не настроена. Проверьте SUPABASE_URL и SUPABASE_ANON_KEY."
     }
     
     func logout() {
         isAuthenticated = false
         currentUser = nil
+        cloudIdentity.clearSession()
     }
     
-    func register(name: String, email: String, password: String, role: UserRole) {
+    func register(name: String, email: String, password: String, role: UserRole, gender: UserGender) {
         isLoading = true
         errorMessage = nil
-        
-        // Имитация регистрации
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.isLoading = false
-            self.isAuthenticated = true
-            self.currentUser = User(
-                id: UUID(),
-                name: name,
-                email: email,
-                role: role,
-                currentWeight: nil,
-                goalWeight: nil,
-                createdAt: Date()
-            )
+        registrationSucceeded = false
+        currentUser = nil
+        isAuthenticated = false
+        let normalizedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let normalizedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let normalizedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if cloudIdentity.isConfigured {
+            Task { @MainActor in
+                do {
+                    let result = try await cloudIdentity.register(
+                        name: normalizedName,
+                        email: normalizedEmail,
+                        password: normalizedPassword,
+                        role: role,
+                        gender: gender
+                    )
+                    isLoading = false
+                    isAuthenticated = true
+                    currentUser = result.user
+                    lastRegisteredEmail = normalizedEmail
+                    registrationSucceeded = true
+                } catch {
+                    isLoading = false
+                    let message = error.localizedDescription
+                    if message.contains("Подтвердите email") {
+                        errorMessage = "Аккаунт создан. Подтвердите email и затем войдите."
+                    } else {
+                        errorMessage = message
+                    }
+                }
+            }
+            return
         }
+
+        isLoading = false
+        errorMessage = "Cloud авторизация не настроена. Проверьте SUPABASE_URL и SUPABASE_ANON_KEY."
     }
 
     @discardableResult
@@ -105,5 +128,6 @@ final class AuthViewModel: ObservableObject {
     init() {
         // Для тестирования - можно установить true
         self.isAuthenticated = false
+        print("Auth mode: \(cloudIdentity.isConfigured ? "Supabase" : "Not configured")")
     }
 }

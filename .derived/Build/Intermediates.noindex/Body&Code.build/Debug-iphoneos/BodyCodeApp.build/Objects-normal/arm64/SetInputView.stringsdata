@@ -1,0 +1,168 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Workout/Components/SetInputView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Ввод подхода",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вес (кг)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 132
+        }
+      },
+      {
+        "comment": "",
+        "key": "Повторения",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сложность",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 218
+        }
+      },
+      {
+        "comment": "",
+        "key": "Заметки (опционально)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 234
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отмена",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сохранить",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "Готово",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "План",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.1f кг × %lld повт.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "Факт",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 118
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.1f кг × %lld повт.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 121
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вес",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.0f",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "Повторения",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 177
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 203
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сложность",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 219
+        }
+      },
+      {
+        "comment": "",
+        "key": "Добавьте заметки о подходе...",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 235
+        }
+      },
+      {
+        "comment": "",
+        "key": "Использовать плановые значения",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 243
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отметить как отказ",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 249
+        }
+      }
+    ]
+  },
+  "version": 1
+}

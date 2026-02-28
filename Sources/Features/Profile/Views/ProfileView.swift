@@ -9,38 +9,33 @@ import SwiftUI
 import Combine
 
 struct ProfileView: View {
-    @StateObject private var viewModel = ProfileViewModel()
+    @EnvironmentObject private var authViewModel: AuthViewModel
     @State private var showingSettings = false
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Профиль пользователя
-                    profileHeaderSection
-                    
-                    // Статистика
-                    profileStatsSection
-                    
-                    // Настройки
-                    settingsSection
-                    
-                    // Достижения
-                    achievementsSection
-                    
-                    // Выход
-                    logoutSection
+            ZStack {
+                LinearGradient.appGlassGradient
+                    .ignoresSafeArea()
+
+                ScrollView {
+                    VStack(spacing: 20) {
+                        profileHeaderSection
+                        profileStatsSection
+                        settingsSection
+                        achievementsSection
+                        logoutSection
+                    }
+                    .padding()
                 }
-                .padding()
             }
             .navigationTitle("Профиль")
-            .background(Color(.systemGroupedBackground))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { showingSettings = true }) {
                         Image(systemName: "gearshape.fill")
                             .font(.title3)
-                            .foregroundColor(.blue)
+                            .foregroundColor(.white)
                     }
                 }
             }
@@ -62,7 +57,7 @@ struct ProfileView: View {
                     ))
                     .frame(width: 100, height: 100)
                 
-                Text("МГ")
+                Text(profileInitials)
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
@@ -71,23 +66,23 @@ struct ProfileView: View {
             
             // Имя и информация
             VStack(spacing: 4) {
-                Text("Максим Горностаев")
+                Text(profileName)
                     .font(.title2)
                     .fontWeight(.bold)
                 
-                Text("@maximgorno")
+                Text(profileHandle)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
                 HStack(spacing: 12) {
-                    Label("28 лет", systemImage: "calendar")
+                    Label(authViewModel.currentUser?.role.localized ?? "Пользователь", systemImage: "person.fill")
                         .font(.caption)
                     
                     Text("•")
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
-                    Label("Мужчина", systemImage: "person.fill")
+                    Label(memberSinceText, systemImage: "calendar")
                         .font(.caption)
                 }
                 .foregroundColor(.secondary)
@@ -99,14 +94,12 @@ struct ProfileView: View {
                 .fontWeight(.medium)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 8)
-                .background(Color.blue.opacity(0.1))
-                .foregroundColor(.blue)
+                .background(Color.white.opacity(0.55))
+                .foregroundColor(.primary)
                 .cornerRadius(20)
         }
         .padding()
-        .background(Color.white)
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 5)
+        .glassCardStyle()
     }
     
     private var profileStatsSection: some View {
@@ -138,9 +131,7 @@ struct ProfileView: View {
             }
         }
         .padding()
-        .background(Color.white)
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 5)
+        .glassCardStyle()
     }
     
     private var settingsSection: some View {
@@ -181,13 +172,11 @@ struct ProfileView: View {
                     color: .gray
                 )
             }
-            .background(Color.white)
+            .background(Color.white.opacity(0.42))
             .cornerRadius(12)
         }
         .padding()
-        .background(Color.white)
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 5)
+        .glassCardStyle()
     }
     
     private var achievementsSection: some View {
@@ -236,25 +225,50 @@ struct ProfileView: View {
             }
         }
         .padding()
-        .background(Color.white)
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 5)
+        .glassCardStyle()
     }
     
     private var logoutSection: some View {
-        Button(action: viewModel.logout) {
+        Button(action: authViewModel.logout) {
             HStack {
                 Spacer()
-                Text("Выйти")
+                Text("Выйти из аккаунта")
                     .fontWeight(.medium)
                     .foregroundColor(.red)
                 Spacer()
             }
             .padding()
-            .background(Color.white)
+            .background(Color.white.opacity(0.6))
             .cornerRadius(12)
         }
-        .shadow(color: .black.opacity(0.05), radius: 5)
+        .glassCardStyle()
+    }
+
+    private var profileName: String {
+        authViewModel.currentUser?.name ?? "Профиль"
+    }
+
+    private var profileHandle: String {
+        if let email = authViewModel.currentUser?.email, !email.isEmpty {
+            return "@\(email.components(separatedBy: "@").first ?? "user")"
+        }
+        return "@user"
+    }
+
+    private var profileInitials: String {
+        let parts = profileName.split(separator: " ")
+        let letters = parts.prefix(2).compactMap { $0.first }.map { String($0).uppercased() }.joined()
+        return letters.isEmpty ? "U" : letters
+    }
+
+    private var memberSinceText: String {
+        guard let createdAt = authViewModel.currentUser?.createdAt else {
+            return "Новый аккаунт"
+        }
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateFormat = "MMM yyyy"
+        return "c \(formatter.string(from: createdAt))"
     }
 }
 
@@ -282,9 +296,8 @@ struct ProfileStatCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.46))
         .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 3)
     }
 }
 
@@ -341,18 +354,9 @@ struct AchievementBadge: View {
         }
         .frame(width: 90)
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.46))
         .cornerRadius(12)
-        .shadow(color: .black.opacity(0.05), radius: 3)
         .opacity(isUnlocked ? 1 : 0.6)
-    }
-}
-
-// ViewModel для Profile
-class ProfileViewModel: ObservableObject {
-    func logout() {
-        print("Выход из аккаунта")
-        // Здесь будет логика выхода
     }
 }
 

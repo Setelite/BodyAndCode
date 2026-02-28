@@ -8,13 +8,20 @@
 // Sources/Features/Dashboard/Views/DashboardView.swift
 import SwiftUI
 import Combine
+import PhotosUI
+import UniformTypeIdentifiers
+import UIKit
 
 struct DashboardView: View {
+    @EnvironmentObject private var authViewModel: AuthViewModel
     @Environment(\.scenePhase) private var scenePhase
+    @StateObject private var coachClientService = CoachClientService()
+    @StateObject private var chatStore = CoachClientChatStore.shared
     @State private var selectedDate = Date()
     @State private var showingStats = false
     @State private var showingNewWorkoutFlow = false
     @State private var showingActiveWorkout = false
+    @State private var showingCoachChat = false
     @State private var hasOngoingWorkout = false
     private let workoutPersistenceStore = WorkoutPersistenceStore()
     
@@ -43,15 +50,31 @@ struct DashboardView: View {
                 .padding()
             }
             .navigationTitle("Главная")
-            .background(Color(.systemGroupedBackground))
+            .background(LinearGradient.appGlassGradient.opacity(0.42))
             .navigationDestination(isPresented: $showingNewWorkoutFlow) {
                 NewWorkoutProgramLibraryView()
             }
             .navigationDestination(isPresented: $showingActiveWorkout) {
                 ActiveWorkoutView()
             }
+            .navigationDestination(isPresented: $showingCoachChat) {
+                if let currentUser = authViewModel.currentUser,
+                   let coach = coachClientService.coachForClient(currentUser.id) {
+                    CoachClientChatScreen(
+                        coach: coach,
+                        client: currentUser,
+                        viewer: currentUser
+                    )
+                } else {
+                    Text("Тренер не назначен")
+                        .foregroundColor(.secondary)
+                }
+            }
             .onAppear {
                 refreshOngoingWorkoutState()
+                if let user = authViewModel.currentUser {
+                    coachClientService.setCurrentUser(user)
+                }
             }
             .onChange(of: scenePhase) { _, newValue in
                 if newValue == .active {
@@ -64,11 +87,11 @@ struct DashboardView: View {
     private var headerSection: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                Text("Привет, Максим!")
+                Text("Привет, \(greetingName)!")
                     .font(.title2)
                     .fontWeight(.bold)
                 
-                Text("Готов к тренировке?")
+                Text(greetingSubtitle)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
@@ -85,7 +108,7 @@ struct DashboardView: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -147,16 +170,57 @@ struct DashboardView: View {
                     color: .purple,
                     action: {}
                 )
+
+                QuickActionButton(
+                    title: unreadCoachMessagesCount > 0 ? "Чат с тренером (\(unreadCoachMessagesCount))" : "Чат с тренером",
+                    icon: "bubble.left.and.bubble.right.fill",
+                    color: .indigo,
+                    action: { showingCoachChat = true }
+                )
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
 
     private func refreshOngoingWorkoutState() {
         hasOngoingWorkout = workoutPersistenceStore.loadOngoing() != nil
+    }
+
+    private var unreadCoachMessagesCount: Int {
+        guard let viewer = authViewModel.currentUser,
+              let coach = coachClientService.coachForClient(viewer.id) else { return 0 }
+        return chatStore.unreadCount(for: viewer.id, coachId: coach.id, clientId: viewer.id)
+    }
+
+    private var greetingName: String {
+        let fullName = authViewModel.currentUser?.name.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if fullName.isEmpty { return "спортсмен" }
+        return fullName.split(separator: " ").first.map(String.init) ?? fullName
+    }
+
+    private var greetingSubtitle: String {
+        hasOngoingWorkout ? "Продолжаем тренировку?" : "Готов к тренировке?"
+    }
+
+    private var weightStatValue: String {
+        guard let weight = authViewModel.currentUser?.currentWeight else {
+            return "— кг"
+        }
+        return String(format: "%.1f кг", weight)
+    }
+
+    private var weightStatChange: String {
+        guard let current = authViewModel.currentUser?.currentWeight,
+              let goal = authViewModel.currentUser?.goalWeight else {
+            return "цель —"
+        }
+        let delta = current - goal
+        if abs(delta) < 0.05 { return "к цели" }
+        if delta > 0 { return String(format: "-%.1f", delta) }
+        return String(format: "+%.1f", abs(delta))
     }
     
     private var statsSection: some View {
@@ -191,15 +255,15 @@ struct DashboardView: View {
                 
                 StatCard(
                     title: "Вес",
-                    value: "74 кг",
+                    value: weightStatValue,
                     icon: "scalemass.fill",
                     color: .blue,
-                    change: "-1.5"
+                    change: weightStatChange
                 )
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -246,7 +310,7 @@ struct DashboardView: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -271,7 +335,7 @@ struct DashboardView: View {
                 .cornerRadius(12)
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -339,7 +403,7 @@ struct StatCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 3)
     }
@@ -405,7 +469,7 @@ struct WorkoutCard: View {
         }
         .padding()
         .frame(width: 180)
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -443,22 +507,30 @@ struct ClockToolsCard: View {
                 }
                 .padding(.horizontal, 14)
                 .padding(.vertical, 11)
-                .background(Color.white.opacity(0.2))
+                .background(Color.white.opacity(0.24))
                 .foregroundColor(.white)
                 .cornerRadius(12)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .stroke(Color.white.opacity(0.35), lineWidth: 1)
+                )
             }
             .buttonStyle(.plain)
         }
         .padding()
         .background(
             LinearGradient(
-                colors: [Color(red: 0.1, green: 0.37, blue: 0.94), Color(red: 0.38, green: 0.17, blue: 0.84)],
+                colors: [.glassIce, .glassBlue, .glassLavender],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         )
-        .cornerRadius(18)
-        .shadow(color: .black.opacity(0.12), radius: 8, y: 4)
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(Color.white.opacity(0.4), lineWidth: 1)
+        )
+        .shadow(color: .glassBlue.opacity(0.22), radius: 12, y: 6)
         .sheet(isPresented: $showingToolsSheet) {
             ClockToolsSheetView()
         }
@@ -688,6 +760,249 @@ private struct CountdownPanelView: View {
     }
 }
 #endif
+
+struct CoachClientChatScreen: View {
+    let coach: User
+    let client: User
+    let viewer: User
+
+    @StateObject private var chatStore = CoachClientChatStore.shared
+    @State private var draftMessage = ""
+    @State private var draftAttachments: [CoachClientChatAttachment] = []
+    @State private var selectedPhotoItem: PhotosPickerItem?
+    @State private var isFileImporterPresented = false
+
+    var body: some View {
+        VStack(spacing: 0) {
+            ScrollViewReader { proxy in
+                ScrollView {
+                    LazyVStack(spacing: 10) {
+                        ForEach(chatMessages) { message in
+                            CoachClientChatBubble(
+                                text: message.text,
+                                attachments: message.attachments,
+                                time: timeText(message.createdAt),
+                                isOutgoing: message.senderId == currentUser.id,
+                                senderName: message.senderName
+                            )
+                            .id(message.id)
+                        }
+                    }
+                    .padding()
+                }
+                .background(LinearGradient.appGlassGradient.opacity(0.42))
+                .onAppear {
+                    scrollToBottom(proxy: proxy)
+                    markRead()
+                }
+                .onChange(of: chatMessages.last?.id) { _, _ in
+                    scrollToBottom(proxy: proxy)
+                    markRead()
+                }
+            }
+
+            VStack(spacing: 8) {
+                if !draftAttachments.isEmpty {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            ForEach(draftAttachments) { attachment in
+                                HStack(spacing: 6) {
+                                    Image(systemName: attachment.kind == .image ? "photo" : "doc")
+                                    Text(attachment.fileName)
+                                        .lineLimit(1)
+                                        .font(.caption)
+                                    Button {
+                                        draftAttachments.removeAll { $0.id == attachment.id }
+                                    } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                    }
+                                }
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 6)
+                                .background(Color(.secondarySystemGroupedBackground))
+                                .cornerRadius(8)
+                            }
+                        }
+                    }
+                }
+
+                HStack(spacing: 10) {
+                    PhotosPicker(
+                        selection: $selectedPhotoItem,
+                        matching: .images
+                    ) {
+                        Image(systemName: "photo")
+                            .font(.title3)
+                            .foregroundColor(.blue)
+                    }
+
+                    Button {
+                        isFileImporterPresented = true
+                    } label: {
+                        Image(systemName: "paperclip")
+                            .font(.title3)
+                            .foregroundColor(.blue)
+                    }
+
+                    TextField("Сообщение", text: $draftMessage, axis: .vertical)
+                        .lineLimit(1...4)
+                        .padding(10)
+                        .background(Color(.secondarySystemGroupedBackground))
+                        .cornerRadius(10)
+
+                    Button("Отпр.") {
+                        send()
+                    }
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 10)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .disabled(draftMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && draftAttachments.isEmpty)
+                }
+            }
+            .padding()
+            .background(Color.white.opacity(0.58))
+        }
+        .navigationTitle(chatTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: selectedPhotoItem) { _, newValue in
+            guard let newValue else { return }
+            Task {
+                if let data = try? await newValue.loadTransferable(type: Data.self) {
+                    let attachment = CoachClientChatAttachment(
+                        kind: .image,
+                        fileName: "image_\(Int(Date().timeIntervalSince1970)).jpg",
+                        data: data
+                    )
+                    draftAttachments.append(attachment)
+                }
+                selectedPhotoItem = nil
+            }
+        }
+        .fileImporter(
+            isPresented: $isFileImporterPresented,
+            allowedContentTypes: [.data, .pdf, .plainText]
+        ) { result in
+            if case .success(let fileURL) = result,
+               let data = try? Data(contentsOf: fileURL) {
+                let attachment = CoachClientChatAttachment(
+                    kind: .file,
+                    fileName: fileURL.lastPathComponent,
+                    data: data
+                )
+                draftAttachments.append(attachment)
+            }
+        }
+    }
+
+    private var currentUser: User {
+        viewer
+    }
+
+    private var chatTitle: String {
+        currentUser.role == .coach ? client.name : coach.name
+    }
+
+    private var chatMessages: [CoachClientChatMessage] {
+        chatStore.messages(coachId: coach.id, clientId: client.id)
+    }
+
+    private func send() {
+        let recipient = currentUser.id == coach.id ? client : coach
+        chatStore.sendMessage(
+            coachId: coach.id,
+            clientId: client.id,
+            sender: currentUser,
+            recipient: recipient,
+            text: draftMessage,
+            attachments: draftAttachments
+        )
+        draftMessage = ""
+        draftAttachments = []
+    }
+
+    private func timeText(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter.string(from: date)
+    }
+
+    private func scrollToBottom(proxy: ScrollViewProxy) {
+        guard let lastID = chatMessages.last?.id else { return }
+        DispatchQueue.main.async {
+            withAnimation(.easeOut(duration: 0.2)) {
+                proxy.scrollTo(lastID, anchor: .bottom)
+            }
+        }
+    }
+
+    private func markRead() {
+        chatStore.markConversationRead(
+            coachId: coach.id,
+            clientId: client.id,
+            readerId: currentUser.id
+        )
+    }
+}
+
+private struct CoachClientChatBubble: View {
+    let text: String
+    let attachments: [CoachClientChatAttachment]
+    let time: String
+    let isOutgoing: Bool
+    let senderName: String
+
+    var body: some View {
+        HStack {
+            if isOutgoing { Spacer(minLength: 50) }
+
+            VStack(alignment: .leading, spacing: 4) {
+                if !isOutgoing {
+                    Text(senderName)
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                }
+                if !text.isEmpty {
+                    Text(text)
+                        .font(.subheadline)
+                        .foregroundColor(isOutgoing ? .white : .primary)
+                }
+
+                ForEach(attachments) { attachment in
+                    if attachment.kind == .image,
+                       let image = UIImage(data: attachment.data) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 220, maxHeight: 220)
+                            .cornerRadius(8)
+                    } else {
+                        HStack(spacing: 6) {
+                            Image(systemName: "doc.fill")
+                            Text(attachment.fileName)
+                                .lineLimit(1)
+                        }
+                        .font(.caption)
+                        .padding(8)
+                        .background((isOutgoing ? Color.white.opacity(0.2) : Color.white))
+                        .cornerRadius(8)
+                    }
+                }
+                Text(time)
+                    .font(.caption2)
+                    .foregroundColor(isOutgoing ? .white.opacity(0.9) : .secondary)
+            }
+            .padding(10)
+            .background(isOutgoing ? Color.blue : Color(.secondarySystemGroupedBackground))
+            .cornerRadius(12)
+
+            if !isOutgoing { Spacer(minLength: 50) }
+        }
+    }
+}
 
 #if DEBUG
 struct DashboardView_Previews: PreviewProvider {

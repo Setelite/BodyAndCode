@@ -1,0 +1,40 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Nutrition/Views/NutritionPlanView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Питание",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "План питания",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Функциональность питания в разработке",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Добавить прием пищи",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 36
+        }
+      }
+    ]
+  },
+  "version": 1
+}

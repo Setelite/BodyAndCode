@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'BodyCodeApp' in project 'Body&Code'
+➜ Explicit dependency on target 'BodyCodeWidgetExtension' in project 'Body&Code'
+Target 'BodyCodeWidgetExtension' in project 'Body&Code' (no dependencies)

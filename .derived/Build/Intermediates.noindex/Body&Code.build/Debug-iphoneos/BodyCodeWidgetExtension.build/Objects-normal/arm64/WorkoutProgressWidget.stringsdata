@@ -1,0 +1,72 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/WidgetExtension/WorkoutProgressWidget.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Сейчас",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Время: %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld/%lld подходов",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Осталось: %lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "Body&Code",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "Нет активной тренировки",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Текущая тренировка",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "Показывает прогресс и сколько осталось",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 118
+        }
+      }
+    ]
+  },
+  "version": 1
+}

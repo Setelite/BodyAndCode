@@ -1,0 +1,120 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Workout/Views/NewWorkoutProgramLibraryView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Новая тренировка",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "База программ",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld упражнений",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Упражнения программы",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld x %lld, %.1f кг",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "Собрать тренировку",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сборка тренировки",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 143
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренировка",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 122
+        }
+      },
+      {
+        "comment": "",
+        "key": "Выбранные упражнения",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "Название тренировки",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "Начать тренировку",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "Подходы: %lld",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 182
+        }
+      },
+      {
+        "comment": "",
+        "key": "Повторения: %lld",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 183
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вес: %.1f кг",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 184
+        }
+      }
+    ]
+  },
+  "version": 1
+}

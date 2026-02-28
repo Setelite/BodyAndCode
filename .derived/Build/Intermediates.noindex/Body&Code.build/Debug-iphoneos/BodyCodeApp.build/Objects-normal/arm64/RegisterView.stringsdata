@@ -1,0 +1,48 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Auth/Views/RegisterView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Имя",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Email",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Пароль",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Роль",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Создать аккаунт",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 53
+        }
+      }
+    ]
+  },
+  "version": 1
+}

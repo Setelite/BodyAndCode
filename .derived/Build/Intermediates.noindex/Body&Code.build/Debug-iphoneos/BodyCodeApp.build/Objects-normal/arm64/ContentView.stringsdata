@@ -1,0 +1,48 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Application/App/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Главная",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренировки",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренеры",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Питание",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 66
+        }
+      },
+      {
+        "comment": "",
+        "key": "Профиль",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 73
+        }
+      }
+    ]
+  },
+  "version": 1
+}

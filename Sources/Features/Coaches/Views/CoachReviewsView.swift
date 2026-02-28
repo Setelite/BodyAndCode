@@ -56,7 +56,7 @@ struct CoachReviewsView: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -114,7 +114,7 @@ struct TrainerReviewRow: View {
                 .lineSpacing(4)
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }

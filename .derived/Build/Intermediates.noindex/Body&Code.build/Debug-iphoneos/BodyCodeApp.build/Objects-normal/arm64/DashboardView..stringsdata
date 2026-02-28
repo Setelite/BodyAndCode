@@ -1,0 +1,232 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Dashboard/Views/DashboardView..swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Главная",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренер не назначен",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Привет, Максим!",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Готов к тренировке?",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Быстрый доступ",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 118
+        }
+      },
+      {
+        "comment": "",
+        "key": "Продолжить тренировку",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 128
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ваша статистика",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 201
+        }
+      },
+      {
+        "comment": "",
+        "key": "За неделю",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 206
+        }
+      },
+      {
+        "comment": "",
+        "key": "Активные тренировки",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 246
+        }
+      },
+      {
+        "comment": "",
+        "key": "Все",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 251
+        }
+      },
+      {
+        "comment": "",
+        "key": "Пейте достаточно воды во время тренировки. 500мл за 2 часа до тренировки и по 150-200мл каждые 15 минут во время занятия.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 302
+        }
+      },
+      {
+        "comment": "",
+        "key": "Совет дня",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 293
+        }
+      },
+      {
+        "comment": "",
+        "key": "Начать",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 431
+        }
+      },
+      {
+        "comment": "",
+        "key": "•",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 409
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ ккал",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 413
+        }
+      },
+      {
+        "comment": "",
+        "key": "Начать",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 421
+        }
+      },
+      {
+        "comment": "",
+        "key": "Секундомер или таймер",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 474
+        }
+      },
+      {
+        "comment": "",
+        "key": "Часы",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 544
+        }
+      },
+      {
+        "comment": "",
+        "key": "Режим",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 525
+        }
+      },
+      {
+        "comment": "",
+        "key": "Закрыть",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 548
+        }
+      },
+      {
+        "comment": "",
+        "key": "Пауза",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 584
+        }
+      },
+      {
+        "comment": "",
+        "key": "Продолжить",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 584
+        }
+      },
+      {
+        "comment": "",
+        "key": "Старт",
+        "location": {
+          "startingColumn": 99,
+          "startingLine": 584
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сброс",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 593
+        }
+      },
+      {
+        "comment": "",
+        "key": "Длительность: %lld мин",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 654
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сброс",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 667
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сообщение",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 811
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отпр.",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 817
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,688 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Coaches/Views/CoachCabinetView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Кабинет тренера",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Раздел",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 480
+        }
+      },
+      {
+        "comment": "",
+        "key": "Выйти",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Клиенты пока не назначены",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "Загрузка клиентов...",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 112
+        }
+      },
+      {
+        "comment": "",
+        "key": "Запланированных тренировок нет",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 502
+        }
+      },
+      {
+        "comment": "",
+        "key": "Создать программу",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "Программ пока нет",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 192
+        }
+      },
+      {
+        "comment": "",
+        "key": "и ещё %lld",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 224
+        }
+      },
+      {
+        "comment": "",
+        "key": "• %@: %lldx%lld",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 219
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld упражнений",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 232
+        }
+      },
+      {
+        "comment": "",
+        "key": "Редактировать",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 239
+        }
+      },
+      {
+        "comment": "",
+        "key": "Опубликовать",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 243
+        }
+      },
+      {
+        "comment": "",
+        "key": "Назначить клиентам",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 247
+        }
+      },
+      {
+        "comment": "",
+        "key": "Действия",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 251
+        }
+      },
+      {
+        "comment": "",
+        "key": "Нет клиентов для переписки",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 265
+        }
+      },
+      {
+        "comment": "",
+        "key": "Пользователь не найден",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 279
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 305
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сохранить изменения",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 352
+        }
+      },
+      {
+        "comment": "",
+        "key": "О себе",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 340
+        }
+      },
+      {
+        "comment": "",
+        "key": "Расскажите о себе",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 343
+        }
+      },
+      {
+        "comment": "",
+        "key": "Управляйте клиентами, расписанием и программами",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 406
+        }
+      },
+      {
+        "comment": "",
+        "key": "Статистика",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 418
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ • %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 467
+        }
+      },
+      {
+        "comment": "",
+        "key": "Создать программу",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 661
+        }
+      },
+      {
+        "comment": "",
+        "key": "Новая программа",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 655
+        }
+      },
+      {
+        "comment": "",
+        "key": "Название",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 656
+        }
+      },
+      {
+        "comment": "",
+        "key": "Описание",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 657
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отмена",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 665
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сохранить",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 668
+        }
+      },
+      {
+        "comment": "",
+        "key": "Редактирование",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 748
+        }
+      },
+      {
+        "comment": "",
+        "key": "Программа",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 707
+        }
+      },
+      {
+        "comment": "",
+        "key": "Упражнения",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 713
+        }
+      },
+      {
+        "comment": "",
+        "key": "Название",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 708
+        }
+      },
+      {
+        "comment": "",
+        "key": "Описание",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 709
+        }
+      },
+      {
+        "comment": "",
+        "key": "Добавьте упражнения",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 715
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lldx%lld • отдых %lldс • %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 727
+        }
+      },
+      {
+        "comment": "",
+        "key": "Добавить упражнение",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 744
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отмена",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 752
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сохранить",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 755
+        }
+      },
+      {
+        "comment": "",
+        "key": "Упражнение",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 848
+        }
+      },
+      {
+        "comment": "",
+        "key": "Упражнение",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 832
+        }
+      },
+      {
+        "comment": "",
+        "key": "Параметры",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 841
+        }
+      },
+      {
+        "comment": "",
+        "key": "Название упражнения",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 833
+        }
+      },
+      {
+        "comment": "",
+        "key": "Мышечная группа",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 834
+        }
+      },
+      {
+        "comment": "",
+        "key": "Подходы: %lld",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 842
+        }
+      },
+      {
+        "comment": "",
+        "key": "Повторы: %lld",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 843
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отдых: %lld сек",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 844
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вес: %lld кг",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 845
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отмена",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 852
+        }
+      },
+      {
+        "comment": "",
+        "key": "Готово",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 855
+        }
+      },
+      {
+        "comment": "",
+        "key": "Назначение",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 968
+        }
+      },
+      {
+        "comment": "",
+        "key": "Программа",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 934
+        }
+      },
+      {
+        "comment": "",
+        "key": "Клиенты",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 942
+        }
+      },
+      {
+        "comment": "",
+        "key": "Комментарий",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 963
+        }
+      },
+      {
+        "comment": "",
+        "key": "Нет доступных клиентов",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 944
+        }
+      },
+      {
+        "comment": "",
+        "key": "Комментарий для клиентов",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 964
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отмена",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 972
+        }
+      },
+      {
+        "comment": "",
+        "key": "Назначить",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 975
+        }
+      },
+      {
+        "comment": "",
+        "key": "Профиль",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 999
+        }
+      },
+      {
+        "comment": "",
+        "key": "Параметры",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 1004
+        }
+      },
+      {
+        "comment": "",
+        "key": "Цели",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 1008
+        }
+      },
+      {
+        "comment": "",
+        "key": "Имя",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1000
+        }
+      },
+      {
+        "comment": "",
+        "key": "Email",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1001
+        }
+      },
+      {
+        "comment": "",
+        "key": "Уровень",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1002
+        }
+      },
+      {
+        "comment": "",
+        "key": "Текущий вес",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1005
+        }
+      },
+      {
+        "comment": "",
+        "key": "Целевой вес",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1006
+        }
+      },
+      {
+        "comment": "",
+        "key": "Цели не указаны",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 1014
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренировка",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 1039
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сессия",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 1029
+        }
+      },
+      {
+        "comment": "",
+        "key": "Заметки",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 1035
+        }
+      },
+      {
+        "comment": "",
+        "key": "Клиент",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1030
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренировка",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1031
+        }
+      },
+      {
+        "comment": "",
+        "key": "Дата",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1032
+        }
+      },
+      {
+        "comment": "",
+        "key": "Длительность",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1033
+        }
+      },
+      {
+        "comment": "",
+        "key": "План",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 1057
+        }
+      },
+      {
+        "comment": "",
+        "key": "Описание",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 1062
+        }
+      },
+      {
+        "comment": "",
+        "key": "Название",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1058
+        }
+      },
+      {
+        "comment": "",
+        "key": "Дни",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1059
+        }
+      },
+      {
+        "comment": "",
+        "key": "Упражнений",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 1060
+        }
+      },
+      {
+        "comment": "",
+        "key": "Новая программа",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 1084
+        }
+      },
+      {
+        "comment": "",
+        "key": "Название программы",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 1080
+        }
+      },
+      {
+        "comment": "",
+        "key": "Описание",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 1081
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отмена",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 1087
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сохранить",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 1090
+        }
+      }
+    ]
+  },
+  "version": 1
+}

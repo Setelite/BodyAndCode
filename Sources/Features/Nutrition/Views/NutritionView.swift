@@ -36,7 +36,7 @@ struct NutritionView: View {
                 .padding(.vertical, 8)
             }
             .navigationTitle("Питание")
-            .background(Color(.systemGroupedBackground))
+            .background(LinearGradient.appGlassGradient.opacity(0.42))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { showingAddMeal = true }) {
@@ -72,7 +72,7 @@ struct NutritionView: View {
             }
         }
         .padding(.vertical, 12)
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 3)
     }
@@ -143,7 +143,7 @@ struct NutritionView: View {
             }
         }
         .padding(16)
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -209,7 +209,7 @@ struct NutritionView: View {
             }
         }
         .padding(16)
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -276,7 +276,7 @@ struct NutritionView: View {
             }
         }
         .padding(16)
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -318,7 +318,7 @@ struct NutritionView: View {
             }
         }
         .padding(16)
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -381,7 +381,7 @@ struct MacroCard: View {
             .frame(height: 4)
         }
         .padding(12)
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 2)
     }
@@ -524,7 +524,7 @@ struct AddMealView: View {
                         }
                     }
                     .padding()
-                    .background(Color.white)
+                    .background(Color.white.opacity(0.58))
                     .cornerRadius(16)
                     
                     // Название блюда
@@ -538,7 +538,7 @@ struct AddMealView: View {
                             .cornerRadius(12)
                     }
                     .padding()
-                    .background(Color.white)
+                    .background(Color.white.opacity(0.58))
                     .cornerRadius(16)
                     
                     // Питательные вещества
@@ -581,7 +581,7 @@ struct AddMealView: View {
                         }
                     }
                     .padding()
-                    .background(Color.white)
+                    .background(Color.white.opacity(0.58))
                     .cornerRadius(16)
                     
                     // Кнопка сохранения
@@ -599,7 +599,7 @@ struct AddMealView: View {
                 }
                 .padding()
             }
-            .background(Color(.systemGroupedBackground))
+            .background(LinearGradient.appGlassGradient.opacity(0.42))
             .navigationTitle("Добавить прием пищи")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

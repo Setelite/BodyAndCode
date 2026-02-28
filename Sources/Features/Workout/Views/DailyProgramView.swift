@@ -23,7 +23,7 @@ struct DailyProgramView: View {
         }
         .navigationTitle("Программа на день")
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color(.systemGroupedBackground))
+        .background(LinearGradient.appGlassGradient.opacity(0.42))
         .onAppear {
             store.refreshForToday()
         }
@@ -54,7 +54,7 @@ struct DailyProgramView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
-            .background(Color.white)
+            .background(Color.white.opacity(0.58))
             .cornerRadius(12)
             .shadow(color: .black.opacity(0.05), radius: 4)
         }
@@ -132,7 +132,7 @@ struct ExercisePlanCard: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4)
     }

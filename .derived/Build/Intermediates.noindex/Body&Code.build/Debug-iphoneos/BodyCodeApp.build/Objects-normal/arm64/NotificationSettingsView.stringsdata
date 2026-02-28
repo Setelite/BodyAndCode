@@ -1,0 +1,176 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Settings/Views/NotificationSettingsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Уведомления",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Разрешения",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Разрешить",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "Напоминание за",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "15 минут",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 128
+        }
+      },
+      {
+        "comment": "",
+        "key": "30 минут",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 129
+        }
+      },
+      {
+        "comment": "",
+        "key": "1 час",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 130
+        }
+      },
+      {
+        "comment": "",
+        "key": "Установить напоминания",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 143
+        }
+      },
+      {
+        "comment": "",
+        "key": "Интервал напоминаний",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 154
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "Установить",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 165
+        }
+      },
+      {
+        "comment": "",
+        "key": "1 час",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 159
+        }
+      },
+      {
+        "comment": "",
+        "key": "2 часа",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "3 часа",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 161
+        }
+      },
+      {
+        "comment": "",
+        "key": "Эти уведомления включают:\n• Новости и обновления\n• Советы по тренировкам\n• Мотивационные сообщения",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 176
+        }
+      },
+      {
+        "comment": "",
+        "key": "Нет запланированных уведомлений",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 186
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отменить все",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 213
+        }
+      },
+      {
+        "comment": "",
+        "key": "Следующее: %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 205
+        }
+      },
+      {
+        "comment": "",
+        "key": "Запланированные уведомления",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 222
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 262
+        }
+      }
+    ]
+  },
+  "version": 1
+}

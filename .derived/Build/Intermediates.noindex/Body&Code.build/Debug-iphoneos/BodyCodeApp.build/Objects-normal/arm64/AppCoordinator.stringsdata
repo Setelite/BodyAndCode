@@ -1,0 +1,40 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Application/App/AppCoordinator.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 184
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 192
+        }
+      },
+      {
+        "comment": "",
+        "key": "Да",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 200
+        }
+      },
+      {
+        "comment": "",
+        "key": "Нет",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 201
+        }
+      }
+    ]
+  },
+  "version": 1
+}

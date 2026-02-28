@@ -15,6 +15,8 @@ class CoachListViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private var allCoaches: [Coach] = []
+    private let cloudDirectory = CloudCoachDirectoryService()
+    private let cloudIdentity = CloudIdentityService()
     
     init() {
         // Загружаем тестовые данные
@@ -25,10 +27,20 @@ class CoachListViewModel: ObservableObject {
     func loadCoaches() async {
         isLoading = true
         errorMessage = nil
-        
-        // Имитация загрузки
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
-        
+
+        if cloudDirectory.isConfigured {
+            do {
+                let token = cloudIdentity.storedAccessToken()
+                let cloudCoaches = try await cloudDirectory.loadCoaches(accessToken: token)
+                allCoaches = cloudCoaches
+                coaches = cloudCoaches
+                isLoading = false
+                return
+            } catch {
+                errorMessage = error.localizedDescription
+            }
+        }
+
         loadMockData()
         isLoading = false
     }

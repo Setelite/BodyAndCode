@@ -169,6 +169,36 @@ class NotificationService: NSObject, ObservableObject {
             return false
         }
     }
+
+    func scheduleChatMessageNotification(
+        senderName: String,
+        recipientName: String,
+        previewText: String,
+        conversationId: String
+    ) async {
+        let content = UNMutableNotificationContent()
+        content.title = "Новое сообщение от \(senderName)"
+        content.body = previewText.isEmpty ? "Отправлено вложение" : previewText
+        content.sound = .default
+        content.userInfo = [
+            "type": "chat_message",
+            "conversationId": conversationId,
+            "recipientName": recipientName
+        ]
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(
+            identifier: "chat_message_\(UUID().uuidString)",
+            content: content,
+            trigger: trigger
+        )
+
+        do {
+            try await notificationCenter.add(request)
+        } catch {
+            print("❌ Ошибка планирования chat уведомления: \(error.localizedDescription)")
+        }
+    }
     
     // MARK: - Отмена уведомлений
     func cancelNotification(identifier: String) async {
@@ -237,6 +267,10 @@ extension NotificationService: UNUserNotificationCenterDelegate {
                 }
             case "water_reminder":
                 handleWaterReminderTap()
+            case "chat_message":
+                if let conversationId = userInfo["conversationId"] as? String {
+                    handleChatMessageTap(conversationId: conversationId)
+                }
             default:
                 break
             }
@@ -277,6 +311,14 @@ extension NotificationService: UNUserNotificationCenterDelegate {
         NotificationCenter.default.post(
             name: NSNotification.Name("OpenWaterTrackerFromNotification"),
             object: nil
+        )
+    }
+
+    private func handleChatMessageTap(conversationId: String) {
+        NotificationCenter.default.post(
+            name: NSNotification.Name("OpenCoachClientChatFromNotification"),
+            object: nil,
+            userInfo: ["conversationId": conversationId]
         )
     }
 }

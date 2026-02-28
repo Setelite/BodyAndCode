@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct WorkoutView: View {
+    @EnvironmentObject private var authViewModel: AuthViewModel
+    @StateObject private var programStore = TrainingProgramStore()
     @State private var selectedCategory = "Все"
     @State private var showingCreateWorkout = false
     
@@ -19,6 +21,9 @@ struct WorkoutView: View {
                 VStack(spacing: 20) {
                     // Категории
                     categoriesSection
+
+                    // Программы от тренера
+                    coachProgramsSection
                     
                     // Популярные тренировки
                     popularWorkoutsSection
@@ -32,7 +37,7 @@ struct WorkoutView: View {
                 .padding()
             }
             .navigationTitle("Тренировки")
-            .background(Color(.systemGroupedBackground))
+            .background(LinearGradient.appGlassGradient.opacity(0.42))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { showingCreateWorkout = true }) {
@@ -66,9 +71,68 @@ struct WorkoutView: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
+    }
+
+    private var coachProgramsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Программы от тренера")
+                    .font(.headline)
+                Spacer()
+            }
+
+            if clientAssignments.isEmpty {
+                Text("Тренер пока не назначил вам программу")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            } else {
+                VStack(spacing: 12) {
+                    ForEach(clientAssignments) { assignment in
+                        if let plan = programStore.workoutPlan(for: assignment) {
+                            NavigationLink(destination: ActiveWorkoutView(presetPlan: plan)) {
+                                HStack(spacing: 12) {
+                                    Circle()
+                                        .fill(Color.blue.opacity(0.2))
+                                        .frame(width: 42, height: 42)
+                                        .overlay(
+                                            Image(systemName: "list.clipboard")
+                                                .foregroundColor(.blue)
+                                        )
+
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(plan.name)
+                                            .font(.subheadline)
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(.primary)
+                                        Text("\(plan.exercises.count) упражнений")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+                                }
+                                .padding(.vertical, 8)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .padding()
+        .background(Color.white.opacity(0.58))
+        .cornerRadius(16)
+        .shadow(color: .black.opacity(0.05), radius: 5)
+    }
+
+    private var clientAssignments: [TrainingProgramAssignment] {
+        guard let clientId = authViewModel.currentUser?.id else { return [] }
+        return programStore.activeAssignmentsForClient(clientId)
     }
     
     private var popularWorkoutsSection: some View {
@@ -122,7 +186,7 @@ struct WorkoutView: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -168,7 +232,7 @@ struct WorkoutView: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -202,7 +266,7 @@ struct WorkoutView: View {
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -279,7 +343,7 @@ struct WorkoutPlanCard: View {
                 .cornerRadius(8)
         }
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 3)
     }
@@ -353,7 +417,7 @@ struct RecommendationCard: View {
         }
         .frame(maxWidth: .infinity, minHeight: 140)
         .padding()
-        .background(Color.white)
+        .background(Color.white.opacity(0.58))
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 3)
     }

@@ -1,0 +1,256 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Profile/Views/ProfileView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Профиль",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "Редактировать профиль",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "МГ",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Максим Горностаев",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "@maximgorno",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "•",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 86
+        }
+      },
+      {
+        "comment": "",
+        "key": "28 лет",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Мужчина",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Статистика",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "Настройки",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "Достижения",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 196
+        }
+      },
+      {
+        "comment": "",
+        "key": "Все",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 201
+        }
+      },
+      {
+        "comment": "",
+        "key": "Выйти",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 248
+        }
+      },
+      {
+        "comment": "",
+        "key": "Настройки",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 397
+        }
+      },
+      {
+        "comment": "",
+        "key": "Аккаунт",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 366
+        }
+      },
+      {
+        "comment": "",
+        "key": "Приложение",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 376
+        }
+      },
+      {
+        "comment": "",
+        "key": "О приложении",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 385
+        }
+      },
+      {
+        "comment": "",
+        "key": "Редактировать профиль",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 367
+        }
+      },
+      {
+        "comment": "",
+        "key": "Изменить пароль",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 371
+        }
+      },
+      {
+        "comment": "",
+        "key": "Редактирование профиля",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 368
+        }
+      },
+      {
+        "comment": "",
+        "key": "Изменение пароля",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 372
+        }
+      },
+      {
+        "comment": "",
+        "key": "Уведомления",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 377
+        }
+      },
+      {
+        "comment": "",
+        "key": "Темная тема",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 378
+        }
+      },
+      {
+        "comment": "",
+        "key": "Единицы измерения",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 379
+        }
+      },
+      {
+        "comment": "",
+        "key": "Метрические",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 380
+        }
+      },
+      {
+        "comment": "",
+        "key": "Имперские",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 381
+        }
+      },
+      {
+        "comment": "",
+        "key": "Политика конфиденциальности",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 393
+        }
+      },
+      {
+        "comment": "",
+        "key": "Условия использования",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 394
+        }
+      },
+      {
+        "comment": "",
+        "key": "Версия",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 387
+        }
+      },
+      {
+        "comment": "",
+        "key": "1.0.0",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 389
+        }
+      },
+      {
+        "comment": "",
+        "key": "Готово",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 401
+        }
+      }
+    ]
+  },
+  "version": 1
+}

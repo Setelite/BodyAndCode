@@ -1,0 +1,192 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Nutrition/Views/NutritionView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Питание",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "Калории сегодня",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "1,280 / 2,200",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "Осталось: 920 ккал",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "-58%",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Приемы пищи",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 154
+        }
+      },
+      {
+        "comment": "",
+        "key": "Добавить",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "Водный баланс",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 220
+        }
+      },
+      {
+        "comment": "",
+        "key": "1.2л / 2л",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 226
+        }
+      },
+      {
+        "comment": "",
+        "key": "250мл",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 250
+        }
+      },
+      {
+        "comment": "",
+        "key": "500мл",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 266
+        }
+      },
+      {
+        "comment": "",
+        "key": "Рекомендации",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 287
+        }
+      },
+      {
+        "comment": "",
+        "key": "из %@",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 363
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lldмл",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 440
+        }
+      },
+      {
+        "comment": "",
+        "key": "Добавить прием пищи",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 603
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тип приема пищи",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 510
+        }
+      },
+      {
+        "comment": "",
+        "key": "Название блюда",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 532
+        }
+      },
+      {
+        "comment": "",
+        "key": "Например: Омлет с овощами",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 535
+        }
+      },
+      {
+        "comment": "",
+        "key": "Питательные вещества",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 546
+        }
+      },
+      {
+        "comment": "",
+        "key": "Добавить прием пищи",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 589
+        }
+      },
+      {
+        "comment": "",
+        "key": "Отмена",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 607
+        }
+      },
+      {
+        "comment": "",
+        "key": "0",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 676
+        }
+      }
+    ]
+  },
+  "version": 1
+}

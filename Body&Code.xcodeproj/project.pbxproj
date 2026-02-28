@@ -12,8 +12,6 @@
 		7DA30C1A2F0F8EC900040001 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526112ED217280030C300 /* AuthViewModel.swift */; };
 		7DA30C1B2F0F8F0700040001 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA038142F0BB2ED00CAF45D /* DashboardView.swift */; };
 		7DA30C242F0F8F5A00040001 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA038202F0C014000CAF45D /* AnalyticsService.swift */; };
-		7DA30C972F123B0000040001 /* CustomWorkoutDraftStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C982F123B0000040001 /* CustomWorkoutDraftStore.swift */; };
-		7DA30C992F123D0000040001 /* WorkoutPersistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C9A2F123D0000040001 /* WorkoutPersistenceStore.swift */; };
 		7DA30C282F0F8F6F00040001 /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526642ED4C8180030C300 /* ProgressViewModel.swift */; };
 		7DA30C292F0F8F7600040001 /* ActiveWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D05261F2ED3004F0030C300 /* ActiveWorkoutViewModel.swift */; };
 		7DA30C2E2F0F906C00040001 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526052ECE39890030C300 /* User.swift */; };
@@ -28,8 +26,6 @@
 		7DA30C382F0F935600040001 /* NutritionPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526192ED2F35F0030C300 /* NutritionPlanView.swift */; };
 		7DA30C392F0F935E00040001 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526242ED330EE0030C300 /* Localization.swift */; };
 		7DA30C3A2F0F93A300040001 /* WorkoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D05260B2ECE3B340030C300 /* WorkoutSet.swift */; };
-		7DA30C932F1231F700040001 /* DailyProgramStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C922F1231E700040001 /* DailyProgramStore.swift */; };
-		7DA30C942F12320600040001 /* DailyProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C932F1231F800040001 /* DailyProgram.swift */; };
 		7DA30C3B2F0F93C400040001 /* BodyCodeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7D984E2C2F0D0D4100824BAC /* BodyCodeModel.xcdatamodeld */; };
 		7DA30C3E2F0F944800040001 /* MuscleGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526622ED4C70E0030C300 /* MuscleGroup.swift */; };
 		7DA30C3F2F0F949200040001 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA038262F0C01D200CAF45D /* Theme.swift */; };
@@ -37,8 +33,6 @@
 		7DA30C412F0F94B300040001 /* WorkoutHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0527302EDC97BA0030C300 /* WorkoutHistoryView.swift */; };
 		7DA30C422F0F94BA00040001 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526172ED21E2E0030C300 /* WorkoutListView.swift */; };
 		7DA30C432F0F94C300040001 /* ActiveWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D05261D2ED2FFB10030C300 /* ActiveWorkoutView.swift */; };
-		7DA30C922F1231A000040001 /* DailyProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C912F12319000040001 /* DailyProgramView.swift */; };
-		7DA30C962F12350100040001 /* NewWorkoutProgramLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C952F12350000040001 /* NewWorkoutProgramLibraryView.swift */; };
 		7DA30C442F0F94D700040001 /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA038182F0BB36300CAF45D /* WorkoutView.swift */; };
 		7DA30C452F0F94EF00040001 /* SetInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526212ED30C960030C300 /* SetInputView.swift */; };
 		7DA30C462F0F94FD00040001 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D05261B2ED2F3E50030C300 /* ProfileView.swift */; };
@@ -46,10 +40,6 @@
 		7DA30C482F0F951800040001 /* DashboardView..swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526152ED218690030C300 /* DashboardView..swift */; };
 		7DA30C492F0F951E00040001 /* ProgressDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526662ED4C89D0030C300 /* ProgressDashboardView.swift */; };
 		7DA30C4A2F0F952700040001 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526132ED218200030C300 /* LoginView.swift */; };
-		7DA30C8E2F12310100040001 /* AuthFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C8A2F12300100040001 /* AuthFlowView.swift */; };
-		7DA30C8F2F12310200040001 /* AuthChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C8B2F12300200040001 /* AuthChoiceView.swift */; };
-		7DA30C902F12310300040001 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C8C2F12300300040001 /* WelcomeView.swift */; };
-		7DA30C912F12310400040001 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C8D2F12300400040001 /* RegisterView.swift */; };
 		7DA30C4B2F0F952C00040001 /* CoachListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA0381C2F0BB4B100CAF45D /* CoachListView.swift */; };
 		7DA30C4C2F0F953300040001 /* CoachDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D05273C2EDDF3BC0030C300 /* CoachDetailView.swift */; };
 		7DA30C4E2F0F95E500040001 /* WorkoutDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D05272E2EDC95B40030C300 /* WorkoutDataService.swift */; };
@@ -61,36 +51,74 @@
 		7DA30C562F0F9A3100040001 /* CoachFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D337F482F016DFE008227CC /* CoachFeature.swift */; };
 		7DA30C572F0F9A4000040001 /* CoachReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D984E282F0C0F7900824BAC /* CoachReviewsView.swift */; };
 		7DA30C582F0F9A5500040001 /* CoachFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA0380D2F0A5AAA00CAF45D /* CoachFiltersView.swift */; };
-		7DA30C9B2F123E0000040001 /* CoachCabinetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C9C2F123E0000040001 /* CoachCabinetView.swift */; };
 		7DA30C5A2F0F9CF900040001 /* MockCoachService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA038122F0A5F4700CAF45D /* MockCoachService.swift */; };
 		7DA30C812F10EFA300040001 /* TimeSlotButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C802F10EF9B00040001 /* TimeSlotButton.swift */; };
 		7DA30C832F10EFCC00040001 /* DetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C822F10EFC500040001 /* DetailRow.swift */; };
+		7DA30C8E2F12310100040001 /* AuthFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C8A2F12300100040001 /* AuthFlowView.swift */; };
+		7DA30C8F2F12310200040001 /* AuthChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C8B2F12300200040001 /* AuthChoiceView.swift */; };
+		7DA30C902F12310300040001 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C8C2F12300300040001 /* WelcomeView.swift */; };
+		7DA30C912F12310400040001 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C8D2F12300400040001 /* RegisterView.swift */; };
+		7DA30C922F1231A000040001 /* DailyProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C912F12319000040001 /* DailyProgramView.swift */; };
+		7DA30C932F1231F700040001 /* DailyProgramStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C922F1231E700040001 /* DailyProgramStore.swift */; };
+		7DA30C942F12320600040001 /* DailyProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C932F1231F800040001 /* DailyProgram.swift */; };
+		7DA30C962F12350100040001 /* NewWorkoutProgramLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C952F12350000040001 /* NewWorkoutProgramLibraryView.swift */; };
+		7DA30C972F123B0000040001 /* CustomWorkoutDraftStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C982F123B0000040001 /* CustomWorkoutDraftStore.swift */; };
+		7DA30C992F123D0000040001 /* WorkoutPersistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C9A2F123D0000040001 /* WorkoutPersistenceStore.swift */; };
+		7DA30C9B2F123E0000040001 /* CoachCabinetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA30C9C2F123E0000040001 /* CoachCabinetView.swift */; };
 		7DC4A2292F0E83CB00E47F86 /* BodyCodeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0526012ECE38AE0030C300 /* BodyCodeApp.swift */; };
+		7DE100012F13000100AA0001 /* AppUserIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE100022F13000100AA0001 /* AppUserIDs.swift */; };
+		7DE100032F13000100AA0001 /* TrainingProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE100042F13000100AA0001 /* TrainingProgram.swift */; };
+		7DE100052F13000100AA0001 /* TrainingProgramStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE100062F13000100AA0001 /* TrainingProgramStore.swift */; };
+		7DF300012F14000100AA1001 /* BodyCodeWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF300122F14000100AA1001 /* BodyCodeWidgetBundle.swift */; };
+		7DF300022F14000100AA1001 /* WorkoutProgressWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF300132F14000100AA1001 /* WorkoutProgressWidget.swift */; };
+		7DF300032F14000100AA1001 /* BodyCodeWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7DF300112F14000100AA1001 /* BodyCodeWidgetExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7E4100012F20000100AA1001 /* Body&Code/Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E4100002F20000100AA1001 /* Body&Code/Assets.xcassets */; };
+		7E4100102F20000200AA1001 /* SupabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4100112F20000200AA1001 /* SupabaseConfig.swift */; };
+		7E4100122F20000200AA1001 /* SupabaseAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4100132F20000200AA1001 /* SupabaseAPIClient.swift */; };
+		7E4100142F20000200AA1001 /* CloudIdentityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4100152F20000200AA1001 /* CloudIdentityService.swift */; };
+		7E4100162F20000200AA1001 /* CloudCoachDirectoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4100172F20000200AA1001 /* CloudCoachDirectoryService.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7DF300412F14000100AA1001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7D0525742ECE30280030C300 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7DF300102F14000100AA1001;
+			remoteInfo = BodyCodeWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7DF300232F14000100AA1001 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				7DF300032F14000100AA1001 /* BodyCodeWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7D0526012ECE38AE0030C300 /* BodyCodeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyCodeApp.swift; sourceTree = "<group>"; };
 		7D0526032ECE39430030C300 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		7D0526052ECE39890030C300 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7D0526072ECE39B00030C300 /* WorkoutPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPlan.swift; sourceTree = "<group>"; };
-		7DA30C932F1231F800040001 /* DailyProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgram.swift; sourceTree = "<group>"; };
 		7D0526092ECE3B0E0030C300 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		7D05260B2ECE3B340030C300 /* WorkoutSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSet.swift; sourceTree = "<group>"; };
 		7D05260D2ECE3B750030C300 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		7D05260F2ECE3BA40030C300 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7D0526112ED217280030C300 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		7D0526132ED218200030C300 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		7DA30C8A2F12300100040001 /* AuthFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlowView.swift; sourceTree = "<group>"; };
-		7DA30C8B2F12300200040001 /* AuthChoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthChoiceView.swift; sourceTree = "<group>"; };
-		7DA30C8C2F12300300040001 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
-		7DA30C8D2F12300400040001 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		7D0526152ED218690030C300 /* DashboardView..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView..swift; sourceTree = "<group>"; };
 		7D0526172ED21E2E0030C300 /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 		7D0526192ED2F35F0030C300 /* NutritionPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionPlanView.swift; sourceTree = "<group>"; };
 		7D05261B2ED2F3E50030C300 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		7D05261D2ED2FFB10030C300 /* ActiveWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveWorkoutView.swift; sourceTree = "<group>"; };
-		7DA30C912F12319000040001 /* DailyProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgramView.swift; sourceTree = "<group>"; };
-		7DA30C952F12350000040001 /* NewWorkoutProgramLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutProgramLibraryView.swift; sourceTree = "<group>"; };
 		7D05261F2ED3004F0030C300 /* ActiveWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveWorkoutViewModel.swift; sourceTree = "<group>"; };
 		7D0526212ED30C960030C300 /* SetInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInputView.swift; sourceTree = "<group>"; };
 		7D0526242ED330EE0030C300 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
@@ -98,9 +126,6 @@
 		7D0526642ED4C8180030C300 /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
 		7D0526662ED4C89D0030C300 /* ProgressDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDashboardView.swift; sourceTree = "<group>"; };
 		7D05272E2EDC95B40030C300 /* WorkoutDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDataService.swift; sourceTree = "<group>"; };
-		7DA30C982F123B0000040001 /* CustomWorkoutDraftStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWorkoutDraftStore.swift; sourceTree = "<group>"; };
-		7DA30C9A2F123D0000040001 /* WorkoutPersistenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPersistenceStore.swift; sourceTree = "<group>"; };
-		7DA30C922F1231E700040001 /* DailyProgramStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgramStore.swift; sourceTree = "<group>"; };
 		7D0527302EDC97BA0030C300 /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
 		7D0527342EDCC0790030C300 /* CoachClientService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachClientService.swift; sourceTree = "<group>"; };
 		7D0527362EDCC0AA0030C300 /* CoachSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachSearchView.swift; sourceTree = "<group>"; };
@@ -118,7 +143,6 @@
 		7D984E372F0D3E1800824BAC /* UserProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProgress.swift; sourceTree = "<group>"; };
 		7D984E392F0D401A00824BAC /* OfflineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineService.swift; sourceTree = "<group>"; };
 		7DA0380D2F0A5AAA00CAF45D /* CoachFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachFiltersView.swift; sourceTree = "<group>"; };
-		7DA30C9C2F123E0000040001 /* CoachCabinetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachCabinetView.swift; sourceTree = "<group>"; };
 		7DA038122F0A5F4700CAF45D /* MockCoachService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoachService.swift; sourceTree = "<group>"; };
 		7DA038142F0BB2ED00CAF45D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		7DA038162F0BB34300CAF45D /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
@@ -130,7 +154,29 @@
 		7DA038262F0C01D200CAF45D /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		7DA30C802F10EF9B00040001 /* TimeSlotButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSlotButton.swift; sourceTree = "<group>"; };
 		7DA30C822F10EFC500040001 /* DetailRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRow.swift; sourceTree = "<group>"; };
+		7DA30C8A2F12300100040001 /* AuthFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlowView.swift; sourceTree = "<group>"; };
+		7DA30C8B2F12300200040001 /* AuthChoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthChoiceView.swift; sourceTree = "<group>"; };
+		7DA30C8C2F12300300040001 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		7DA30C8D2F12300400040001 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		7DA30C912F12319000040001 /* DailyProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgramView.swift; sourceTree = "<group>"; };
+		7DA30C922F1231E700040001 /* DailyProgramStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgramStore.swift; sourceTree = "<group>"; };
+		7DA30C932F1231F800040001 /* DailyProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgram.swift; sourceTree = "<group>"; };
+		7DA30C952F12350000040001 /* NewWorkoutProgramLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutProgramLibraryView.swift; sourceTree = "<group>"; };
+		7DA30C982F123B0000040001 /* CustomWorkoutDraftStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWorkoutDraftStore.swift; sourceTree = "<group>"; };
+		7DA30C9A2F123D0000040001 /* WorkoutPersistenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPersistenceStore.swift; sourceTree = "<group>"; };
+		7DA30C9C2F123E0000040001 /* CoachCabinetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachCabinetView.swift; sourceTree = "<group>"; };
 		7DC4A21E2F0E812000E47F86 /* BodyCodeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BodyCodeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DE100022F13000100AA0001 /* AppUserIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUserIDs.swift; sourceTree = "<group>"; };
+		7DE100042F13000100AA0001 /* TrainingProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingProgram.swift; sourceTree = "<group>"; };
+		7DE100062F13000100AA0001 /* TrainingProgramStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingProgramStore.swift; sourceTree = "<group>"; };
+		7DF300112F14000100AA1001 /* BodyCodeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BodyCodeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DF300122F14000100AA1001 /* BodyCodeWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyCodeWidgetBundle.swift; sourceTree = "<group>"; };
+		7DF300132F14000100AA1001 /* WorkoutProgressWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutProgressWidget.swift; sourceTree = "<group>"; };
+		7E4100002F20000100AA1001 /* Body&Code/Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Body&Code/Assets.xcassets"; sourceTree = "<group>"; };
+		7E4100112F20000200AA1001 /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
+		7E4100132F20000200AA1001 /* SupabaseAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseAPIClient.swift; sourceTree = "<group>"; };
+		7E4100152F20000200AA1001 /* CloudIdentityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudIdentityService.swift; sourceTree = "<group>"; };
+		7E4100172F20000200AA1001 /* CloudCoachDirectoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudCoachDirectoryService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -278,12 +324,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7DF300212F14000100AA1001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		7D0525732ECE30280030C300 = {
 			isa = PBXGroup;
 			children = (
+				7E4100002F20000100AA1001 /* Body&Code/Assets.xcassets */,
 				7D984E2C2F0D0D4100824BAC /* BodyCodeModel.xcdatamodeld */,
 				7D0526002ECE36560030C300 /* ProjectFiles */,
 				7D0525DE2ECE35A40030C300 /* Sources */,
@@ -295,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				7DC4A21E2F0E812000E47F86 /* BodyCodeApp.app */,
+				7DF300112F14000100AA1001 /* BodyCodeWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -312,6 +367,7 @@
 		7D05258E2ECE35A40030C300 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				7E4100112F20000200AA1001 /* SupabaseConfig.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -358,6 +414,7 @@
 				7D984E352F0D3DEC00824BAC /* Nutrition.swift */,
 				7D984E332F0D3DBD00824BAC /* Workout.swift */,
 				7D337F2A2F016B99008227CC /* Coaches */,
+				7DE100072F13000100AA0001 /* Programs */,
 				7D0526052ECE39890030C300 /* User.swift */,
 				7D0525932ECE35A40030C300 /* Nutrition */,
 				7D0525952ECE35A40030C300 /* Workout */,
@@ -388,9 +445,13 @@
 				7D984E392F0D401A00824BAC /* OfflineService.swift */,
 				7DA038122F0A5F4700CAF45D /* MockCoachService.swift */,
 				7D337F462F016DA8008227CC /* CoachService.swift */,
+				7E4100132F20000200AA1001 /* SupabaseAPIClient.swift */,
+				7E4100152F20000200AA1001 /* CloudIdentityService.swift */,
+				7E4100172F20000200AA1001 /* CloudCoachDirectoryService.swift */,
 				7DA30C982F123B0000040001 /* CustomWorkoutDraftStore.swift */,
 				7DA30C9A2F123D0000040001 /* WorkoutPersistenceStore.swift */,
 				7DA30C922F1231E700040001 /* DailyProgramStore.swift */,
+				7DE100062F13000100AA0001 /* TrainingProgramStore.swift */,
 				7D05272E2EDC95B40030C300 /* WorkoutDataService.swift */,
 			);
 			path = Data;
@@ -720,6 +781,7 @@
 		7D0525D72ECE35A40030C300 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				7DE100022F13000100AA0001 /* AppUserIDs.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -766,6 +828,7 @@
 				7D0525C72ECE35A40030C300 /* Features */,
 				7D0525C92ECE35A40030C300 /* Resources */,
 				7D0525DD2ECE35A40030C300 /* Shared */,
+				7DF300142F14000100AA1001 /* WidgetExtension */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -814,6 +877,23 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		7DE100072F13000100AA0001 /* Programs */ = {
+			isa = PBXGroup;
+			children = (
+				7DE100042F13000100AA0001 /* TrainingProgram.swift */,
+			);
+			path = Programs;
+			sourceTree = "<group>";
+		};
+		7DF300142F14000100AA1001 /* WidgetExtension */ = {
+			isa = PBXGroup;
+			children = (
+				7DF300122F14000100AA1001 /* BodyCodeWidgetBundle.swift */,
+				7DF300132F14000100AA1001 /* WorkoutProgressWidget.swift */,
+			);
+			path = WidgetExtension;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -824,10 +904,12 @@
 				7DC4A21A2F0E812000E47F86 /* Sources */,
 				7DC4A21B2F0E812000E47F86 /* Frameworks */,
 				7DC4A21C2F0E812000E47F86 /* Resources */,
+				7DF300232F14000100AA1001 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				7DF300402F14000100AA1001 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				7D8952DA2F12B5EF00FC078A /* Navigation */,
@@ -838,6 +920,25 @@
 			productName = BodyCodeApp;
 			productReference = 7DC4A21E2F0E812000E47F86 /* BodyCodeApp.app */;
 			productType = "com.apple.product-type.application";
+		};
+		7DF300102F14000100AA1001 /* BodyCodeWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7DF300302F14000100AA1001 /* Build configuration list for PBXNativeTarget "BodyCodeWidgetExtension" */;
+			buildPhases = (
+				7DF300202F14000100AA1001 /* Sources */,
+				7DF300212F14000100AA1001 /* Frameworks */,
+				7DF300222F14000100AA1001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BodyCodeWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = BodyCodeWidgetExtension;
+			productReference = 7DF300112F14000100AA1001 /* BodyCodeWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -851,6 +952,19 @@
 				TargetAttributes = {
 					7DC4A21D2F0E812000E47F86 = {
 						CreatedOnToolsVersion = 26.0;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					7DF300102F14000100AA1001 = {
+						CreatedOnToolsVersion = 26.0;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -869,12 +983,21 @@
 			projectRoot = "";
 			targets = (
 				7DC4A21D2F0E812000E47F86 /* BodyCodeApp */,
+				7DF300102F14000100AA1001 /* BodyCodeWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7DC4A21C2F0E812000E47F86 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E4100012F20000100AA1001 /* Body&Code/Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DF300222F14000100AA1001 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -909,6 +1032,9 @@
 				7DA30C922F1231A000040001 /* DailyProgramView.swift in Sources */,
 				7DA30C962F12350100040001 /* NewWorkoutProgramLibraryView.swift in Sources */,
 				7DA30C972F123B0000040001 /* CustomWorkoutDraftStore.swift in Sources */,
+				7E4100122F20000200AA1001 /* SupabaseAPIClient.swift in Sources */,
+				7E4100142F20000200AA1001 /* CloudIdentityService.swift in Sources */,
+				7E4100162F20000200AA1001 /* CloudCoachDirectoryService.swift in Sources */,
 				7DA30C992F123D0000040001 /* WorkoutPersistenceStore.swift in Sources */,
 				7DA30C932F1231F700040001 /* DailyProgramStore.swift in Sources */,
 				7DA30C812F10EFA300040001 /* TimeSlotButton.swift in Sources */,
@@ -926,12 +1052,14 @@
 				7DA30C512F0F98BD00040001 /* CoachService.swift in Sources */,
 				7DA30C182F0F8E5A00040001 /* ContentView.swift in Sources */,
 				7DA30C242F0F8F5A00040001 /* AnalyticsService.swift in Sources */,
+				7E4100102F20000200AA1001 /* SupabaseConfig.swift in Sources */,
 				7DA30C372F0F934D00040001 /* NutritionView.swift in Sources */,
 				7DA30C2E2F0F906C00040001 /* User.swift in Sources */,
 				7DA30C522F0F98F400040001 /* CoachesView.swift in Sources */,
 				7DA30C482F0F951800040001 /* DashboardView..swift in Sources */,
 				7DC4A2292F0E83CB00E47F86 /* BodyCodeApp.swift in Sources */,
 				7DA30C2F2F0F90A300040001 /* UserProgress.swift in Sources */,
+				7DE100012F13000100AA0001 /* AppUserIDs.swift in Sources */,
 				7DA30C312F0F90C300040001 /* CoachClientService.swift in Sources */,
 				7DA30C3E2F0F944800040001 /* MuscleGroup.swift in Sources */,
 				7DA30C3F2F0F949200040001 /* Theme.swift in Sources */,
@@ -945,12 +1073,31 @@
 				7DA30C382F0F935600040001 /* NutritionPlanView.swift in Sources */,
 				7DA30C352F0F933B00040001 /* Nutrition.swift in Sources */,
 				7DA30C4C2F0F953300040001 /* CoachDetailView.swift in Sources */,
+				7DE100032F13000100AA0001 /* TrainingProgram.swift in Sources */,
+				7DE100052F13000100AA0001 /* TrainingProgramStore.swift in Sources */,
 				7DA30C462F0F94FD00040001 /* ProfileView.swift in Sources */,
 				7DA30C562F0F9A3100040001 /* CoachFeature.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7DF300202F14000100AA1001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DF300012F14000100AA1001 /* BodyCodeWidgetBundle.swift in Sources */,
+				7DF300022F14000100AA1001 /* WorkoutProgressWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7DF300402F14000100AA1001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7DF300102F14000100AA1001 /* BodyCodeWidgetExtension */;
+			targetProxy = 7DF300412F14000100AA1001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7D0525852ECE302A0030C300 /* Debug */ = {
@@ -1079,11 +1226,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Body&Code/BodyCodeApp.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7Y9FQ552PV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Body&Code";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_SUPABASE_ANON_KEY = "sb_publishable_-EVpy1Hw0AJ04IEh6c1R5w_TwhfDBsb";
+				INFOPLIST_KEY_SUPABASE_URL = "https://lvltghhgwxrookyglodz.supabase.co";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1111,11 +1263,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Body&Code/BodyCodeApp.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7Y9FQ552PV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Body&Code";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_SUPABASE_ANON_KEY = "sb_publishable_-EVpy1Hw0AJ04IEh6c1R5w_TwhfDBsb";
+				INFOPLIST_KEY_SUPABASE_URL = "https://lvltghhgwxrookyglodz.supabase.co";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1128,6 +1285,68 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Wowgorno.BodyCodeApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7DF300312F14000100AA1001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Sources/WidgetExtension/BodyCodeWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7Y9FQ552PV;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/WidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Body&Code Widget";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Wowgorno.BodyCodeApp.Widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7DF300322F14000100AA1001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = Sources/WidgetExtension/BodyCodeWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7Y9FQ552PV;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/WidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Body&Code Widget";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Wowgorno.BodyCodeApp.Widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -1155,6 +1374,15 @@
 			buildConfigurations = (
 				7DC4A2262F0E812100E47F86 /* Debug */,
 				7DC4A2272F0E812100E47F86 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7DF300302F14000100AA1001 /* Build configuration list for PBXNativeTarget "BodyCodeWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7DF300312F14000100AA1001 /* Debug */,
+				7DF300322F14000100AA1001 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

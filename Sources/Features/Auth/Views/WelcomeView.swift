@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     var onContinue: (() -> Void)?
+    @State private var didScheduleTransition = false
 
     init(onContinue: (() -> Void)? = nil) {
         self.onContinue = onContinue
@@ -32,21 +33,14 @@ struct WelcomeView: View {
                 .multilineTextAlignment(.center)
 
             Spacer()
-
-            Button {
-                onContinue?()
-            } label: {
-                Text("Начать")
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
-            }
-            .padding(.horizontal)
-            .padding(.bottom, 20)
         }
         .padding()
+        .onAppear {
+            guard !didScheduleTransition else { return }
+            didScheduleTransition = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+                onContinue?()
+            }
+        }
     }
 }

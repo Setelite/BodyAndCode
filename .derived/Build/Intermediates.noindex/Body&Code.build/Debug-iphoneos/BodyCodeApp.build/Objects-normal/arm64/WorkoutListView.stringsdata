@@ -1,0 +1,120 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Workout/Views/WorkoutListView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "История тренировок",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренировки",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренировка на сегодня",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Быстрые действия",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Недавние тренировки",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Начать сегодняшнюю тренировку",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Грудь и Трицепс • 45 мин",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Создать свою тренировку",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Библиотека упражнений",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Понедельник - День ног",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Пятница - Верхняя часть тела",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Прошлая неделя - Все тело",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Просмотр истории",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "История",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 65
+        }
+      }
+    ]
+  },
+  "version": 1
+}

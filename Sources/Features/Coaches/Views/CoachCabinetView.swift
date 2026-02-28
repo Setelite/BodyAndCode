@@ -10,10 +10,14 @@ import SwiftUI
 struct CoachCabinetView: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
     @StateObject private var coachClientService = CoachClientService()
+    @StateObject private var programStore = TrainingProgramStore()
+    @StateObject private var chatStore = CoachClientChatStore.shared
     @State private var selectedTab: CoachCabinetTab = .clients
-    @State private var plans: [CoachPlan] = CoachPlan.sample
     @State private var events: [CoachEvent] = CoachEvent.sample
     @State private var showingCreatePlan = false
+    @State private var selectedProgramForEditing: TrainingProgram?
+    @State private var selectedProgramForAssignment: TrainingProgram?
+    @State private var assignmentNote = ""
     @State private var profileName = ""
     @State private var profileEmail = ""
     @State private var profileSpecialization = ""
@@ -36,6 +40,8 @@ struct CoachCabinetView: View {
                         calendarTab
                     case .plans:
                         plansTab
+                    case .chat:
+                        chatTab
                     case .profile:
                         profileTab
                     }
@@ -65,8 +71,35 @@ struct CoachCabinetView: View {
                 }
             }
             .sheet(isPresented: $showingCreatePlan) {
-                CoachPlanEditorView { plan in
-                    plans.insert(plan, at: 0)
+                TrainingProgramEditorSheetView { title, summary in
+                    guard let coachId = authViewModel.currentUser?.id else { return }
+                    _ = programStore.createProgram(coachId: coachId, title: title, summary: summary)
+                }
+            }
+            .sheet(item: $selectedProgramForEditing) { program in
+                TrainingProgramDetailEditorSheetView(program: program) { title, summary, exercises in
+                    programStore.updateProgram(
+                        program.id,
+                        title: title,
+                        summary: summary,
+                        exercises: exercises
+                    )
+                }
+            }
+            .sheet(item: $selectedProgramForAssignment) { program in
+                TrainingProgramAssignmentSheetView(
+                    program: program,
+                    clients: coachClientService.clients,
+                    note: $assignmentNote
+                ) { selectedClientIDs in
+                    guard let coachId = authViewModel.currentUser?.id else { return }
+                    programStore.assignProgram(
+                        program.id,
+                        coachId: coachId,
+                        to: selectedClientIDs,
+                        note: assignmentNote.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : assignmentNote
+                    )
+                    assignmentNote = ""
                 }
             }
         }
@@ -155,17 +188,139 @@ struct CoachCabinetView: View {
             .cardStyle()
 
             cardSection(title: "Программы") {
-                ForEach(plans) { plan in
-                    NavigationLink(destination: CoachPlanDetailView(plan: plan)) {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(plan.title)
+                if coachPrograms.isEmpty {
+                    Text("Программ пока нет")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+
+                ForEach(coachPrograms) { program in
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text(program.title)
                                 .font(.headline)
-                                .foregroundColor(.primary)
-                            Text("\(plan.weekdaysText) • \(plan.exerciseCount) упражнений")
+                            Spacer()
+                            Text(program.status.localized)
+                                .font(.caption2)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(program.status == .published ? Color.green.opacity(0.2) : Color.orange.opacity(0.2))
+                                .cornerRadius(8)
+                        }
+
+                        Text(program.summary)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+
+                        if !program.exercises.isEmpty {
+                            VStack(alignment: .leading, spacing: 4) {
+                                ForEach(Array(program.exercises.prefix(3))) { exercise in
+                                    Text("• \(exercise.exercise.name): \(exercise.sets)x\(exercise.reps)")
+                                        .font(.caption2)
+                                        .foregroundColor(.secondary)
+                                }
+                                if program.exercises.count > 3 {
+                                    Text("и ещё \(program.exercises.count - 3)")
+                                        .font(.caption2)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+
+                        HStack {
+                            Text("\(program.exercises.count) упражнений")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
+
+                            Spacer()
+
+                            Menu {
+                                Button("Редактировать") {
+                                    selectedProgramForEditing = program
+                                }
+                                if program.status == .draft {
+                                    Button("Опубликовать") {
+                                        programStore.publishProgram(program.id)
+                                    }
+                                }
+                                Button("Назначить клиентам") {
+                                    selectedProgramForAssignment = program
+                                }
+                            } label: {
+                                Label("Действия", systemImage: "ellipsis.circle")
+                                    .font(.caption)
+                            }
                         }
-                        .padding(.vertical, 8)
+                    }
+                    .padding(.vertical, 8)
+                }
+            }
+        }
+    }
+
+    private var chatTab: some View {
+        cardSection(title: "Диалоги с клиентами") {
+            if coachClientService.clients.isEmpty {
+                Text("Нет клиентов для переписки")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            } else {
+                VStack(spacing: 0) {
+                    ForEach(Array(coachClientService.clients.enumerated()), id: \.element.id) { index, client in
+                        NavigationLink {
+                            if let coach = authViewModel.currentUser {
+                                CoachClientChatScreen(
+                                    coach: coach,
+                                    client: client,
+                                    viewer: coach
+                                )
+                            } else {
+                                Text("Пользователь не найден")
+                            }
+                        } label: {
+                            HStack(spacing: 12) {
+                                Circle()
+                                    .fill(Color.indigo.opacity(0.18))
+                                    .frame(width: 40, height: 40)
+                                    .overlay(
+                                        Image(systemName: "person.fill")
+                                            .foregroundColor(.indigo)
+                                    )
+
+                                VStack(alignment: .leading, spacing: 3) {
+                                    Text(client.name)
+                                        .font(.subheadline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.primary)
+                                    Text(lastMessagePreview(for: client))
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .lineLimit(1)
+                                }
+
+                                Spacer()
+                                let unreadCount = unreadMessagesCount(for: client)
+                                if unreadCount > 0 {
+                                    Text("\(unreadCount)")
+                                        .font(.caption2)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                        .padding(.horizontal, 7)
+                                        .padding(.vertical, 4)
+                                        .background(Color.red)
+                                        .clipShape(Capsule())
+                                }
+                                Image(systemName: "chevron.right")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+                            .padding(.vertical, 10)
+                        }
+
+                        if index < coachClientService.clients.count - 1 {
+                            Divider()
+                        }
                     }
                 }
             }
@@ -266,10 +421,15 @@ struct CoachCabinetView: View {
             HStack(spacing: 12) {
                 coachStat("Клиенты", "\(coachClientService.clients.count)")
                 coachStat("Сегодня", "\(events.filter { Calendar.current.isDateInToday($0.date) }.count)")
-                coachStat("Программы", "\(plans.count)")
+                coachStat("Программы", "\(coachPrograms.count)")
             }
         }
         .cardStyle()
+    }
+
+    private var coachPrograms: [TrainingProgram] {
+        guard let coachId = authViewModel.currentUser?.id else { return [] }
+        return programStore.programsForCoach(coachId)
     }
 
     private func coachStat(_ title: String, _ value: String) -> some View {
@@ -428,6 +588,22 @@ struct CoachCabinetView: View {
         formatter.timeStyle = .short
         return formatter.string(from: date)
     }
+
+    private func lastMessagePreview(for client: User) -> String {
+        guard let coachId = authViewModel.currentUser?.id else { return "Начните диалог" }
+        guard let lastMessage = chatStore.lastMessage(coachId: coachId, clientId: client.id) else {
+            return "Начните диалог"
+        }
+        if !lastMessage.text.isEmpty {
+            return lastMessage.text
+        }
+        return "Вложение"
+    }
+
+    private func unreadMessagesCount(for client: User) -> Int {
+        guard let coachId = authViewModel.currentUser?.id else { return 0 }
+        return chatStore.unreadCount(for: coachId, coachId: coachId, clientId: client.id)
+    }
 }
 
 #if DEBUG
@@ -443,6 +619,7 @@ private enum CoachCabinetTab: CaseIterable {
     case clients
     case calendar
     case plans
+    case chat
     case profile
 
     var title: String {
@@ -450,6 +627,7 @@ private enum CoachCabinetTab: CaseIterable {
         case .clients: return "Клиенты"
         case .calendar: return "Календарь"
         case .plans: return "Программы"
+        case .chat: return "Чат"
         case .profile: return "Профиль"
         }
     }
@@ -459,9 +637,357 @@ private extension View {
     func cardStyle() -> some View {
         self
             .padding()
-            .background(Color.white)
+            .background(Color.white.opacity(0.58))
             .cornerRadius(16)
             .shadow(color: .black.opacity(0.05), radius: 5)
+    }
+}
+
+private struct TrainingProgramEditorSheetView: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var title = ""
+    @State private var summary = ""
+    let onSave: (String, String) -> Void
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section("Новая программа") {
+                    TextField("Название", text: $title)
+                    TextField("Описание", text: $summary, axis: .vertical)
+                        .lineLimit(3...6)
+                }
+            }
+            .navigationTitle("Создать программу")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Отмена") { dismiss() }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Сохранить") {
+                        onSave(
+                            title.trimmingCharacters(in: .whitespacesAndNewlines),
+                            summary.trimmingCharacters(in: .whitespacesAndNewlines)
+                        )
+                        dismiss()
+                    }
+                    .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+            }
+        }
+    }
+}
+
+private struct TrainingProgramDetailEditorSheetView: View {
+    @Environment(\.dismiss) private var dismiss
+    let program: TrainingProgram
+    let onSave: (String, String, [TrainingProgramExercise]) -> Void
+
+    @State private var title: String
+    @State private var summary: String
+    @State private var draftExercises: [DraftExercise]
+    @State private var selectedDraftExerciseID: UUID?
+    @State private var showingNewExerciseSheet = false
+
+    init(
+        program: TrainingProgram,
+        onSave: @escaping (String, String, [TrainingProgramExercise]) -> Void
+    ) {
+        self.program = program
+        self.onSave = onSave
+        _title = State(initialValue: program.title)
+        _summary = State(initialValue: program.summary)
+        _draftExercises = State(initialValue: program.exercises.map(DraftExercise.init))
+    }
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section("Программа") {
+                    TextField("Название", text: $title)
+                    TextField("Описание", text: $summary, axis: .vertical)
+                        .lineLimit(3...6)
+                }
+
+                Section("Упражнения") {
+                    if draftExercises.isEmpty {
+                        Text("Добавьте упражнения")
+                            .foregroundColor(.secondary)
+                    } else {
+                        ForEach(draftExercises) { exercise in
+                            Button {
+                                selectedDraftExerciseID = exercise.id
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(exercise.name)
+                                            .font(.subheadline)
+                                            .foregroundColor(.primary)
+                                        Text("\(exercise.sets)x\(exercise.reps) • отдых \(exercise.restSeconds)с • \(exercise.muscleGroup.localized)")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                        }
+                        .onDelete(perform: deleteExercises)
+                    }
+
+                    Button {
+                        showingNewExerciseSheet = true
+                    } label: {
+                        Label("Добавить упражнение", systemImage: "plus.circle.fill")
+                    }
+                }
+            }
+            .navigationTitle("Редактирование")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Отмена") { dismiss() }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Сохранить") {
+                        onSave(
+                            title.trimmingCharacters(in: .whitespacesAndNewlines),
+                            summary.trimmingCharacters(in: .whitespacesAndNewlines),
+                            draftExercises.map(\.asTrainingExercise)
+                        )
+                        dismiss()
+                    }
+                    .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || draftExercises.isEmpty)
+                }
+            }
+            .sheet(item: selectedExerciseBinding) { exercise in
+                TrainingProgramExerciseEditorSheetView(
+                    draftExercise: exercise,
+                    onSave: { updated in
+                        updateExercise(updated)
+                    }
+                )
+            }
+            .sheet(isPresented: $showingNewExerciseSheet) {
+                TrainingProgramExerciseEditorSheetView(
+                    draftExercise: DraftExercise(
+                        id: UUID(),
+                        sourceExerciseId: UUID(),
+                        name: "",
+                        muscleGroup: .fullBody,
+                        sets: 3,
+                        reps: 10,
+                        restSeconds: 90,
+                        targetWeight: 0
+                    ),
+                    onSave: { newExercise in
+                        draftExercises.append(newExercise)
+                    }
+                )
+            }
+        }
+    }
+
+    private var selectedExerciseBinding: Binding<DraftExercise?> {
+        Binding<DraftExercise?>(
+            get: {
+                guard let id = selectedDraftExerciseID else { return nil }
+                return draftExercises.first(where: { $0.id == id })
+            },
+            set: { newValue in
+                selectedDraftExerciseID = newValue?.id
+            }
+        )
+    }
+
+    private func deleteExercises(at offsets: IndexSet) {
+        draftExercises.remove(atOffsets: offsets)
+    }
+
+    private func updateExercise(_ updated: DraftExercise) {
+        guard let index = draftExercises.firstIndex(where: { $0.id == updated.id }) else {
+            draftExercises.append(updated)
+            return
+        }
+        draftExercises[index] = updated
+    }
+}
+
+private struct TrainingProgramExerciseEditorSheetView: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var draftExercise: DraftExercise
+    let onSave: (DraftExercise) -> Void
+
+    init(draftExercise: DraftExercise, onSave: @escaping (DraftExercise) -> Void) {
+        _draftExercise = State(initialValue: draftExercise)
+        self.onSave = onSave
+    }
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section("Упражнение") {
+                    TextField("Название упражнения", text: $draftExercise.name)
+                    Picker("Мышечная группа", selection: $draftExercise.muscleGroup) {
+                        ForEach(MuscleGroup.allCases, id: \.self) { group in
+                            Text(group.localized).tag(group)
+                        }
+                    }
+                }
+
+                Section("Параметры") {
+                    Stepper("Подходы: \(draftExercise.sets)", value: $draftExercise.sets, in: 1...12)
+                    Stepper("Повторы: \(draftExercise.reps)", value: $draftExercise.reps, in: 1...50)
+                    Stepper("Отдых: \(draftExercise.restSeconds) сек", value: $draftExercise.restSeconds, in: 15...300, step: 15)
+                    Stepper("Вес: \(Int(draftExercise.targetWeight)) кг", value: $draftExercise.targetWeight, in: 0...300, step: 2.5)
+                }
+            }
+            .navigationTitle("Упражнение")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Отмена") { dismiss() }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Готово") {
+                        onSave(draftExercise)
+                        dismiss()
+                    }
+                    .disabled(draftExercise.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+            }
+        }
+    }
+}
+
+private struct DraftExercise: Identifiable, Hashable {
+    let id: UUID
+    let sourceExerciseId: UUID
+    var name: String
+    var muscleGroup: MuscleGroup
+    var sets: Int
+    var reps: Int
+    var restSeconds: Int
+    var targetWeight: Double
+
+    init(trainingExercise: TrainingProgramExercise) {
+        id = trainingExercise.id
+        sourceExerciseId = trainingExercise.exercise.id
+        name = trainingExercise.exercise.name
+        muscleGroup = trainingExercise.exercise.muscleGroup
+        sets = trainingExercise.sets
+        reps = trainingExercise.reps
+        restSeconds = trainingExercise.restSeconds
+        targetWeight = trainingExercise.targetWeight
+    }
+
+    init(
+        id: UUID,
+        sourceExerciseId: UUID,
+        name: String,
+        muscleGroup: MuscleGroup,
+        sets: Int,
+        reps: Int,
+        restSeconds: Int,
+        targetWeight: Double
+    ) {
+        self.id = id
+        self.sourceExerciseId = sourceExerciseId
+        self.name = name
+        self.muscleGroup = muscleGroup
+        self.sets = sets
+        self.reps = reps
+        self.restSeconds = restSeconds
+        self.targetWeight = targetWeight
+    }
+
+    var asTrainingExercise: TrainingProgramExercise {
+        TrainingProgramExercise(
+            id: id,
+            exercise: Exercise(
+                id: sourceExerciseId,
+                name: name.trimmingCharacters(in: .whitespacesAndNewlines),
+                muscleGroup: muscleGroup
+            ),
+            sets: sets,
+            reps: reps,
+            restSeconds: restSeconds,
+            targetWeight: targetWeight
+        )
+    }
+}
+
+private struct TrainingProgramAssignmentSheetView: View {
+    @Environment(\.dismiss) private var dismiss
+    let program: TrainingProgram
+    let clients: [User]
+    @Binding var note: String
+    let onAssign: ([UUID]) -> Void
+    @State private var selectedClientIDs: Set<UUID> = []
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section("Программа") {
+                    Text(program.title)
+                        .font(.headline)
+                    Text(program.summary)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+
+                Section("Клиенты") {
+                    if clients.isEmpty {
+                        Text("Нет доступных клиентов")
+                            .foregroundColor(.secondary)
+                    } else {
+                        ForEach(clients) { client in
+                            Button {
+                                toggle(client.id)
+                            } label: {
+                                HStack {
+                                    Text(client.name)
+                                    Spacer()
+                                    Image(systemName: selectedClientIDs.contains(client.id) ? "checkmark.circle.fill" : "circle")
+                                        .foregroundColor(selectedClientIDs.contains(client.id) ? .blue : .gray)
+                                }
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+
+                Section("Комментарий") {
+                    TextField("Комментарий для клиентов", text: $note, axis: .vertical)
+                        .lineLimit(2...5)
+                }
+            }
+            .navigationTitle("Назначение")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Отмена") { dismiss() }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Назначить") {
+                        onAssign(Array(selectedClientIDs))
+                        dismiss()
+                    }
+                    .disabled(selectedClientIDs.isEmpty)
+                }
+            }
+        }
+    }
+
+    private func toggle(_ clientId: UUID) {
+        if selectedClientIDs.contains(clientId) {
+            selectedClientIDs.remove(clientId)
+        } else {
+            selectedClientIDs.insert(clientId)
+        }
     }
 }
 

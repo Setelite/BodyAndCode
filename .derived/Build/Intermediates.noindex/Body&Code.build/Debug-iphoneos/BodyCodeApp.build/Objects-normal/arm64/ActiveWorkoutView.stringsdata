@@ -1,0 +1,144 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Workout/Views/ActiveWorkoutView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Текущая тренировка",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Загрузка тренировки...",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "История",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld упражнений",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренировка завершена! 🎉",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сохранить тренировку",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "Завершить тренировку",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренировка не запланирована",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вернитесь позже или попросите тренера назначить план тренировок.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 185
+        }
+      },
+      {
+        "comment": "",
+        "key": "Библиотека упражнений",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 190
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld подходов",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 221
+        }
+      },
+      {
+        "comment": "",
+        "key": "Готово",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 273
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 295
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.1f кг",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 302
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld повт.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 304
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.1f кг",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 355
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld повт.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 358
+        }
+      }
+    ]
+  },
+  "version": 1
+}

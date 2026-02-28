@@ -1,0 +1,168 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Coaches/Views/CoachesView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Ошибка",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренеры",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Поиск тренеров",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренер не найден",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ошибка бронирования",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренер не найден",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ошибка",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Запись на тренировку",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ошибка",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 112
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ошибка",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 120
+        }
+      },
+      {
+        "comment": "",
+        "key": "Загружаем список тренеров...",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 129
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренеры не найдены",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 141
+        }
+      },
+      {
+        "comment": "",
+        "key": "Попробуйте изменить параметры поиска",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 144
+        }
+      },
+      {
+        "comment": "",
+        "key": "Обновить",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "Рейтинг 4.5+",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 174
+        }
+      },
+      {
+        "comment": "",
+        "key": "Рейтинг 4.8+",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 177
+        }
+      },
+      {
+        "comment": "",
+        "key": "Сбросить фильтры",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "•",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 236
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld отзывов",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 240
+        }
+      }
+    ]
+  },
+  "version": 1
+}

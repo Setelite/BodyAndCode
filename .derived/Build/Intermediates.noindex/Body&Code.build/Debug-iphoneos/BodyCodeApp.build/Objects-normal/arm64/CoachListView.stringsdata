@@ -1,0 +1,24 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Coaches/CoachListView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "(%lld)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренеры",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 63
+        }
+      }
+    ]
+  },
+  "version": 1
+}

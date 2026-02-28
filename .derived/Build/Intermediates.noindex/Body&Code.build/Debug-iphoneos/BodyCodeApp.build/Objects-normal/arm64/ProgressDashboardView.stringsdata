@@ -1,0 +1,160 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Dashboard/Views/ProgressDashboardView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Прогресс",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Период",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "Загрузка данных...",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вес тела",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@%.1f кг",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Дата",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вес",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "Дата",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вес",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.0f кг",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Прогресс в упражнениях",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 112
+        }
+      },
+      {
+        "comment": "",
+        "key": "Личные рекорды",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "История тренировок",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 152
+        }
+      },
+      {
+        "comment": "",
+        "key": "+%.1f%%",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 197
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.1f кг",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 207
+        }
+      },
+      {
+        "comment": "",
+        "key": "Цель: %.1f кг",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 213
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.1f кг",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 232
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld повт.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 237
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld/%lld упр.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 274
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,48 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Auth/Views/AuthChoiceView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Авторизация",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "Body&Code",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вход или регистрация",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Войти",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Создать аккаунт",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 34
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -19,11 +19,28 @@ enum UserRole: String, Codable, CaseIterable {
     }
 }
 
+enum UserGender: String, Codable, CaseIterable {
+    case male = "male"
+    case female = "female"
+    case other = "other"
+    case notSpecified = "not_specified"
+
+    var localized: String {
+        switch self {
+        case .male: return "Мужской"
+        case .female: return "Женский"
+        case .other: return "Другой"
+        case .notSpecified: return "Не указан"
+        }
+    }
+}
+
 struct User: Identifiable, Codable {
     let id: UUID
     var name: String
     var email: String
     let role: UserRole
+    var gender: UserGender?
     var currentWeight: Double?
     var goalWeight: Double?
     var profileImageUrl: String?
@@ -44,6 +61,7 @@ struct User: Identifiable, Codable {
          name: String,
          email: String,
          role: UserRole,
+         gender: UserGender? = nil,
          currentWeight: Double? = nil,
          goalWeight: Double? = nil,
          profileImageUrl: String? = nil,
@@ -59,6 +77,7 @@ struct User: Identifiable, Codable {
         self.name = name
         self.email = email
         self.role = role
+        self.gender = gender
         self.currentWeight = currentWeight
         self.goalWeight = goalWeight
         self.profileImageUrl = profileImageUrl

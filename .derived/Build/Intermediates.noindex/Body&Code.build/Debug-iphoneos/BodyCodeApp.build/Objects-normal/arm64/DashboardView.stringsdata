@@ -1,0 +1,24 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Coaches/Views/DashboardView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Экран главной",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Главная",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 14
+        }
+      }
+    ]
+  },
+  "version": 1
+}

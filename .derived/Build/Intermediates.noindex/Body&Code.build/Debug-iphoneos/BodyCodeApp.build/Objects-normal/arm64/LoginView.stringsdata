@@ -1,0 +1,72 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Auth/Views/LoginView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Вход",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Body&Code",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тест: user@example.com, client@example.com, coach@example.com, trainer@example.com. Пароль: password",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Email",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Password",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Клиент",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Тренер",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Войти",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 65
+        }
+      }
+    ]
+  },
+  "version": 1
+}

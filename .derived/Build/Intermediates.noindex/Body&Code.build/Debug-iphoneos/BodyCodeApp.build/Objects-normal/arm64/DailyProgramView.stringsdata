@@ -1,0 +1,64 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Workout/Views/DailyProgramView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Программа на день",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Активировать",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Добавить подход",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "Убрать подход",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "Подход %lld",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "Вес",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "Повт.",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 164
+        }
+      }
+    ]
+  },
+  "version": 1
+}

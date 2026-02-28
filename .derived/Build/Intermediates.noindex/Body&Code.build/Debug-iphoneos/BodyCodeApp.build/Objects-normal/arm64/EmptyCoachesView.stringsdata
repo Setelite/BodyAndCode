@@ -1,0 +1,24 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Coaches/Components/EmptyCoachesView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Тренеры не найдены",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Попробуйте изменить параметры поиска или зайдите позже",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 22
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,160 @@
+{
+  "source": "/Users/wowgorno/Documents/Body&Code/Sources/Features/Workout/Views/History/WorkoutHistoryView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "История тренировок",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Загрузка истории...",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Статистика",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "История тренировок пуста",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Завершите первую тренировку, и она появится здесь.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Начать тренировку",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Детали тренировки",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Обзор",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Название",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "Дата",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 86
+        }
+      },
+      {
+        "comment": "",
+        "key": "Длительность",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "Упражнений",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "Макс. вес",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Макс. повторения",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Подход %lld",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "План: %@ кг × %lld",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Факт: %@ кг × %lld",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld упр.",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 159
+        }
+      },
+      {
+        "comment": "",
+        "key": "Завершено",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 173
+        }
+      }
+    ]
+  },
+  "version": 1
+}
