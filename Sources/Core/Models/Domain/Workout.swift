@@ -14,7 +14,7 @@ struct Workout: Identifiable, Codable, Hashable {
     let type: String
     let duration: Int // в минутах
     let calories: Int
-    let date: Date
+    let date: Date // дни
     var isCompleted: Bool
     let notes: String?
     let coachId: UUID?
