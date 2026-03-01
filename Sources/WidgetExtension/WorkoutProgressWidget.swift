@@ -257,15 +257,14 @@ struct WorkoutProgressWidgetEntryView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .padding(family == .systemSmall ? 8 : 10)
-        .background(innerGlass)
+        .padding(family == .systemSmall ? 10 : 12)
     }
 
     @ViewBuilder
     private func mediumLayout(_ summary: WorkoutWidgetSummary) -> some View {
         VStack(alignment: .leading, spacing: 7) {
             Text(summary.workoutName)
-                .font(.subheadline.weight(.semibold))
+                .font(.headline.weight(.semibold))
                 .lineLimit(1)
                 .minimumScaleFactor(0.75)
 
@@ -300,9 +299,7 @@ struct WorkoutProgressWidgetEntryView: View {
                 Text("Тренировка завершена")
                     .font(.caption.weight(.semibold))
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(Color.green.opacity(0.2))
-                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    .padding(.vertical, 8)
             } else {
                 HStack(spacing: 6) {
                     Button(intent: CompleteSetIntent()) {
@@ -338,8 +335,10 @@ struct WorkoutProgressWidgetEntryView: View {
             }
 
             restTimerLabel(summary)
+            Spacer(minLength: 0)
         }
         .foregroundStyle(.primary)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 
     @ViewBuilder
@@ -400,8 +399,10 @@ struct WorkoutProgressWidgetEntryView: View {
                     )
                 }
             }
+            Spacer(minLength: 0)
         }
         .foregroundStyle(.primary)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 
     private var emptyLayout: some View {
@@ -448,24 +449,12 @@ struct WorkoutProgressWidgetEntryView: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.75)
             }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 6)
-            .background(Color.white.opacity(0.22))
-            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         } else if !isWorkoutCompleted(summary) {
             Text("Следующий подход: \(summary.completedSets + 1)")
                 .font(.caption2.weight(.semibold))
-                .padding(.horizontal, 8)
-                .padding(.vertical, 6)
-                .background(Color.white.opacity(0.22))
-                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         } else {
             Text("Все подходы выполнены")
                 .font(.caption2.weight(.semibold))
-                .padding(.horizontal, 8)
-                .padding(.vertical, 6)
-                .background(Color.green.opacity(0.2))
-                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
     }
 
@@ -484,36 +473,6 @@ struct WorkoutProgressWidgetEntryView: View {
             return max(Int(endDate.timeIntervalSinceNow), 0)
         }
         return max(summary.restRemainingSeconds ?? summary.restDurationSeconds ?? 90, 0)
-    }
-
-    private var innerGlass: some View {
-        RoundedRectangle(cornerRadius: 22, style: .continuous)
-            .fill(.ultraThinMaterial)
-            .overlay(
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                .white.opacity(0.26),
-                                .blue.opacity(0.08),
-                                .purple.opacity(0.12)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                    .strokeBorder(
-                        LinearGradient(
-                            colors: [.white.opacity(0.52), .white.opacity(0.12)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 1
-                    )
-            )
     }
 
     private func formatTime(_ seconds: Int) -> String {
@@ -545,5 +504,6 @@ struct WorkoutProgressWidget: Widget {
         .configurationDisplayName("Текущая тренировка")
         .description("Показывает прогресс и сколько осталось")
         .supportedFamilies([.systemSmall, .systemMedium])
+        .contentMarginsDisabled()
     }
 }
