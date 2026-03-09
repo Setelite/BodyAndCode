@@ -5,11 +5,12 @@ struct ContentView: View {
     @StateObject private var authViewModel = AuthViewModel()
     @StateObject private var appCoordinator = AppCoordinator()
     @State private var shouldShowWelcome = true
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         ZStack {
-            LinearGradient.appGlassGradient
-                .opacity(0.45)
+            backgroundGradient
+                .opacity(colorScheme == .dark ? 0.28 : 0.45)
                 .ignoresSafeArea()
 
             Group {
@@ -36,6 +37,21 @@ struct ContentView: View {
                 shouldShowWelcome = true
             }
         }
+    }
+
+    private var backgroundGradient: LinearGradient {
+        if colorScheme == .dark {
+            return LinearGradient(
+                colors: [
+                    Color(red: 0.10, green: 0.12, blue: 0.18),
+                    Color(red: 0.13, green: 0.15, blue: 0.24),
+                    Color(red: 0.16, green: 0.13, blue: 0.24)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+        return .appGlassGradient
     }
 }
 

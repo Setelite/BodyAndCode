@@ -55,7 +55,9 @@ struct ActiveWorkoutView: View {
                 ForEach(workoutPlan.exercises) { exercise in
                     ExerciseSummaryCard(
                         exercise: exercise,
-                        setsCount: viewModel.setsForExercise(exercise.id).count
+                        setsCount: viewModel.totalSetCount(for: exercise.id),
+                        completedSetsCount: viewModel.completedSetCount(for: exercise.id),
+                        isCompleted: viewModel.isExerciseCompleted(exercise.id)
                     ) {
                         selectedExercise = exercise
                     }
@@ -223,6 +225,8 @@ struct ActiveWorkoutView: View {
 struct ExerciseSummaryCard: View {
     let exercise: Exercise
     let setsCount: Int
+    let completedSetsCount: Int
+    let isCompleted: Bool
     let onTap: () -> Void
     
     var body: some View {
@@ -241,7 +245,7 @@ struct ExerciseSummaryCard: View {
                             .background(Color.blue.opacity(0.2))
                             .cornerRadius(8)
 
-                        Text("\(setsCount) подходов")
+                        Text("\(completedSetsCount)/\(setsCount) подходов")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }

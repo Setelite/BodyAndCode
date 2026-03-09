@@ -72,7 +72,7 @@ struct NutritionView: View {
             }
         }
         .padding(.vertical, 12)
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 3)
     }
@@ -143,7 +143,7 @@ struct NutritionView: View {
             }
         }
         .padding(16)
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -209,7 +209,7 @@ struct NutritionView: View {
             }
         }
         .padding(16)
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -276,7 +276,7 @@ struct NutritionView: View {
             }
         }
         .padding(16)
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -318,7 +318,7 @@ struct NutritionView: View {
             }
         }
         .padding(16)
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -335,7 +335,7 @@ struct DayButton: View {
             .fontWeight(.medium)
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
-            .background(isSelected ? Color.blue : Color.gray.opacity(0.1))
+            .background(isSelected ? Color.blue : Color.appButtonSurface)
             .foregroundColor(isSelected ? .white : .primary)
             .cornerRadius(20)
     }
@@ -381,7 +381,7 @@ struct MacroCard: View {
             .frame(height: 4)
         }
         .padding(12)
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 2)
     }
@@ -524,7 +524,7 @@ struct AddMealView: View {
                         }
                     }
                     .padding()
-                    .background(Color.white.opacity(0.58))
+                    .background(Color.appCardSurface)
                     .cornerRadius(16)
                     
                     // Название блюда
@@ -534,11 +534,11 @@ struct AddMealView: View {
                         
                         TextField("Например: Омлет с овощами", text: $mealName)
                             .padding()
-                            .background(Color.gray.opacity(0.1))
+                            .background(Color.appButtonSurface)
                             .cornerRadius(12)
                     }
                     .padding()
-                    .background(Color.white.opacity(0.58))
+                    .background(Color.appCardSurface)
                     .cornerRadius(16)
                     
                     // Питательные вещества
@@ -581,7 +581,7 @@ struct AddMealView: View {
                         }
                     }
                     .padding()
-                    .background(Color.white.opacity(0.58))
+                    .background(Color.appCardSurface)
                     .cornerRadius(16)
                     
                     // Кнопка сохранения

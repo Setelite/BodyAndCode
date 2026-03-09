@@ -23,6 +23,7 @@ struct ProgressDashboardView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
+                    analyticsStatusSection
                     timeFramePicker
                     weightProgressSection
                     workoutProgressSection
@@ -50,6 +51,25 @@ struct ProgressDashboardView: View {
             }
         }
         .pickerStyle(SegmentedPickerStyle())
+    }
+
+    private var analyticsStatusSection: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "waveform.path.ecg")
+                .font(.title3)
+                .foregroundColor(.green)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Аналитика активности включена")
+                    .font(.subheadline.weight(.semibold))
+                Text("Событий зафиксировано: \(viewModel.analyticsEventsCount)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+        }
+        .padding()
+        .background(Color.secondaryBackground)
+        .cornerRadius(12)
     }
     
     private var weightProgressSection: some View {

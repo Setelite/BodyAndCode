@@ -70,6 +70,9 @@ struct DashboardView: View {
                         .foregroundColor(.secondary)
                 }
             }
+            .navigationDestination(isPresented: $showingStats) {
+                ProgressDashboardView()
+            }
             .onAppear {
                 refreshOngoingWorkoutState()
                 if let user = authViewModel.currentUser {
@@ -108,7 +111,7 @@ struct DashboardView: View {
             }
         }
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -180,7 +183,7 @@ struct DashboardView: View {
             }
         }
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -263,7 +266,7 @@ struct DashboardView: View {
             }
         }
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -310,7 +313,7 @@ struct DashboardView: View {
             }
         }
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -335,7 +338,7 @@ struct DashboardView: View {
                 .cornerRadius(12)
         }
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -403,7 +406,7 @@ struct StatCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 3)
     }
@@ -469,7 +472,7 @@ struct WorkoutCard: View {
         }
         .padding()
         .frame(width: 180)
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -864,7 +867,7 @@ struct CoachClientChatScreen: View {
                 }
             }
             .padding()
-            .background(Color.white.opacity(0.58))
+            .background(Color.appCardSurface)
         }
         .navigationTitle(chatTitle)
         .navigationBarTitleDisplayMode(.inline)

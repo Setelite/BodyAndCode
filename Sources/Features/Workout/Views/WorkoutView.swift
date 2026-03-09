@@ -10,8 +10,11 @@ import SwiftUI
 struct WorkoutView: View {
     @EnvironmentObject private var authViewModel: AuthViewModel
     @StateObject private var programStore = TrainingProgramStore()
+    private let draftStore = CustomWorkoutDraftStore()
     @State private var selectedCategory = "Все"
     @State private var showingCreateWorkout = false
+    @State private var uploadedWorkouts: [UploadedWorkout] = []
+    @State private var selectedPopularPlan: WorkoutPlan?
     
     let categories = ["Все", "Силовые", "Кардио", "Йога", "Домашние"]
     
@@ -30,6 +33,9 @@ struct WorkoutView: View {
                     
                     // Ваши тренировки
                     yourWorkoutsSection
+
+                    // Архив загрузок
+                    uploadedArchiveSection
                     
                     // Рекомендации
                     recommendationsSection
@@ -49,6 +55,12 @@ struct WorkoutView: View {
             }
             .sheet(isPresented: $showingCreateWorkout) {
                 CreateWorkoutView()
+            }
+            .sheet(item: $selectedPopularPlan) { plan in
+                ActiveWorkoutView(presetPlan: plan)
+            }
+            .onAppear {
+                uploadedWorkouts = draftStore.loadImportedWorkouts()
             }
         }
     }
@@ -71,7 +83,7 @@ struct WorkoutView: View {
             }
         }
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -125,7 +137,7 @@ struct WorkoutView: View {
             }
         }
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -152,41 +164,74 @@ struct WorkoutView: View {
                 GridItem(.flexible()),
                 GridItem(.flexible())
             ], spacing: 16) {
-                WorkoutPlanCard(
-                    title: "Full Body",
-                    duration: "45 мин",
-                    difficulty: "Средняя",
-                    exercises: 8,
-                    color: .blue
-                )
-                
-                WorkoutPlanCard(
-                    title: "Cardio Blast",
-                    duration: "30 мин",
-                    difficulty: "Высокая",
-                    exercises: 6,
-                    color: .red
-                )
-                
-                WorkoutPlanCard(
-                    title: "Yoga Flow",
-                    duration: "60 мин",
-                    difficulty: "Легкая",
-                    exercises: 10,
-                    color: .green
-                )
-                
-                WorkoutPlanCard(
-                    title: "Arms & Abs",
-                    duration: "40 мин",
-                    difficulty: "Средняя",
-                    exercises: 7,
-                    color: .orange
-                )
+                ForEach(popularTemplates) { template in
+                    WorkoutPlanCard(
+                        title: template.title,
+                        duration: template.duration,
+                        difficulty: template.difficulty,
+                        exercises: template.exercises.count,
+                        color: template.color,
+                        onStart: {
+                            selectedPopularPlan = template.makeWorkoutPlan()
+                        }
+                    )
+                }
             }
         }
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
+        .cornerRadius(16)
+        .shadow(color: .black.opacity(0.05), radius: 5)
+    }
+
+    private var uploadedArchiveSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Архив загрузок")
+                    .font(.headline)
+                Spacer()
+                Text("\(uploadedWorkouts.count)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
+            if uploadedWorkouts.isEmpty {
+                Text("Пока нет загруженных тренировок. Импортируйте .txt в разделе «Новая тренировка».")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            } else {
+                VStack(spacing: 10) {
+                    ForEach(uploadedWorkouts) { workout in
+                        NavigationLink(destination: WorkoutAssemblyView(workoutName: workout.name, items: workout.asPlannedItems)) {
+                            HStack(spacing: 10) {
+                                Image(systemName: "square.and.arrow.down")
+                                    .foregroundColor(.blue)
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(workout.name)
+                                        .font(.subheadline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.primary)
+                                        .lineLimit(1)
+                                    Text(workout.sourceFileName)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                                Spacer()
+                                Text("\(workout.items.count)")
+                                    .font(.caption2)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(Color.appButtonSurface)
+                                    .cornerRadius(10)
+                            }
+                            .padding(.vertical, 4)
+                        }
+                    }
+                }
+            }
+        }
+        .padding()
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -232,7 +277,7 @@ struct WorkoutView: View {
             }
         }
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
     }
@@ -266,9 +311,67 @@ struct WorkoutView: View {
             }
         }
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.05), radius: 5)
+    }
+}
+
+private extension WorkoutView {
+    var popularTemplates: [PopularWorkoutTemplate] {
+        [
+            PopularWorkoutTemplate(
+                title: "Full Body",
+                duration: "45 мин",
+                difficulty: "Средняя",
+                color: .blue,
+                exercises: [
+                    Exercise(name: "Присед со штангой", muscleGroup: .legs),
+                    Exercise(name: "Жим лежа", muscleGroup: .chest),
+                    Exercise(name: "Тяга штанги в наклоне", muscleGroup: .back),
+                    Exercise(name: "Жим гантелей сидя", muscleGroup: .shoulders),
+                    Exercise(name: "Подъем на бицепс", muscleGroup: .arms),
+                    Exercise(name: "Планка", muscleGroup: .core)
+                ]
+            ),
+            PopularWorkoutTemplate(
+                title: "Cardio Blast",
+                duration: "30 мин",
+                difficulty: "Высокая",
+                color: .red,
+                exercises: [
+                    Exercise(name: "Берпи", muscleGroup: .fullBody),
+                    Exercise(name: "Спринт", muscleGroup: .fullBody),
+                    Exercise(name: "Скакалка", muscleGroup: .fullBody),
+                    Exercise(name: "Выпады", muscleGroup: .legs)
+                ]
+            ),
+            PopularWorkoutTemplate(
+                title: "Yoga Flow",
+                duration: "60 мин",
+                difficulty: "Легкая",
+                color: .green,
+                exercises: [
+                    Exercise(name: "Боковая планка", muscleGroup: .core),
+                    Exercise(name: "Планка", muscleGroup: .core),
+                    Exercise(name: "Выпады", muscleGroup: .legs),
+                    Exercise(name: "Скручивания", muscleGroup: .core)
+                ]
+            ),
+            PopularWorkoutTemplate(
+                title: "Arms & Abs",
+                duration: "40 мин",
+                difficulty: "Средняя",
+                color: .orange,
+                exercises: [
+                    Exercise(name: "Подъем на бицепс", muscleGroup: .arms),
+                    Exercise(name: "Французский жим", muscleGroup: .arms),
+                    Exercise(name: "Разгибание на блоке", muscleGroup: .arms),
+                    Exercise(name: "Скручивания", muscleGroup: .core),
+                    Exercise(name: "Русский твист", muscleGroup: .core)
+                ]
+            )
+        ]
     }
 }
 
@@ -285,7 +388,7 @@ struct CategoryChip: View {
                 .fontWeight(.medium)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
-                .background(isSelected ? Color.blue : Color.gray.opacity(0.1))
+                .background(isSelected ? Color.blue : Color.appButtonSurface)
                 .foregroundColor(isSelected ? .white : .primary)
                 .cornerRadius(20)
         }
@@ -298,6 +401,7 @@ struct WorkoutPlanCard: View {
     let difficulty: String
     let exercises: Int
     let color: Color
+    let onStart: () -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -333,7 +437,7 @@ struct WorkoutPlanCard: View {
             }
             .foregroundColor(.secondary)
             
-            Button("Начать") {}
+            Button("Начать", action: onStart)
                 .font(.caption)
                 .fontWeight(.medium)
                 .frame(maxWidth: .infinity)
@@ -343,9 +447,43 @@ struct WorkoutPlanCard: View {
                 .cornerRadius(8)
         }
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 3)
+    }
+}
+
+private struct PopularWorkoutTemplate: Identifiable {
+    let id = UUID()
+    let title: String
+    let duration: String
+    let difficulty: String
+    let color: Color
+    let exercises: [Exercise]
+
+    func makeWorkoutPlan() -> WorkoutPlan {
+        WorkoutPlan(
+            name: title,
+            description: "\(difficulty) • \(duration)",
+            dayOfWeek: DayOfWeek.from(Date()),
+            exercises: exercises,
+            assignedTo: [],
+            createdAt: Date()
+        )
+    }
+}
+
+private extension UploadedWorkout {
+    var asPlannedItems: [PlannedWorkoutItem] {
+        items.map {
+            PlannedWorkoutItem(
+                id: $0.id,
+                exercise: $0.exercise,
+                sets: $0.sets,
+                reps: $0.reps,
+                weight: $0.weight
+            )
+        }
     }
 }
 
@@ -417,7 +555,7 @@ struct RecommendationCard: View {
         }
         .frame(maxWidth: .infinity, minHeight: 140)
         .padding()
-        .background(Color.white.opacity(0.58))
+        .background(Color.appCardSurface)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 3)
     }

@@ -16,6 +16,8 @@ final class ProgressViewModel: ObservableObject {
     @Published var personalRecords: [PersonalRecord] = []
     @Published var workoutHistory: [WorkoutHistory] = []
     @Published var isLoading: Bool = false
+    @Published var analyticsEventsCount: Int = 0
+    private let workoutStore = WorkoutPersistenceStore()
     
     // MARK: - Data Structures
     struct WeightData: Identifiable {
@@ -41,12 +43,28 @@ final class ProgressViewModel: ObservableObject {
     }
     
     struct WorkoutHistory: Identifiable {
-        let id = UUID()
+        let id: UUID
         let workoutName: String
         let date: Date
         let completedExercises: Int
         let totalExercises: Int
         let duration: TimeInterval
+
+        init(
+            id: UUID = UUID(),
+            workoutName: String,
+            date: Date,
+            completedExercises: Int,
+            totalExercises: Int,
+            duration: TimeInterval
+        ) {
+            self.id = id
+            self.workoutName = workoutName
+            self.date = date
+            self.completedExercises = completedExercises
+            self.totalExercises = totalExercises
+            self.duration = duration
+        }
     }
     
     // MARK: - Initialization
@@ -58,18 +76,23 @@ final class ProgressViewModel: ObservableObject {
         self.workoutHistory = []
         self.isLoading = false
         
-        // Загрузка mock данных
-        loadMockData()
+        loadProgressData()
     }
     
     // MARK: - Public Methods
     func loadProgressData() {
         isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
-            self.loadMockData()
-            self.isLoading = false
+        let sessions = workoutStore.loadHistory()
+        analyticsEventsCount = AnalyticsService.shared.recentEvents(limit: 10_000).count
+
+        if sessions.isEmpty {
+            loadMockData()
+            isLoading = false
+            return
         }
+
+        applyHistorySessions(sessions)
+        isLoading = false
     }
     
     func addWeightEntry(_ weight: Double, date: Date = Date()) {
@@ -237,5 +260,52 @@ final class ProgressViewModel: ObservableObject {
                 duration: 40 * 60
             )
         ]
+    }
+
+    private func applyHistorySessions(_ sessions: [StoredWorkoutHistorySession]) {
+        workoutHistory = sessions.map {
+            WorkoutHistory(
+                id: $0.id,
+                workoutName: $0.workoutName,
+                date: $0.startDate,
+                completedExercises: $0.completedExercises.count,
+                totalExercises: $0.completedExercises.count,
+                duration: $0.duration
+            )
+        }
+
+        let allExercises = sessions.flatMap(\.completedExercises)
+
+        personalRecords = allExercises.compactMap { exercise in
+            guard let best = exercise.sets.max(by: { $0.completedWeight < $1.completedWeight }) else { return nil }
+            return PersonalRecord(
+                exerciseName: exercise.exerciseName,
+                weight: best.completedWeight,
+                reps: best.completedReps,
+                date: sessions.first(where: { $0.completedExercises.contains(where: { $0.exerciseId == exercise.exerciseId }) })?.endDate ?? Date()
+            )
+        }
+        .sorted { $0.weight > $1.weight }
+
+        let grouped = Dictionary(grouping: allExercises, by: { $0.exerciseName })
+        exerciseProgress = grouped.compactMap { name, exercises in
+            let weights = exercises.compactMap { ex in
+                ex.sets.map(\.completedWeight).max()
+            }
+            guard let current = weights.last ?? weights.max(),
+                  let minValue = weights.min(),
+                  current > 0 else { return nil }
+
+            let baseline = max(minValue, 1)
+            let progress = ((current - baseline) / baseline) * 100
+            let goal = max(current * 1.15, current + 2.5)
+            return ExerciseProgress(
+                exerciseName: name,
+                currentWeight: current,
+                goalWeight: goal,
+                progressPercentage: progress
+            )
+        }
+        .sorted { $0.progressPercentage > $1.progressPercentage }
     }
 }

@@ -26,8 +26,25 @@ struct CustomWorkoutSet: Codable, Hashable {
     let targetWeight: Double
 }
 
+struct UploadedWorkout: Identifiable, Codable, Hashable {
+    let id: UUID
+    let name: String
+    let sourceFileName: String
+    let importedAt: Date
+    let items: [UploadedWorkoutItem]
+}
+
+struct UploadedWorkoutItem: Identifiable, Codable, Hashable {
+    let id: UUID
+    let exercise: Exercise
+    let sets: Int
+    let reps: Int
+    let weight: Double
+}
+
 final class CustomWorkoutDraftStore {
     private let key = "custom_workout_draft_v1"
+    private let importedWorkoutsKey = "imported_workout_library_v1"
     private let defaults: UserDefaults
 
     init(defaults: UserDefaults = .standard) {
@@ -46,5 +63,42 @@ final class CustomWorkoutDraftStore {
 
     func clear() {
         defaults.removeObject(forKey: key)
+    }
+
+    func saveImportedWorkout(
+        name: String,
+        sourceFileName: String,
+        items: [UploadedWorkoutItem]
+    ) -> UploadedWorkout {
+        let workout = UploadedWorkout(
+            id: UUID(),
+            name: name,
+            sourceFileName: sourceFileName,
+            importedAt: Date(),
+            items: items
+        )
+
+        var stored = loadImportedWorkouts()
+        stored.removeAll { $0.id == workout.id }
+        stored.insert(workout, at: 0)
+
+        guard let data = try? JSONEncoder().encode(stored) else { return workout }
+        defaults.set(data, forKey: importedWorkoutsKey)
+        return workout
+    }
+
+    func loadImportedWorkouts() -> [UploadedWorkout] {
+        guard let data = defaults.data(forKey: importedWorkoutsKey),
+              let decoded = try? JSONDecoder().decode([UploadedWorkout].self, from: data) else {
+            return []
+        }
+        return decoded.sorted { $0.importedAt > $1.importedAt }
+    }
+
+    func removeImportedWorkout(id: UUID) {
+        var stored = loadImportedWorkouts()
+        stored.removeAll { $0.id == id }
+        guard let data = try? JSONEncoder().encode(stored) else { return }
+        defaults.set(data, forKey: importedWorkoutsKey)
     }
 }

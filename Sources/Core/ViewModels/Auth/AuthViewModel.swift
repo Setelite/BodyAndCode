@@ -104,6 +104,7 @@ final class AuthViewModel: ObservableObject {
         guard var user = currentUser else { return nil }
         transform(&user)
         currentUser = user
+        cloudIdentity.persistUser(user)
         return user
     }
 
@@ -126,8 +127,13 @@ final class AuthViewModel: ObservableObject {
     
     // MARK: - Initialization
     init() {
-        // Для тестирования - можно установить true
-        self.isAuthenticated = false
+        if let restoredUser = cloudIdentity.restoreUser(), cloudIdentity.storedAccessToken() != nil {
+            self.currentUser = restoredUser
+            self.isAuthenticated = true
+        } else {
+            self.currentUser = nil
+            self.isAuthenticated = false
+        }
         print("Auth mode: \(cloudIdentity.isConfigured ? "Supabase" : "Not configured")")
     }
 }

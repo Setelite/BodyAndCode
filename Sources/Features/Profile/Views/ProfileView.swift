@@ -94,7 +94,11 @@ struct ProfileView: View {
                 .fontWeight(.medium)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 8)
-                .background(Color.white.opacity(0.55))
+                .background(Color.appButtonSurface)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .stroke(Color.appButtonBorder, lineWidth: 1)
+                )
                 .foregroundColor(.primary)
                 .cornerRadius(20)
         }
@@ -172,7 +176,7 @@ struct ProfileView: View {
                     color: .gray
                 )
             }
-            .background(Color.white.opacity(0.42))
+            .background(Color.appCardSurface)
             .cornerRadius(12)
         }
         .padding()
@@ -238,7 +242,11 @@ struct ProfileView: View {
                 Spacer()
             }
             .padding()
-            .background(Color.white.opacity(0.6))
+            .background(Color.appButtonSurface)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .stroke(Color.appButtonBorder, lineWidth: 1)
+            )
             .cornerRadius(12)
         }
         .glassCardStyle()
@@ -296,7 +304,7 @@ struct ProfileStatCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color.white.opacity(0.46))
+        .background(Color.appCardSurface)
         .cornerRadius(12)
     }
 }
@@ -354,7 +362,7 @@ struct AchievementBadge: View {
         }
         .frame(width: 90)
         .padding()
-        .background(Color.white.opacity(0.46))
+        .background(Color.appCardSurface)
         .cornerRadius(12)
         .opacity(isUnlocked ? 1 : 0.6)
     }
@@ -363,6 +371,9 @@ struct AchievementBadge: View {
 // Settings View
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var themeManager: ThemeManager
+    @StateObject private var notificationService = NotificationService.shared
+    @AppStorage("notifications_enabled") private var notificationsEnabled = true
     
     var body: some View {
         NavigationView {
@@ -378,8 +389,15 @@ struct SettingsView: View {
                 }
                 
                 Section("Приложение") {
-                    Toggle("Уведомления", isOn: .constant(true))
-                    Toggle("Темная тема", isOn: .constant(false))
+                    Toggle("Уведомления", isOn: notificationsBinding)
+                    NavigationLink("Настройки уведомлений") {
+                        NotificationSettingsView()
+                    }
+                    Picker("Тема", selection: $themeManager.currentTheme) {
+                        ForEach(Theme.allCases, id: \.self) { theme in
+                            Text(theme.title).tag(theme)
+                        }
+                    }
                     Picker("Единицы измерения", selection: .constant(0)) {
                         Text("Метрические").tag(0)
                         Text("Имперские").tag(1)
@@ -395,11 +413,16 @@ struct SettingsView: View {
                     }
                     
                     Button("Политика конфиденциальности") {}
+                        .appContrastButton()
                     Button("Условия использования") {}
+                        .appContrastButton()
                 }
             }
             .navigationTitle("Настройки")
             .navigationBarTitleDisplayMode(.inline)
+            .task {
+                await notificationService.checkPermissionStatus()
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Готово") {
@@ -408,6 +431,23 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+
+    private var notificationsBinding: Binding<Bool> {
+        Binding(
+            get: { notificationsEnabled },
+            set: { newValue in
+                notificationsEnabled = newValue
+                Task {
+                    if newValue {
+                        _ = await notificationService.requestPermission()
+                        await notificationService.checkPermissionStatus()
+                    } else {
+                        await notificationService.cancelAllNotifications()
+                    }
+                }
+            }
+        )
     }
 }
 

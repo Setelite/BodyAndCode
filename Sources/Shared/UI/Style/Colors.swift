@@ -29,6 +29,31 @@ extension Color {
     // UI Colors
     static let cardBackground = Color(.systemGray6)
     static let borderColor = Color(.systemGray4)
+
+    // Adaptive UI Colors
+    static let appSurface = Color(UIColor { trait in
+        trait.userInterfaceStyle == .dark
+        ? UIColor(red: 0.13, green: 0.14, blue: 0.16, alpha: 1.0)
+        : UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.0)
+    })
+
+    static let appCardSurface = Color(UIColor { trait in
+        trait.userInterfaceStyle == .dark
+        ? UIColor(red: 0.18, green: 0.19, blue: 0.22, alpha: 0.95)
+        : UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.72)
+    })
+
+    static let appButtonSurface = Color(UIColor { trait in
+        trait.userInterfaceStyle == .dark
+        ? UIColor(red: 0.24, green: 0.26, blue: 0.30, alpha: 1.0)
+        : UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.92)
+    })
+
+    static let appButtonBorder = Color(UIColor { trait in
+        trait.userInterfaceStyle == .dark
+        ? UIColor.white.withAlphaComponent(0.18)
+        : UIColor.black.withAlphaComponent(0.12)
+    })
 }
 
 extension LinearGradient {
@@ -70,9 +95,30 @@ struct GlassCardModifier: ViewModifier {
     }
 }
 
+struct AppContrastButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color.appButtonSurface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .stroke(Color.appButtonBorder, lineWidth: 1)
+                    )
+            )
+            .opacity(configuration.isPressed ? 0.86 : 1)
+    }
+}
+
 extension View {
     func glassCardStyle() -> some View {
         modifier(GlassCardModifier())
+    }
+
+    func appContrastButton() -> some View {
+        buttonStyle(AppContrastButtonStyle())
     }
 }
 

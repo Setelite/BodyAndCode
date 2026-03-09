@@ -102,7 +102,7 @@ struct ToggleRestTimerIntent: AppIntent {
     static var title: LocalizedStringResource = "Старт/стоп отдыха"
 
     func perform() async throws -> some IntentResult {
-        guard let summary = WidgetSharedStore.loadSummary() else {
+        guard let summary = await WidgetSharedStore.loadSummary() else {
             return .result()
         }
 
@@ -157,7 +157,7 @@ struct ToggleRestTimerIntent: AppIntent {
             )
         }
 
-        WidgetSharedStore.saveSummary(updated)
+        await WidgetSharedStore.saveSummary(updated)
         return .result()
     }
 }
@@ -166,7 +166,7 @@ struct CompleteSetIntent: AppIntent {
     static var title: LocalizedStringResource = "Выполнил подход"
 
     func perform() async throws -> some IntentResult {
-        guard let summary = WidgetSharedStore.loadSummary() else {
+        guard let summary = await WidgetSharedStore.loadSummary() else {
             return .result()
         }
 
@@ -190,12 +190,12 @@ struct CompleteSetIntent: AppIntent {
             timerReferenceDate: summary.timerReferenceDate,
             restDurationSeconds: defaultRest,
             restRemainingSeconds: defaultRest,
-            isRestTimerRunning: true,
-            restTimerEndDate: now.addingTimeInterval(TimeInterval(defaultRest)),
+            isRestTimerRunning: false,
+            restTimerEndDate: nil,
             updatedAt: now
         )
 
-        WidgetSharedStore.saveSummary(updated)
+        await WidgetSharedStore.saveSummary(updated)
         return .result()
     }
 }
@@ -242,6 +242,7 @@ struct WorkoutProgressProvider: TimelineProvider {
 struct WorkoutProgressWidgetEntryView: View {
     let entry: WorkoutProgressProvider.Entry
     @Environment(\.widgetFamily) private var family
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         Group {
@@ -262,147 +263,155 @@ struct WorkoutProgressWidgetEntryView: View {
 
     @ViewBuilder
     private func mediumLayout(_ summary: WorkoutWidgetSummary) -> some View {
-        VStack(alignment: .leading, spacing: 7) {
-            Text(summary.workoutName)
-                .font(.headline.weight(.semibold))
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
+        ZStack {
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .fill(widgetBackground)
 
-            currentStepBlock(summary)
+            GeometryReader { geo in
+                let topHeight = geo.size.height * 0.58
+                let sideInset: CGFloat = 16
 
-            HStack(spacing: 6) {
-                Image(systemName: "timer")
-                    .font(.caption)
-                timerText(summary)
-                    .font(.caption.weight(.semibold))
-                    .monospacedDigit()
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-            }
+                VStack(spacing: 0) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        HStack(spacing: 6) {
+                            Text(currentExerciseName(summary))
+                                .font(.system(size: 16, weight: .semibold))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.72)
+                            Text("⟶")
+                                .font(.system(size: 15, weight: .regular))
+                            Text(nextExerciseTitle(summary))
+                                .font(.system(size: 12, weight: .regular))
+                                .foregroundStyle(widgetSecondaryText)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.7)
+                        }
 
-            ProgressView(value: summary.progress)
-                .tint(.white.opacity(0.95))
+                        Spacer(minLength: 8)
 
-            HStack {
-                Text("\(summary.completedSets)/\(summary.totalSets) подходов")
-                    .font(.caption2)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.75)
-                Spacer()
-                Text("Осталось \(summary.remainingSets)")
-                    .font(.caption2)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.75)
-            }
+                        HStack(alignment: .lastTextBaseline, spacing: 10) {
+                            restTimerDisplay(summary)
+                                .font(.system(size: 66, weight: .black, design: .rounded))
+                                .monospacedDigit()
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
 
-            if isWorkoutCompleted(summary) {
-                Text("Тренировка завершена")
-                    .font(.caption.weight(.semibold))
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-            } else {
-                HStack(spacing: 6) {
-                    Button(intent: CompleteSetIntent()) {
-                        Label("Подход", systemImage: "checkmark.circle.fill")
-                            .font(.system(size: 13, weight: .bold))
-                            .frame(maxWidth: .infinity)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.75)
-                            .padding(.vertical, 9)
+                            Spacer(minLength: 16)
+
+                            VStack(alignment: .trailing, spacing: 2) {
+                                Text("Подход \(activeSetIndex(summary))/\(activeExerciseTotalSets(summary))")
+                                    .font(.system(size: 18, weight: .regular))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.72)
+                                Text("Упр. \(completedExercises(summary))/\(totalExercises(summary))")
+                                    .font(.system(size: 12, weight: .medium))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+                            }
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(.white)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color.green.opacity(0.78))
-                    )
+                    .padding(.horizontal, sideInset)
+                    .padding(.top, 4)
+                    .padding(.bottom, 10)
+                    .frame(maxWidth: .infinity, maxHeight: topHeight, alignment: .topLeading)
 
-                    Button(intent: ToggleRestTimerIntent()) {
-                        Label((summary.isRestTimerRunning ?? false) ? "Стоп отдых" : "Старт отдых", systemImage: "timer")
-                            .font(.system(size: 13, weight: .bold))
-                            .frame(maxWidth: .infinity)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.75)
-                            .padding(.vertical, 9)
+                    Rectangle()
+                        .fill(widgetDivider)
+                        .frame(height: 1)
+                        .padding(.horizontal, 2)
+
+                    HStack(spacing: 0) {
+                        Button(intent: ToggleRestTimerIntent()) {
+                            Text((summary.isRestTimerRunning ?? false) ? "Продолжить" : "Отдых")
+                                .font(.system(size: 26, weight: .semibold))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.65)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                        .buttonStyle(.plain)
+                        .foregroundStyle(Color(red: 0.10, green: 0.78, blue: 0.36))
+                        .padding(.horizontal, 20)
+
+                        Rectangle()
+                            .fill(widgetDivider)
+                            .frame(width: 1)
+                            .padding(.vertical, 22)
+
+                        Button(intent: CompleteSetIntent()) {
+                            Text(primaryActionTitle(summary))
+                                .font(.system(size: 26, weight: .regular))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.65)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                        .buttonStyle(.plain)
+                        .foregroundStyle(widgetPrimaryText)
+                        .padding(.horizontal, 20)
                     }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(.primary)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color.white.opacity(0.38))
-                    )
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.horizontal, sideInset)
                 }
             }
-
-            restTimerLabel(summary)
-            Spacer(minLength: 0)
+            .padding(8)
         }
-        .foregroundStyle(.primary)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .foregroundStyle(widgetPrimaryText)
     }
 
     @ViewBuilder
     private func smallLayout(_ summary: WorkoutWidgetSummary) -> some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text(summary.workoutName)
-                .font(.caption.weight(.semibold))
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
+        ZStack {
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(widgetBackground)
 
-            if let step = currentStep(summary) {
-                Text("\(step.exerciseName) • \(step.setNumber)")
-                    .font(.caption2.weight(.semibold))
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .stroke(widgetDivider.opacity(0.7), style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
+                .padding(5)
+
+            VStack(alignment: .leading, spacing: 5) {
+                Text(currentStepTitle(summary))
+                    .font(.system(size: 11, weight: .semibold))
                     .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-            }
 
-            HStack(spacing: 6) {
-                Image(systemName: "timer")
-                    .font(.caption2)
-                timerText(summary)
-                    .font(.caption2.weight(.semibold))
-                    .monospacedDigit()
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.75)
-            }
-
-            ProgressView(value: summary.progress)
-                .tint(.white.opacity(0.95))
-
-            Text("\(summary.completedSets)/\(summary.totalSets) • осталось \(summary.remainingSets)")
-                .font(.caption2)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-
-            if !isWorkoutCompleted(summary) {
-                HStack(spacing: 6) {
-                    Button(intent: CompleteSetIntent()) {
-                        Image(systemName: "checkmark.circle.fill")
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 8)
-                    }
-                    .buttonStyle(.plain)
-                    .background(
-                        RoundedRectangle(cornerRadius: 7, style: .continuous)
-                            .fill(Color.green.opacity(0.82))
-                    )
-
-                    Button(intent: ToggleRestTimerIntent()) {
-                        Image(systemName: (summary.isRestTimerRunning ?? false) ? "pause.circle.fill" : "timer")
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 8)
-                    }
-                    .buttonStyle(.plain)
-                    .background(
-                        RoundedRectangle(cornerRadius: 7, style: .continuous)
-                            .fill(Color.white.opacity(0.38))
-                    )
+                HStack(spacing: 4) {
+                    Image(systemName: "timer")
+                        .font(.system(size: 12, weight: .medium))
+                    timerText(summary)
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .monospacedDigit()
                 }
+
+                HStack(spacing: 0) {
+                    Button(intent: ToggleRestTimerIntent()) {
+                        Text((summary.isRestTimerRunning ?? false) ? "СТОП" : "СТАРТ")
+                            .font(.system(size: 11, weight: .bold))
+                            .frame(maxWidth: .infinity, minHeight: 34)
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle((summary.isRestTimerRunning ?? false) ? .white : Color(red: 0.08, green: 0.74, blue: 0.52))
+                    .background((summary.isRestTimerRunning ?? false) ? Color(red: 0.98, green: 0.50, blue: 0.28, opacity: 0.95) : widgetButtonBackground)
+
+                    Rectangle()
+                        .fill(widgetDivider.opacity(0.8))
+                        .frame(width: 1)
+                        .padding(.vertical, 7)
+
+                    Button(intent: CompleteSetIntent()) {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 12, weight: .bold))
+                            .frame(maxWidth: .infinity, minHeight: 34)
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(widgetPrimaryText)
+                    .background(widgetButtonBackground)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 9, style: .continuous))
+                Spacer(minLength: 0)
             }
-            Spacer(minLength: 0)
+            .padding(9)
         }
-        .foregroundStyle(.primary)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .foregroundStyle(widgetPrimaryText)
     }
 
     private var emptyLayout: some View {
@@ -424,37 +433,108 @@ struct WorkoutProgressWidgetEntryView: View {
         }
     }
 
-    @ViewBuilder
-    private func restTimerLabel(_ summary: WorkoutWidgetSummary) -> some View {
-        let running = summary.isRestTimerRunning ?? false
-        let remaining = restRemaining(summary)
-        let label = running ? "Отдых (идет): \(formatTime(remaining))" : "Отдых: \(formatTime(remaining))"
-        Text(label)
-            .font(.caption2)
-            .lineLimit(1)
-            .minimumScaleFactor(0.75)
+    private func currentStepTitle(_ summary: WorkoutWidgetSummary) -> String {
+        if let step = currentStep(summary) {
+            return "\(step.exerciseName) • \(step.setNumber)"
+        }
+        if !isWorkoutCompleted(summary) {
+            return "Подход \(summary.completedSets + 1)"
+        } else {
+            return "Все подходы выполнены"
+        }
+    }
+
+    private func nextExerciseTitle(_ summary: WorkoutWidgetSummary) -> String {
+        guard !summary.steps.isEmpty else {
+            return "Следующий подход"
+        }
+        let requestedNext = summary.currentStepIndex + 1
+        guard requestedNext < summary.steps.count else {
+            return "Завершить тренировку"
+        }
+        let nextIndex = min(requestedNext, summary.steps.count - 1)
+        return summary.steps[nextIndex].exerciseName
+    }
+
+    private func activeSetIndex(_ summary: WorkoutWidgetSummary) -> Int {
+        if let step = currentStep(summary) {
+            return max(step.setNumber, 1)
+        }
+        return 1
+    }
+
+    private func activeExerciseTotalSets(_ summary: WorkoutWidgetSummary) -> Int {
+        guard let step = currentStep(summary) else {
+            return 1
+        }
+        let sameExerciseSets = summary.steps
+            .filter { $0.exerciseName == step.exerciseName }
+            .map(\.setNumber)
+        return max(sameExerciseSets.max() ?? step.setNumber, 1)
+    }
+
+    private func primaryActionTitle(_ summary: WorkoutWidgetSummary) -> String {
+        guard let current = currentStep(summary) else {
+            return "Выполнено"
+        }
+        let nextIndex = summary.currentStepIndex + 1
+        guard nextIndex < summary.steps.count else {
+            return "Выполнено"
+        }
+        let next = summary.steps[nextIndex]
+        return next.exerciseName == current.exerciseName ? "Дальше" : "Выполнено"
+    }
+
+    private func totalExercises(_ summary: WorkoutWidgetSummary) -> Int {
+        let names = Set(summary.steps.map(\.exerciseName))
+        return max(names.count, 1)
+    }
+
+    private func completedExercises(_ summary: WorkoutWidgetSummary) -> Int {
+        guard !summary.steps.isEmpty else { return 0 }
+        let completedCount = min(summary.completedSets, summary.steps.count)
+        let completedSteps = Array(summary.steps.prefix(completedCount))
+        let allNames = Set(summary.steps.map(\.exerciseName))
+
+        let completed = allNames.filter { exerciseName in
+            let totalSetsForExercise = summary.steps.filter { $0.exerciseName == exerciseName }.count
+            let doneSetsForExercise = completedSteps.filter { $0.exerciseName == exerciseName }.count
+            return doneSetsForExercise >= totalSetsForExercise
+        }
+        return completed.count
+    }
+
+    private func currentExerciseName(_ summary: WorkoutWidgetSummary) -> String {
+        currentStep(summary)?.exerciseName.capitalized ?? "Текущее упражнение"
     }
 
     @ViewBuilder
-    private func currentStepBlock(_ summary: WorkoutWidgetSummary) -> some View {
-        if let step = currentStep(summary) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(step.exerciseName)
-                    .font(.caption.weight(.semibold))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.75)
-                Text("Подход \(step.setNumber) • \(Int(step.targetWeight)) кг × \(step.targetReps)")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.75)
-            }
-        } else if !isWorkoutCompleted(summary) {
-            Text("Следующий подход: \(summary.completedSets + 1)")
-                .font(.caption2.weight(.semibold))
+    private func restTimerInline(_ summary: WorkoutWidgetSummary, font: Font) -> some View {
+        if summary.isRestTimerRunning == true,
+           let endDate = summary.restTimerEndDate,
+           endDate.timeIntervalSinceNow > 0 {
+            Text(endDate, style: .timer)
+                .font(font)
+                .monospacedDigit()
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
         } else {
-            Text("Все подходы выполнены")
-                .font(.caption2.weight(.semibold))
+            Text(formatTime(restRemaining(summary)))
+                .font(font)
+                .monospacedDigit()
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+    }
+
+    @ViewBuilder
+    private func restTimerDisplay(_ summary: WorkoutWidgetSummary) -> some View {
+        if summary.isRestTimerRunning == true,
+           let endDate = summary.restTimerEndDate,
+           endDate.timeIntervalSinceNow > 0 {
+            Text(endDate, style: .timer)
+        } else {
+            Text(formatShortTime(restRemaining(summary)))
         }
     }
 
@@ -481,6 +561,53 @@ struct WorkoutProgressWidgetEntryView: View {
         let s = seconds % 60
         return String(format: "%02d:%02d:%02d", h, m, s)
     }
+
+    private func formatShortTime(_ seconds: Int) -> String {
+        let clamped = max(seconds, 0)
+        let m = clamped / 60
+        let s = clamped % 60
+        return String(format: "%02d:%02d", m, s)
+    }
+
+    private var widgetThemeOverride: String? {
+        UserDefaults(suiteName: WidgetSharedStore.appGroupID)?
+            .string(forKey: "selectedTheme")
+    }
+
+    private var isDarkTheme: Bool {
+        switch widgetThemeOverride {
+        case "dark":
+            return true
+        case "light":
+            return false
+        default:
+            return colorScheme == .dark
+        }
+    }
+
+    private var widgetBackground: Color {
+        isDarkTheme
+        ? Color(red: 0.14, green: 0.15, blue: 0.17)
+        : Color(red: 0.93, green: 0.93, blue: 0.93)
+    }
+
+    private var widgetPrimaryText: Color {
+        isDarkTheme ? .white : .black
+    }
+
+    private var widgetSecondaryText: Color {
+        isDarkTheme ? .white.opacity(0.74) : .black.opacity(0.72)
+    }
+
+    private var widgetDivider: Color {
+        isDarkTheme ? .white.opacity(0.65) : .black.opacity(0.9)
+    }
+
+    private var widgetButtonBackground: Color {
+        isDarkTheme
+        ? Color(red: 0.21, green: 0.22, blue: 0.25)
+        : Color.white.opacity(0.5)
+    }
 }
 
 struct WorkoutProgressWidget: Widget {
@@ -490,15 +617,7 @@ struct WorkoutProgressWidget: Widget {
         StaticConfiguration(kind: kind, provider: WorkoutProgressProvider()) { entry in
             WorkoutProgressWidgetEntryView(entry: entry)
                 .containerBackground(for: .widget) {
-                    LinearGradient(
-                        colors: [
-                            Color(red: 0.86, green: 0.9, blue: 0.98),
-                            Color(red: 0.77, green: 0.83, blue: 0.98),
-                            Color(red: 0.84, green: 0.78, blue: 0.95)
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
+                    Color.clear
                 }
         }
         .configurationDisplayName("Текущая тренировка")

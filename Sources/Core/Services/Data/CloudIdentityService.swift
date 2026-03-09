@@ -8,6 +8,7 @@ struct CloudIdentityResult {
 final class CloudIdentityService {
     private let api: SupabaseAPIClient
     private let tokenKey = "supabase_access_token_v1"
+    private let userKey = "supabase_current_user_v1"
 
     init(api: SupabaseAPIClient = SupabaseAPIClient()) {
         self.api = api
@@ -19,7 +20,7 @@ final class CloudIdentityService {
         let session = try await api.signIn(email: email, password: password)
         let profile = try await api.fetchProfile(userID: session.user.id, accessToken: session.access_token)
         let appUser = mapUser(session: session, profile: profile)
-        saveAccessToken(session.access_token)
+        saveSession(token: session.access_token, user: appUser)
         return CloudIdentityResult(user: appUser, accessToken: session.access_token)
     }
 
@@ -45,7 +46,7 @@ final class CloudIdentityService {
         let profile = try await api.fetchProfile(userID: session.user.id, accessToken: session.access_token)
 
         let appUser = mapUser(session: session, profile: profile)
-        saveAccessToken(session.access_token)
+        saveSession(token: session.access_token, user: appUser)
         return CloudIdentityResult(user: appUser, accessToken: session.access_token)
     }
 
@@ -57,12 +58,32 @@ final class CloudIdentityService {
         UserDefaults.standard.string(forKey: tokenKey)
     }
 
+    func restoreUser() -> User? {
+        guard let data = UserDefaults.standard.data(forKey: userKey) else {
+            return nil
+        }
+        return try? JSONDecoder().decode(User.self, from: data)
+    }
+
+    func persistUser(_ user: User) {
+        guard let data = try? JSONEncoder().encode(user) else {
+            return
+        }
+        UserDefaults.standard.set(data, forKey: userKey)
+    }
+
     func clearSession() {
         UserDefaults.standard.removeObject(forKey: tokenKey)
+        UserDefaults.standard.removeObject(forKey: userKey)
     }
 
     private func saveAccessToken(_ token: String) {
         UserDefaults.standard.set(token, forKey: tokenKey)
+    }
+
+    private func saveSession(token: String, user: User) {
+        saveAccessToken(token)
+        persistUser(user)
     }
 
     private func mapUser(session: SupabaseAuthSession, profile: SupabaseProfileDTO?) -> User {

@@ -24,6 +24,7 @@ final class ActiveWorkoutViewModel: ObservableObject {
     private var accumulatedElapsedSeconds: Int = 0
     private let customWorkoutDraftStore = CustomWorkoutDraftStore()
     private let workoutPersistenceStore = WorkoutPersistenceStore()
+    private let analytics = AnalyticsService.shared
     private var exerciseSetPlan: [UUID: [CustomWorkoutSet]] = [:]
     private var stableSetIDs: [String: UUID] = [:]
     private let presetPlan: WorkoutPlan?
@@ -207,6 +208,7 @@ final class ActiveWorkoutViewModel: ObservableObject {
     func completeSet(for exerciseId: UUID, setIndex: Int, weight: Double, reps: Int) {
         let setNumber = setIndex + 1
         let plannedSet = exerciseSetPlan[exerciseId]?.first(where: { $0.setNumber == setNumber })
+        let exerciseName = currentWorkoutPlan?.exercises.first(where: { $0.id == exerciseId })?.name ?? "unknown"
         
         // Удаляем старую запись если есть
         completedSets.removeAll { $0.exerciseId == exerciseId && $0.setNumber == setNumber }
@@ -226,8 +228,50 @@ final class ActiveWorkoutViewModel: ObservableObject {
         )
         
         completedSets.append(completedSet)
+        analytics.logEvent(.setCompleted(exerciseName, setNumber: setNumber))
         objectWillChange.send()
         persistOngoingWorkout()
+    }
+
+    func totalSetCount(for exerciseId: UUID) -> Int {
+        if let planned = exerciseSetPlan[exerciseId] {
+            return max(planned.count, 1)
+        }
+        return 3
+    }
+
+    func completedSetCount(for exerciseId: UUID) -> Int {
+        completedSets.filter { $0.exerciseId == exerciseId && $0.isCompleted }.count
+    }
+
+    func isExerciseCompleted(_ exerciseId: UUID) -> Bool {
+        completedSetCount(for: exerciseId) >= totalSetCount(for: exerciseId)
+    }
+
+    func completeExercise(_ exerciseId: UUID) {
+        guard let workoutPlan = currentWorkoutPlan,
+              let exercise = workoutPlan.exercises.first(where: { $0.id == exerciseId }) else { return }
+
+        let plannedSets = exerciseSetPlan[exerciseId] ?? (1...3).map {
+            CustomWorkoutSet(
+                setNumber: $0,
+                targetReps: 8 + ($0 - 1) * 2,
+                targetWeight: 60.0 + Double($0 - 1) * 5.0
+            )
+        }
+
+        for plannedSet in plannedSets {
+            let alreadyDone = completedSets.contains { $0.exerciseId == exerciseId && $0.setNumber == plannedSet.setNumber }
+            if alreadyDone { continue }
+            completeSet(
+                for: exerciseId,
+                setIndex: plannedSet.setNumber - 1,
+                weight: plannedSet.targetWeight,
+                reps: plannedSet.targetReps
+            )
+        }
+
+        analytics.logEvent(.exerciseCompleted(exercise.name, sets: plannedSets.count))
     }
     
     // MARK: - Workout History Methods
@@ -238,6 +282,8 @@ final class ActiveWorkoutViewModel: ObservableObject {
         isTimerRunning = false
         timerStartedAt = nil
         accumulatedElapsedSeconds = 0
+        let workoutName = currentWorkoutPlan?.name ?? "workout"
+        analytics.logEvent(.workoutStarted(workoutName))
         print("Тренировка начата: \(workoutStartTime?.description ?? "неизвестно")")
         persistOngoingWorkout()
     }
@@ -326,6 +372,7 @@ final class ActiveWorkoutViewModel: ObservableObject {
         
         // Сохраняем в историю
         saveWorkoutToHistory(storedSession)
+        analytics.logEvent(.workoutCompleted(workoutPlan.name, duration: duration))
         
         // Показываем успешное сообщение
         errorMessage = "Тренировка завершена и сохранена! 🎉"
