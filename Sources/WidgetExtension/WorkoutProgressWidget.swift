@@ -263,96 +263,90 @@ struct WorkoutProgressWidgetEntryView: View {
 
     @ViewBuilder
     private func mediumLayout(_ summary: WorkoutWidgetSummary) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .fill(widgetBackground)
+        GeometryReader { geo in
+            let topHeight = geo.size.height * 0.58
+            let sideInset: CGFloat = 16
 
-            GeometryReader { geo in
-                let topHeight = geo.size.height * 0.58
-                let sideInset: CGFloat = 16
+            VStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack(spacing: 6) {
+                        Text(currentExerciseName(summary))
+                            .font(.system(size: 16, weight: .semibold))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.72)
+                        Text("⟶")
+                            .font(.system(size: 15, weight: .regular))
+                        Text(nextExerciseTitle(summary))
+                            .font(.system(size: 12, weight: .regular))
+                            .foregroundStyle(widgetSecondaryText)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                    }
 
-                VStack(spacing: 0) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        HStack(spacing: 6) {
-                            Text(currentExerciseName(summary))
-                                .font(.system(size: 16, weight: .semibold))
+                    Spacer(minLength: 8)
+
+                    HStack(alignment: .lastTextBaseline, spacing: 10) {
+                        restTimerDisplay(summary)
+                            .font(.system(size: 66, weight: .black, design: .rounded))
+                            .monospacedDigit()
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
+
+                        Spacer(minLength: 16)
+
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Text("Подход \(activeSetIndex(summary))/\(activeExerciseTotalSets(summary))")
+                                .font(.system(size: 18, weight: .regular))
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.72)
-                            Text("⟶")
-                                .font(.system(size: 15, weight: .regular))
-                            Text(nextExerciseTitle(summary))
-                                .font(.system(size: 12, weight: .regular))
-                                .foregroundStyle(widgetSecondaryText)
+                            Text("Упр. \(completedExercises(summary))/\(totalExercises(summary))")
+                                .font(.system(size: 12, weight: .medium))
                                 .lineLimit(1)
-                                .minimumScaleFactor(0.7)
-                        }
-
-                        Spacer(minLength: 8)
-
-                        HStack(alignment: .lastTextBaseline, spacing: 10) {
-                            restTimerDisplay(summary)
-                                .font(.system(size: 66, weight: .black, design: .rounded))
-                                .monospacedDigit()
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.5)
-
-                            Spacer(minLength: 16)
-
-                            VStack(alignment: .trailing, spacing: 2) {
-                                Text("Подход \(activeSetIndex(summary))/\(activeExerciseTotalSets(summary))")
-                                    .font(.system(size: 18, weight: .regular))
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.72)
-                                Text("Упр. \(completedExercises(summary))/\(totalExercises(summary))")
-                                    .font(.system(size: 12, weight: .medium))
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.8)
-                            }
+                                .minimumScaleFactor(0.8)
                         }
                     }
-                    .padding(.horizontal, sideInset)
-                    .padding(.top, 4)
-                    .padding(.bottom, 10)
-                    .frame(maxWidth: .infinity, maxHeight: topHeight, alignment: .topLeading)
+                }
+                .padding(.horizontal, sideInset)
+                .padding(.top, 4)
+                .padding(.bottom, 10)
+                .frame(maxWidth: .infinity, maxHeight: topHeight, alignment: .topLeading)
+
+                Rectangle()
+                    .fill(widgetDivider)
+                    .frame(height: 1)
+                    .padding(.horizontal, 2)
+
+                HStack(spacing: 0) {
+                    Button(intent: ToggleRestTimerIntent()) {
+                        Text((summary.isRestTimerRunning ?? false) ? "Продолжить" : "Отдых")
+                            .font(.system(size: 26, weight: .semibold))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.65)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(Color(red: 0.10, green: 0.78, blue: 0.36))
+                    .padding(.horizontal, 20)
 
                     Rectangle()
                         .fill(widgetDivider)
-                        .frame(height: 1)
-                        .padding(.horizontal, 2)
+                        .frame(width: 1)
+                        .padding(.vertical, 22)
 
-                    HStack(spacing: 0) {
-                        Button(intent: ToggleRestTimerIntent()) {
-                            Text((summary.isRestTimerRunning ?? false) ? "Продолжить" : "Отдых")
-                                .font(.system(size: 26, weight: .semibold))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.65)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        }
-                        .buttonStyle(.plain)
-                        .foregroundStyle(Color(red: 0.10, green: 0.78, blue: 0.36))
-                        .padding(.horizontal, 20)
-
-                        Rectangle()
-                            .fill(widgetDivider)
-                            .frame(width: 1)
-                            .padding(.vertical, 22)
-
-                        Button(intent: CompleteSetIntent()) {
-                            Text(primaryActionTitle(summary))
-                                .font(.system(size: 26, weight: .regular))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.65)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        }
-                        .buttonStyle(.plain)
-                        .foregroundStyle(widgetPrimaryText)
-                        .padding(.horizontal, 20)
+                    Button(intent: CompleteSetIntent()) {
+                        Text(primaryActionTitle(summary))
+                            .font(.system(size: 26, weight: .regular))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.65)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.horizontal, sideInset)
+                    .buttonStyle(.plain)
+                    .foregroundStyle(widgetPrimaryText)
+                    .padding(.horizontal, 20)
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.horizontal, sideInset)
             }
-            .padding(8)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .foregroundStyle(widgetPrimaryText)
@@ -360,56 +354,44 @@ struct WorkoutProgressWidgetEntryView: View {
 
     @ViewBuilder
     private func smallLayout(_ summary: WorkoutWidgetSummary) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(widgetBackground)
+        VStack(alignment: .leading, spacing: 5) {
+            Text(currentStepTitle(summary))
+                .font(.system(size: 11, weight: .semibold))
+                .lineLimit(1)
 
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .stroke(widgetDivider.opacity(0.7), style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
-                .padding(5)
-
-            VStack(alignment: .leading, spacing: 5) {
-                Text(currentStepTitle(summary))
-                    .font(.system(size: 11, weight: .semibold))
-                    .lineLimit(1)
-
-                HStack(spacing: 4) {
-                    Image(systemName: "timer")
-                        .font(.system(size: 12, weight: .medium))
-                    timerText(summary)
-                        .font(.system(size: 14, weight: .medium, design: .rounded))
-                        .monospacedDigit()
-                }
-
-                HStack(spacing: 0) {
-                    Button(intent: ToggleRestTimerIntent()) {
-                        Text((summary.isRestTimerRunning ?? false) ? "СТОП" : "СТАРТ")
-                            .font(.system(size: 11, weight: .bold))
-                            .frame(maxWidth: .infinity, minHeight: 34)
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundStyle((summary.isRestTimerRunning ?? false) ? .white : Color(red: 0.08, green: 0.74, blue: 0.52))
-                    .background((summary.isRestTimerRunning ?? false) ? Color(red: 0.98, green: 0.50, blue: 0.28, opacity: 0.95) : widgetButtonBackground)
-
-                    Rectangle()
-                        .fill(widgetDivider.opacity(0.8))
-                        .frame(width: 1)
-                        .padding(.vertical, 7)
-
-                    Button(intent: CompleteSetIntent()) {
-                        Image(systemName: "checkmark")
-                            .font(.system(size: 12, weight: .bold))
-                            .frame(maxWidth: .infinity, minHeight: 34)
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(widgetPrimaryText)
-                    .background(widgetButtonBackground)
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 9, style: .continuous))
-                Spacer(minLength: 0)
+            HStack(spacing: 4) {
+                Image(systemName: "timer")
+                    .font(.system(size: 12, weight: .medium))
+                timerText(summary)
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .monospacedDigit()
             }
-            .padding(9)
+
+            HStack(spacing: 0) {
+                Button(intent: ToggleRestTimerIntent()) {
+                    Text((summary.isRestTimerRunning ?? false) ? "СТОП" : "СТАРТ")
+                        .font(.system(size: 11, weight: .bold))
+                        .frame(maxWidth: .infinity, minHeight: 34)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle((summary.isRestTimerRunning ?? false) ? .white : Color(red: 0.08, green: 0.74, blue: 0.52))
+
+                Rectangle()
+                    .fill(widgetDivider.opacity(0.8))
+                    .frame(width: 1)
+                    .padding(.vertical, 7)
+
+                Button(intent: CompleteSetIntent()) {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 12, weight: .bold))
+                        .frame(maxWidth: .infinity, minHeight: 34)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(widgetPrimaryText)
+            }
+            Spacer(minLength: 0)
         }
+        .padding(9)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .foregroundStyle(widgetPrimaryText)
     }
@@ -585,12 +567,6 @@ struct WorkoutProgressWidgetEntryView: View {
         }
     }
 
-    private var widgetBackground: Color {
-        isDarkTheme
-        ? Color(red: 0.14, green: 0.15, blue: 0.17)
-        : Color(red: 0.93, green: 0.93, blue: 0.93)
-    }
-
     private var widgetPrimaryText: Color {
         isDarkTheme ? .white : .black
     }
@@ -603,11 +579,6 @@ struct WorkoutProgressWidgetEntryView: View {
         isDarkTheme ? .white.opacity(0.65) : .black.opacity(0.9)
     }
 
-    private var widgetButtonBackground: Color {
-        isDarkTheme
-        ? Color(red: 0.21, green: 0.22, blue: 0.25)
-        : Color.white.opacity(0.5)
-    }
 }
 
 struct WorkoutProgressWidget: Widget {
